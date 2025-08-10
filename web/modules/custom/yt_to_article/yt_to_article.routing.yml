@@ -53,11 +53,3 @@ yt_to_article.webhook_debug:
     _permission: 'administer yt to article'
   options:
     _admin_route: TRUE
-
-yt_to_article.rating_form:
-  path: '/yt-to-article/rating'
-  defaults:
-    _controller: '\Drupal\yt_to_article\Controller\YtToArticleRatingController::ratingPage'
-    _title: 'Ocena Wideo YouTube'
-  requirements:
-    _permission: 'access yt to article'

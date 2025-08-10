@@ -1,0 +1,22 @@
+uuid: 8d56b716-a7ea-4c63-a1e6-29f8d5514dd4
+langcode: en
+status: true
+dependencies:
+  theme:
+    - pf_tech
+_core:
+  default_config_hash: ydSxdq7R66I8UMC460rOzlfzvlUL4VRbdwc6z9DWaUI
+id: pf_tech_secondary_local_tasks
+theme: pf_tech
+region: header
+weight: -2
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Secondary tabs'
+  label_display: '0'
+  provider: core
+  primary: false
+  secondary: true
+visibility: {  }

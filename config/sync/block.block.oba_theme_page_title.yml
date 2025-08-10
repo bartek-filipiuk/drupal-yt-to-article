@@ -1,0 +1,20 @@
+uuid: ed1b80b4-7681-4567-a5d8-ef434545fa29
+langcode: en
+status: true
+dependencies:
+  theme:
+    - oba_theme
+_core:
+  default_config_hash: '-kFePOrNNGTH0yDJylnR8nxFOWVRDjeZL45e2T40BGk'
+id: oba_theme_page_title
+theme: oba_theme
+region: content
+weight: -7
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  label_display: '0'
+  provider: core
+visibility: {  }

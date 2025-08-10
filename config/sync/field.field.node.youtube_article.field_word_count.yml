@@ -1,0 +1,23 @@
+uuid: a51d0546-c967-4cf0-babc-85fdbc92869f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_word_count
+    - node.type.youtube_article
+id: node.youtube_article.field_word_count
+field_name: field_word_count
+entity_type: node
+bundle: youtube_article
+label: 'word count'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

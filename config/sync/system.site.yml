@@ -1,0 +1,15 @@
+_core:
+  default_config_hash: ijfbzDTN4CbE7Sr-6ubWzy_t1vH4OtU1doNCLssVz-4
+langcode: en
+uuid: dd2232ff-e03f-4e36-b92a-bd2a9457c5f7
+name: 'Agentic APIs'
+mail: filipiuk.bartek@gmail.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node/106
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: en
+mail_notification: null

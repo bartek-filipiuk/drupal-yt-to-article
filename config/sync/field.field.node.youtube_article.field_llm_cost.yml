@@ -1,0 +1,23 @@
+uuid: 698db2a3-659e-4c3a-9d5d-1d7f82fde9fe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_llm_cost
+    - node.type.youtube_article
+id: node.youtube_article.field_llm_cost
+field_name: field_llm_cost
+entity_type: node
+bundle: youtube_article
+label: 'llm cost'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

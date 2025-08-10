@@ -1,0 +1,23 @@
+uuid: 7cd0d98b-1c68-4670-9912-5cec9d8b6128
+langcode: en
+status: true
+dependencies:
+  module:
+    - search
+  theme:
+    - oba_theme
+_core:
+  default_config_hash: pZJwCQSdGGiGmCP4n_RANyzehzlWZaCabdGvwdqWeG8
+id: oba_theme_search_form_wide
+theme: oba_theme
+region: top_header_form
+weight: -7
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: 'Search form (wide)'
+  label_display: '0'
+  provider: search
+  page_id: null
+visibility: {  }

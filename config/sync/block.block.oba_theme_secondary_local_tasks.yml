@@ -1,0 +1,22 @@
+uuid: 4e0b7a97-631d-433e-823f-4e43417a100c
+langcode: en
+status: true
+dependencies:
+  theme:
+    - oba_theme
+_core:
+  default_config_hash: 64RRid5tQTbDnQ6lM8B8PDWqCJAjKY6QWsbKvQL8McU
+id: oba_theme_secondary_local_tasks
+theme: oba_theme
+region: content
+weight: -4
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Secondary tabs'
+  label_display: '0'
+  provider: core
+  primary: false
+  secondary: true
+visibility: {  }

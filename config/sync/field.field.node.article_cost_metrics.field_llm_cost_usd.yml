@@ -1,0 +1,25 @@
+uuid: 92a106e9-b0e1-44d5-91c0-edbea66ac4ca
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_llm_cost_usd
+    - node.type.article_cost_metrics
+_core:
+  default_config_hash: N-GrlgQyqUOD6RAE7_4K8_EZoqNKxmkpLzu96gS-tBM
+id: node.article_cost_metrics.field_llm_cost_usd
+field_name: field_llm_cost_usd
+entity_type: node
+bundle: article_cost_metrics
+label: 'LLM Cost (USD)'
+description: 'Cost of LLM API calls in USD.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: $
+  suffix: ''
+field_type: decimal

@@ -1,0 +1,22 @@
+uuid: 7bf3ca83-1c69-47b3-ae2a-dc50d9c2e93f
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: KG1omB1lRF9_O95w_Wyv-6etcZ85wSpTPEgSn_sMRM4
+id: node.field_llm_cost_usd
+field_name: field_llm_cost_usd
+entity_type: node
+type: decimal
+settings:
+  precision: 16
+  scale: 8
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

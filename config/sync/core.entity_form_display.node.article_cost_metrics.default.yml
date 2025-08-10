@@ -1,0 +1,95 @@
+uuid: b829744b-ea20-4459-8760-2bead63c8eb4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.article_cost_metrics.field_cost_breakdown_json
+    - field.field.node.article_cost_metrics.field_input_tokens
+    - field.field.node.article_cost_metrics.field_llm_cost_usd
+    - field.field.node.article_cost_metrics.field_llm_model
+    - field.field.node.article_cost_metrics.field_llm_provider
+    - field.field.node.article_cost_metrics.field_output_tokens
+    - field.field.node.article_cost_metrics.field_request_id
+    - field.field.node.article_cost_metrics.field_total_cost_usd
+    - node.type.article_cost_metrics
+  module:
+    - path
+id: node.article_cost_metrics.default
+targetEntityType: node
+bundle: article_cost_metrics
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_llm_model:
+    type: string_textfield
+    weight: 133
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_llm_provider:
+    type: string_textfield
+    weight: 134
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 15
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 120
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 16
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  field_cost_breakdown_json: true
+  field_input_tokens: true
+  field_llm_cost_usd: true
+  field_output_tokens: true
+  field_request_id: true
+  field_total_cost_usd: true

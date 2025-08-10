@@ -1,0 +1,25 @@
+uuid: 99e24adf-3ed6-477e-9e37-43da39410cda
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_total_cost_usd
+    - node.type.article_cost_metrics
+_core:
+  default_config_hash: kMt5SpUYlPAXqe6DPChbbMJgj3vLKVzachB83L-US2w
+id: node.article_cost_metrics.field_total_cost_usd
+field_name: field_total_cost_usd
+entity_type: node
+bundle: article_cost_metrics
+label: 'Total Cost (USD)'
+description: 'Total cost of article generation in USD.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: $
+  suffix: ''
+field_type: decimal

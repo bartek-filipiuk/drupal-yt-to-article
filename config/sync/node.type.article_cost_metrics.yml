@@ -1,0 +1,16 @@
+uuid: 0714ee25-15cb-4eb3-a1bb-b1c9c7368f74
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - yt_to_article_admin
+_core:
+  default_config_hash: GCCeatuUfjyf1RsZzKp91NHNrHag65uRYAF_pdwUc0s
+name: 'Article Cost Metrics'
+type: article_cost_metrics
+description: 'Stores cost metrics for YouTube to Article conversions.'
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: true

@@ -1,0 +1,20 @@
+uuid: 3f6a778c-bcc9-464c-a130-2456b2300513
+langcode: en
+status: true
+dependencies:
+  module:
+    - yt_to_article
+  theme:
+    - pf_tech
+id: pf_tech_yourrecentarticlessession
+theme: pf_tech
+region: sidebar_first
+weight: 0
+provider: null
+plugin: yt_to_article_anonymous_articles
+settings:
+  id: yt_to_article_anonymous_articles
+  label: 'Your Recent Articles (Session)'
+  label_display: visible
+  provider: yt_to_article
+visibility: {  }

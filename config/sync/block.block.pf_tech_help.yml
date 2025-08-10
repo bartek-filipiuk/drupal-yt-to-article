@@ -1,0 +1,22 @@
+uuid: 743f5ca5-0266-4249-af70-ef024493b740
+langcode: en
+status: false
+dependencies:
+  module:
+    - help
+  theme:
+    - pf_tech
+_core:
+  default_config_hash: VfPFqqxfkomud5CO8DUijw85QIl9GIxh_nIxLOYESxg
+id: pf_tech_help
+theme: pf_tech
+region: header
+weight: 0
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility: {  }

@@ -1,0 +1,22 @@
+uuid: 576beded-89ff-4d3b-a0d5-d67f6841befc
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: cvChoSKNUySkTAmgv5DaawjS-vfKtdfqQT6P_yukByA
+id: node.field_total_cost_usd
+field_name: field_total_cost_usd
+entity_type: node
+type: decimal
+settings:
+  precision: 16
+  scale: 8
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

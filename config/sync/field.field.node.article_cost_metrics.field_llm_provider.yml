@@ -1,0 +1,19 @@
+uuid: 7075a2f0-fc07-4b4b-9c3a-18f561acf0fe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_llm_provider
+    - node.type.article_cost_metrics
+id: node.article_cost_metrics.field_llm_provider
+field_name: field_llm_provider
+entity_type: node
+bundle: article_cost_metrics
+label: 'LLM Provider'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

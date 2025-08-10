@@ -1,0 +1,20 @@
+uuid: e4d34a13-eb5a-4739-b6ce-e48c8ae44920
+langcode: en
+status: true
+dependencies:
+  theme:
+    - pf_tech
+_core:
+  default_config_hash: Q9_2whdOj1YIomfvsIfopROW4FT_X5pY0DjdOiOaQ5U
+id: pf_tech_primary_admin_actions
+theme: pf_tech
+region: header
+weight: -4
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }

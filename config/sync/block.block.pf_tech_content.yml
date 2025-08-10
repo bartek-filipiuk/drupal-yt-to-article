@@ -1,0 +1,22 @@
+uuid: 524fca1d-df1e-4490-bca8-952d399dcbcf
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - pf_tech
+_core:
+  default_config_hash: erQSEZF2XUjNmgTl0uNRBzmg18ZGXwUcw2FhApoeuHk
+id: pf_tech_content
+theme: pf_tech
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }

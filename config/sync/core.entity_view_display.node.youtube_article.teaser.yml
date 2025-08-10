@@ -1,0 +1,56 @@
+uuid: 18fdbfe7-75b8-441c-8cf0-7013d1151727
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.youtube_article.body
+    - field.field.node.youtube_article.field_accuracy_score
+    - field.field.node.youtube_article.field_cost_breakdown
+    - field.field.node.youtube_article.field_generation_time
+    - field.field.node.youtube_article.field_input_tokens
+    - field.field.node.youtube_article.field_llm_calls
+    - field.field.node.youtube_article.field_llm_cost
+    - field.field.node.youtube_article.field_llm_model
+    - field.field.node.youtube_article.field_output_tokens
+    - field.field.node.youtube_article.field_request_id
+    - field.field.node.youtube_article.field_total_cost
+    - field.field.node.youtube_article.field_transcription_cost
+    - field.field.node.youtube_article.field_video_url
+    - field.field.node.youtube_article.field_word_count
+    - node.type.youtube_article
+  module:
+    - text
+    - user
+id: node.youtube_article.teaser
+targetEntityType: node
+bundle: youtube_article
+mode: teaser
+content:
+  body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_accuracy_score: true
+  field_cost_breakdown: true
+  field_generation_time: true
+  field_input_tokens: true
+  field_llm_calls: true
+  field_llm_cost: true
+  field_llm_model: true
+  field_output_tokens: true
+  field_request_id: true
+  field_total_cost: true
+  field_transcription_cost: true
+  field_video_url: true
+  field_word_count: true

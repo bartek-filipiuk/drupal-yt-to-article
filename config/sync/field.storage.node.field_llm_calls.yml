@@ -1,0 +1,20 @@
+uuid: 4692998c-538d-4c50-8b7f-2a2c583a84e1
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_llm_calls
+field_name: field_llm_calls
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

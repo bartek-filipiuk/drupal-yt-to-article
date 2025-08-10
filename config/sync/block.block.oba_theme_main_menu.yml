@@ -1,0 +1,27 @@
+uuid: c80f4b51-80a7-4cb6-8a65-acaeae8fefdb
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - oba_theme
+_core:
+  default_config_hash: SDkSKPTQGUxxiyDdghWr8r4sbUPMjr2ge3nM_2RYxkY
+id: oba_theme_main_menu
+theme: oba_theme
+region: primary_menu
+weight: -6
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: 'Main navigation'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 2
+  expand_all_items: true
+visibility: {  }

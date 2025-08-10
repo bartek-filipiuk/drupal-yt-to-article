@@ -1,0 +1,23 @@
+uuid: 74a8445c-0922-4df0-87fe-c2fee3f0e676
+langcode: en
+status: false
+dependencies:
+  module:
+    - search
+  theme:
+    - pf_tech
+_core:
+  default_config_hash: pbbed0hdqGDF-_QWVVTWRAwgDIotFuAvWH5mWUZu0fA
+id: pf_tech_search_form_wide
+theme: pf_tech
+region: secondary_menu
+weight: -5
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: 'Search form (wide)'
+  label_display: '0'
+  provider: search
+  page_id: null
+visibility: {  }

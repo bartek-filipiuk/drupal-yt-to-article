@@ -1,0 +1,22 @@
+uuid: 874b1bc8-1147-42b0-9325-b5a2a4729c62
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - oba_theme
+_core:
+  default_config_hash: NAUFI6O7VR1xDPOiC9bG4b0cDu3bt-ouivD95Ql8hAA
+id: oba_theme_help
+theme: oba_theme
+region: highlighted
+weight: -2
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility: {  }

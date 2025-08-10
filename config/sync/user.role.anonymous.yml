@@ -1,0 +1,28 @@
+uuid: c9b9abaf-f3e4-4ca4-bb0e-9eb93c932364
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.full_html
+    - filter.format.restricted_html
+  module:
+    - comment
+    - contact
+    - filter
+    - search
+    - system
+    - yt_to_article
+_core:
+  default_config_hash: 6WavjUYXIegP9AAg2zXGx54MWIVoomC3SZhNiqe-Dyk
+id: anonymous
+label: 'Anonymous user'
+weight: 0
+is_admin: false
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'access site-wide contact form'
+  - 'access yt to article'
+  - 'search content'
+  - 'use text format full_html'
+  - 'use text format restricted_html'

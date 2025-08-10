@@ -1,0 +1,22 @@
+uuid: 21fdec6f-9545-4f8a-bd2c-57411be32cc5
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - pf_tech
+_core:
+  default_config_hash: eYL19CLDyinGTWYQfBD1DswWzglEotE_kHnHx3AxTXM
+id: pf_tech_powered
+theme: pf_tech
+region: footer_bottom
+weight: 0
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  label_display: '0'
+  provider: system
+visibility: {  }

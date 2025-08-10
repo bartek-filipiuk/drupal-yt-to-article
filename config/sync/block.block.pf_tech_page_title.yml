@@ -1,0 +1,37 @@
+uuid: e21aee2e-54ae-426b-b799-660d97e0e0ba
+langcode: en
+status: false
+dependencies:
+  module:
+    - node
+    - system
+  theme:
+    - pf_tech
+_core:
+  default_config_hash: 6aOgWsNTXjqrDm98TXSAjP6qd2nCijD1xw45MrnbK-Y
+id: pf_tech_page_title
+theme: pf_tech
+region: header
+weight: -5
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  label_display: '0'
+  provider: core
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: '<front>'
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      article: article
+      article_cost_metrics: article_cost_metrics
+      page: page
+      youtube_article: youtube_article

@@ -1,0 +1,25 @@
+uuid: 8c1cbe08-d2a8-443e-832d-184bef076a48
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - oba_theme
+_core:
+  default_config_hash: TyrFD5y7Fna4j4HqXxdvLQkBx9AUGYdQv3Tml2_eA8w
+id: oba_theme_site_branding
+theme: oba_theme
+region: header
+weight: -7
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Site branding'
+  label_display: '0'
+  provider: system
+  use_site_logo: true
+  use_site_name: true
+  use_site_slogan: false
+visibility: {  }

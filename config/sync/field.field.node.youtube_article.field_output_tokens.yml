@@ -1,0 +1,23 @@
+uuid: db47a18b-1a4d-48e6-82cc-42fad3e8c1fe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_output_tokens
+    - node.type.youtube_article
+id: node.youtube_article.field_output_tokens
+field_name: field_output_tokens
+entity_type: node
+bundle: youtube_article
+label: 'output tokens'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

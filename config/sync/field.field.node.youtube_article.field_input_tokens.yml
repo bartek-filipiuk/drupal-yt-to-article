@@ -1,0 +1,23 @@
+uuid: 12116d89-8eed-4adc-8736-1f5cf441e54a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_input_tokens
+    - node.type.youtube_article
+id: node.youtube_article.field_input_tokens
+field_name: field_input_tokens
+entity_type: node
+bundle: youtube_article
+label: 'input tokens'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

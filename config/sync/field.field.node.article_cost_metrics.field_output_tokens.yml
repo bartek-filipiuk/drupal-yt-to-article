@@ -1,0 +1,25 @@
+uuid: c79b912a-7fec-40f0-8f73-4eb088fbdb3e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_output_tokens
+    - node.type.article_cost_metrics
+_core:
+  default_config_hash: _drDsyng18sncmSmlsf-NTMYzo8XXCIyu7wu94ANxEg
+id: node.article_cost_metrics.field_output_tokens
+field_name: field_output_tokens
+entity_type: node
+bundle: article_cost_metrics
+label: 'Output Tokens'
+description: 'Number of output tokens generated.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ' tokens'
+field_type: integer

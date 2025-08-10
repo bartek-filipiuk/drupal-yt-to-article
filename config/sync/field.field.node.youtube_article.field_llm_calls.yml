@@ -1,0 +1,23 @@
+uuid: 576b35e6-bf97-43d7-a2ee-b46773e77faf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_llm_calls
+    - node.type.youtube_article
+id: node.youtube_article.field_llm_calls
+field_name: field_llm_calls
+entity_type: node
+bundle: youtube_article
+label: 'llm calls'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

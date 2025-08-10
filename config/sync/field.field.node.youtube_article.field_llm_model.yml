@@ -1,0 +1,19 @@
+uuid: e63b4fc7-3a78-4821-89dd-cb7fdbc7c1de
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_llm_model
+    - node.type.youtube_article
+id: node.youtube_article.field_llm_model
+field_name: field_llm_model
+entity_type: node
+bundle: youtube_article
+label: 'LLM Model'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

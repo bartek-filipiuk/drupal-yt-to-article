@@ -1,0 +1,22 @@
+uuid: 62a9ca02-4480-45dc-9e36-5c8e6618931a
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - oba_theme
+_core:
+  default_config_hash: re6-VpnvbPOQDl2AR18tCeTmBoJzFlN_wIhBv4YTJ9U
+id: oba_theme_breadcrumbs
+theme: oba_theme
+region: breadcrumb
+weight: 0
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  label_display: '0'
+  provider: system
+visibility: {  }

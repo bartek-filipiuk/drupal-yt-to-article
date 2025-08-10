@@ -1,0 +1,20 @@
+uuid: 9d57e6a1-4d9a-45c8-915a-8d9884b302b3
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_transcription_cost
+field_name: field_transcription_cost
+entity_type: node
+type: decimal
+settings:
+  precision: 10
+  scale: 4
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,21 @@
+uuid: c366e7f9-a03b-43be-ad7d-95dd7a95dc68
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+_core:
+  default_config_hash: VpoMMZR0uWoJWe8TUpdnF83opog_B7LUgXn07wiu_oo
+id: node.field_cost_breakdown_json
+field_name: field_cost_breakdown_json
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

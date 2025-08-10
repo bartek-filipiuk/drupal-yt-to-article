@@ -1,0 +1,22 @@
+uuid: 3c391949-d39d-4576-9b47-09b7e6f402cd
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - oba_theme
+_core:
+  default_config_hash: kdHf2twwd6N20BtstWF47F47aNdtfj8Tw9q7QT6WzEk
+id: oba_theme_powered
+theme: oba_theme
+region: footer_fifth
+weight: -7
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  label_display: '0'
+  provider: system
+visibility: {  }

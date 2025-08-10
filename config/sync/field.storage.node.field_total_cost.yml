@@ -1,0 +1,20 @@
+uuid: 13fb3875-c12f-46b6-bea5-25b6fd658abe
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_total_cost
+field_name: field_total_cost
+entity_type: node
+type: decimal
+settings:
+  precision: 16
+  scale: 8
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

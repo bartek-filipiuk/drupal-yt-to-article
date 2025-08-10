@@ -1,0 +1,19 @@
+uuid: 74b162a4-1088-4f49-aa52-3df4d204ba6e
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_cost_breakdown
+field_name: field_cost_breakdown
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

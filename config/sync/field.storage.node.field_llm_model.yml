@@ -1,0 +1,21 @@
+uuid: 00572cf4-6b23-442c-82bc-945f3035eed2
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_llm_model
+field_name: field_llm_model
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

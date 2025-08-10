@@ -1,0 +1,23 @@
+uuid: 29dad1c8-06b4-4e9b-981e-0d3b53e1399a
+langcode: en
+status: true
+dependencies:
+  module:
+    - search
+  theme:
+    - oba_theme
+_core:
+  default_config_hash: SpbQPlIYonaqjYo5Rt5QDNQqWW1KEICzVu7ljZXBlqo
+id: oba_theme_search_form_narrow
+theme: oba_theme
+region: sidebar_first
+weight: -7
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: 'Search form (narrow)'
+  label_display: '0'
+  provider: search
+  page_id: null
+visibility: {  }

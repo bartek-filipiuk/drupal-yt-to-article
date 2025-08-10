@@ -1,0 +1,22 @@
+uuid: ad0889e3-4aaf-49aa-a5ca-fac9466f22ed
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - oba_theme
+_core:
+  default_config_hash: jhIC81rnzVJHX5AYIAKYKqS7BiJ3CkdyrMsnLUlJMLE
+id: oba_theme_messages
+theme: oba_theme
+region: highlighted
+weight: -6
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  label_display: '0'
+  provider: system
+visibility: {  }

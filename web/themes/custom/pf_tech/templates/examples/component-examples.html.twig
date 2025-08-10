@@ -1,0 +1,301 @@
+{#
+/**
+ * @file
+ * Example Tailwind component patterns for PF Tech theme.
+ * 
+ * Copy and paste these patterns into your templates!
+ */
+#}
+
+{# HERO BANNER VARIATIONS #}
+
+{# 1. Gradient Hero with CTA #}
+<section class="relative overflow-hidden">
+  <div class="bg-gradient-to-br from-drupal-primary via-drupal-secondary to-purple-600 py-24 px-6">
+    <div class="drupal-container text-center text-white relative z-10">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
+        Welcome to Our Platform
+      </h1>
+      <p class="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto">
+        Build amazing things with our powerful tools and resources
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#" class="px-8 py-3 bg-white text-drupal-primary rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105">
+          Get Started
+        </a>
+        <a href="#" class="px-8 py-3 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-drupal-primary transition-all">
+          Learn More
+        </a>
+      </div>
+    </div>
+    {# Decorative elements #}
+    <div class="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-white opacity-5 rounded-full"></div>
+    <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-60 h-60 bg-white opacity-5 rounded-full"></div>
+  </div>
+</section>
+
+{# 2. Image Background Hero #}
+<section class="relative h-[500px] flex items-center justify-center">
+  <div class="absolute inset-0">
+    <img src="/path/to/hero-image.jpg" alt="Hero background" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+  </div>
+  <div class="relative z-10 text-center text-white px-6">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">Stunning Visual Impact</h1>
+    <p class="text-xl mb-8 max-w-2xl mx-auto">Create beautiful experiences with our theme</p>
+    <a href="#" class="drupal-button">Explore Now</a>
+  </div>
+</section>
+
+{# CONTENT CARDS #}
+
+{# 1. Blog Post Card #}
+<article class="group bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden">
+  <div class="aspect-w-16 aspect-h-9 overflow-hidden">
+    <img src="/path/to/image.jpg" alt="Post thumbnail" 
+         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+  </div>
+  <div class="p-6">
+    <div class="flex items-center gap-4 text-sm text-drupal-muted mb-3">
+      <span>Jan 15, 2024</span>
+      <span>•</span>
+      <span>5 min read</span>
+    </div>
+    <h3 class="text-2xl font-bold mb-3 group-hover:text-drupal-primary transition-colors">
+      Article Title Goes Here
+    </h3>
+    <p class="text-drupal-muted mb-4">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt...
+    </p>
+    <a href="#" class="inline-flex items-center text-drupal-primary hover:text-drupal-secondary transition-colors">
+      Read more 
+      <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+    </a>
+  </div>
+</article>
+
+{# 2. Feature Card with Icon #}
+<div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow text-center">
+  <div class="w-16 h-16 bg-drupal-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+    <svg class="w-8 h-8 text-drupal-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+    </svg>
+  </div>
+  <h3 class="text-xl font-semibold mb-2">Lightning Fast</h3>
+  <p class="text-drupal-muted">
+    Optimized for speed and performance with modern best practices
+  </p>
+</div>
+
+{# FORMS #}
+
+{# 1. Contact Form #}
+<form class="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+  <h2 class="text-2xl font-bold mb-6">Get in Touch</h2>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+    <div>
+      <label class="drupal-field-label">First Name</label>
+      <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-drupal-primary focus:border-transparent transition-all">
+    </div>
+    <div>
+      <label class="drupal-field-label">Last Name</label>
+      <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-drupal-primary focus:border-transparent transition-all">
+    </div>
+  </div>
+  
+  <div class="mb-6">
+    <label class="drupal-field-label">Email</label>
+    <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-drupal-primary focus:border-transparent transition-all">
+  </div>
+  
+  <div class="mb-6">
+    <label class="drupal-field-label">Message</label>
+    <textarea rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-drupal-primary focus:border-transparent transition-all"></textarea>
+  </div>
+  
+  <button type="submit" class="drupal-button w-full md:w-auto">
+    Send Message
+  </button>
+</form>
+
+{# NAVIGATION #}
+
+{# 1. Tab Navigation #}
+<div class="border-b border-gray-200">
+  <nav class="flex space-x-8" aria-label="Tabs">
+    <a href="#" class="py-4 px-1 border-b-2 border-drupal-primary text-drupal-primary text-sm font-medium">
+      Overview
+    </a>
+    <a href="#" class="py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 text-sm font-medium transition-colors">
+      Details
+    </a>
+    <a href="#" class="py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 text-sm font-medium transition-colors">
+      Reviews
+    </a>
+  </nav>
+</div>
+
+{# ALERTS & MESSAGES #}
+
+{# 1. Success Alert #}
+<div class="bg-green-50 border-l-4 border-green-400 p-4 rounded-lg flex items-start gap-3">
+  <svg class="w-5 h-5 text-green-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+  </svg>
+  <div>
+    <h3 class="text-sm font-medium text-green-800">Success!</h3>
+    <p class="text-sm text-green-700 mt-1">Your changes have been saved successfully.</p>
+  </div>
+</div>
+
+{# PRICING CARDS #}
+
+{# 1. Pricing Table #}
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+  {# Basic Plan #}
+  <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+    <div class="p-8">
+      <h3 class="text-xl font-semibold mb-2">Basic</h3>
+      <p class="text-drupal-muted mb-6">Perfect for getting started</p>
+      <div class="mb-6">
+        <span class="text-4xl font-bold">$9</span>
+        <span class="text-drupal-muted">/month</span>
+      </div>
+      <ul class="space-y-3 mb-8">
+        <li class="flex items-center">
+          <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          10 Projects
+        </li>
+        <li class="flex items-center">
+          <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          Basic Support
+        </li>
+      </ul>
+      <button class="w-full py-3 border-2 border-drupal-primary text-drupal-primary rounded-lg font-semibold hover:bg-drupal-primary hover:text-white transition-all">
+        Get Started
+      </button>
+    </div>
+  </div>
+  
+  {# Pro Plan - Featured #}
+  <div class="bg-drupal-primary text-white rounded-xl shadow-xl overflow-hidden transform scale-105">
+    <div class="p-8">
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="text-xl font-semibold">Pro</h3>
+        <span class="bg-white text-drupal-primary text-xs font-semibold px-3 py-1 rounded-full">Popular</span>
+      </div>
+      <p class="opacity-90 mb-6">Best for professionals</p>
+      <div class="mb-6">
+        <span class="text-4xl font-bold">$29</span>
+        <span class="opacity-90">/month</span>
+      </div>
+      <ul class="space-y-3 mb-8">
+        <li class="flex items-center">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          Unlimited Projects
+        </li>
+        <li class="flex items-center">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          Priority Support
+        </li>
+      </ul>
+      <button class="w-full py-3 bg-white text-drupal-primary rounded-lg font-semibold hover:bg-gray-100 transition-all">
+        Get Started
+      </button>
+    </div>
+  </div>
+</div>
+
+{# TESTIMONIALS #}
+
+{# 1. Testimonial Card #}
+<div class="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+  <div class="flex items-start gap-1 mb-4">
+    {% for i in 1..5 %}
+      <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+      </svg>
+    {% endfor %}
+  </div>
+  <blockquote class="text-lg text-drupal-text mb-6">
+    "This theme has completely transformed how we build Drupal sites. The Tailwind integration is seamless and the components are beautiful!"
+  </blockquote>
+  <div class="flex items-center gap-4">
+    <img src="/path/to/avatar.jpg" alt="John Doe" class="w-12 h-12 rounded-full">
+    <div>
+      <div class="font-semibold">John Doe</div>
+      <div class="text-sm text-drupal-muted">CEO, TechCorp</div>
+    </div>
+  </div>
+</div>
+
+{# CALL TO ACTION #}
+
+{# 1. CTA Section #}
+<section class="bg-drupal-surface py-16 px-6 rounded-2xl">
+  <div class="text-center max-w-3xl mx-auto">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Get Started?</h2>
+    <p class="text-xl text-drupal-muted mb-8">
+      Join thousands of developers building amazing experiences with our theme
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#" class="drupal-button">Start Free Trial</a>
+      <a href="#" class="px-6 py-3 text-drupal-primary hover:text-drupal-secondary transition-colors">
+        View Documentation →
+      </a>
+    </div>
+  </div>
+</section>
+
+{# FOOTER #}
+
+{# 1. Modern Footer #}
+<footer class="bg-gray-900 text-gray-300">
+  <div class="drupal-container py-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <h3 class="text-white font-semibold mb-4">About</h3>
+        <p class="text-sm">Building modern Drupal experiences with Tailwind CSS.</p>
+      </div>
+      <div>
+        <h3 class="text-white font-semibold mb-4">Quick Links</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Components</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Examples</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-white font-semibold mb-4">Resources</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Support</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-white font-semibold mb-4">Newsletter</h3>
+        <form class="flex gap-2">
+          <input type="email" placeholder="Your email" class="px-3 py-2 bg-gray-800 rounded-lg flex-1 text-sm focus:outline-none focus:ring-2 focus:ring-drupal-primary">
+          <button type="submit" class="px-4 py-2 bg-drupal-primary text-white rounded-lg hover:bg-drupal-secondary transition-colors">
+            Subscribe
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
+      <p>&copy; 2024 PF Tech. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,151 @@
+/**
+ * Utility Classes
+ * Single-purpose classes for common styling needs
+ */
+
+/* Spacing Utilities */
+.u-mt-0 { margin-top: 0 !important; }
+.u-mt-xs { margin-top: var(--pf-space-xs, 0.25rem) !important; }
+.u-mt-sm { margin-top: var(--pf-space-sm, 0.5rem) !important; }
+.u-mt-md { margin-top: var(--pf-space-md, 1rem) !important; }
+.u-mt-lg { margin-top: var(--pf-space-lg, 1.5rem) !important; }
+.u-mt-xl { margin-top: var(--pf-space-xl, 2rem) !important; }
+.u-mt-2xl { margin-top: var(--pf-space-2xl, 3rem) !important; }
+
+.u-mb-0 { margin-bottom: 0 !important; }
+.u-mb-xs { margin-bottom: var(--pf-space-xs, 0.25rem) !important; }
+.u-mb-sm { margin-bottom: var(--pf-space-sm, 0.5rem) !important; }
+.u-mb-md { margin-bottom: var(--pf-space-md, 1rem) !important; }
+.u-mb-lg { margin-bottom: var(--pf-space-lg, 1.5rem) !important; }
+.u-mb-xl { margin-bottom: var(--pf-space-xl, 2rem) !important; }
+.u-mb-2xl { margin-bottom: var(--pf-space-2xl, 3rem) !important; }
+
+.u-my-0 { margin-top: 0 !important; margin-bottom: 0 !important; }
+.u-my-sm { margin-top: var(--pf-space-sm, 0.5rem) !important; margin-bottom: var(--pf-space-sm, 0.5rem) !important; }
+.u-my-md { margin-top: var(--pf-space-md, 1rem) !important; margin-bottom: var(--pf-space-md, 1rem) !important; }
+.u-my-lg { margin-top: var(--pf-space-lg, 1.5rem) !important; margin-bottom: var(--pf-space-lg, 1.5rem) !important; }
+
+.u-p-0 { padding: 0 !important; }
+.u-p-xs { padding: var(--pf-space-xs, 0.25rem) !important; }
+.u-p-sm { padding: var(--pf-space-sm, 0.5rem) !important; }
+.u-p-md { padding: var(--pf-space-md, 1rem) !important; }
+.u-p-lg { padding: var(--pf-space-lg, 1.5rem) !important; }
+.u-p-xl { padding: var(--pf-space-xl, 2rem) !important; }
+
+/* Typography Utilities */
+.u-text-xs { font-size: var(--pf-font-size-xs, 0.75rem) !important; }
+.u-text-sm { font-size: var(--pf-font-size-sm, 0.875rem) !important; }
+.u-text-base { font-size: var(--pf-font-size-base, 1rem) !important; }
+.u-text-lg { font-size: var(--pf-font-size-lg, 1.125rem) !important; }
+.u-text-xl { font-size: var(--pf-font-size-xl, 1.25rem) !important; }
+.u-text-2xl { font-size: var(--pf-font-size-2xl, 1.5rem) !important; }
+.u-text-3xl { font-size: var(--pf-font-size-3xl, 2rem) !important; }
+
+.u-text-muted { color: var(--pf-muted) !important; }
+.u-text-primary { color: var(--pf-primary) !important; }
+.u-text-danger { color: var(--pf-danger) !important; }
+.u-text-success { color: var(--pf-success) !important; }
+
+.u-text-left { text-align: left !important; }
+.u-text-center { text-align: center !important; }
+.u-text-right { text-align: right !important; }
+
+.u-font-normal { font-weight: 400 !important; }
+.u-font-medium { font-weight: 500 !important; }
+.u-font-semibold { font-weight: 600 !important; }
+.u-font-bold { font-weight: 700 !important; }
+
+/* Display Utilities */
+.u-hidden { display: none !important; }
+.u-block { display: block !important; }
+.u-inline-block { display: inline-block !important; }
+.u-flex { display: flex !important; }
+.u-inline-flex { display: inline-flex !important; }
+
+/* Flexbox Utilities */
+.u-flex-row { flex-direction: row !important; }
+.u-flex-col { flex-direction: column !important; }
+.u-flex-wrap { flex-wrap: wrap !important; }
+.u-items-center { align-items: center !important; }
+.u-items-start { align-items: flex-start !important; }
+.u-items-end { align-items: flex-end !important; }
+.u-justify-center { justify-content: center !important; }
+.u-justify-between { justify-content: space-between !important; }
+.u-justify-around { justify-content: space-around !important; }
+.u-gap-sm { gap: var(--pf-space-sm, 0.5rem) !important; }
+.u-gap-md { gap: var(--pf-space-md, 1rem) !important; }
+.u-gap-lg { gap: var(--pf-space-lg, 1.5rem) !important; }
+
+/* Width Utilities */
+.u-w-full { width: 100% !important; }
+.u-w-auto { width: auto !important; }
+.u-max-w-full { max-width: 100% !important; }
+.u-max-w-content { max-width: var(--pf-max-content) !important; }
+.u-max-w-narrow { max-width: var(--pf-content-narrow, 65ch) !important; }
+
+/* Border Utilities */
+.u-border { border: 1px solid var(--pf-border) !important; }
+.u-border-top { border-top: 1px solid var(--pf-border) !important; }
+.u-border-bottom { border-bottom: 1px solid var(--pf-border) !important; }
+.u-border-0 { border: 0 !important; }
+.u-rounded { border-radius: var(--pf-radius-md, 0.5rem) !important; }
+.u-rounded-sm { border-radius: var(--pf-radius-sm, 0.25rem) !important; }
+.u-rounded-lg { border-radius: var(--pf-radius-lg, 0.75rem) !important; }
+.u-rounded-full { border-radius: 9999px !important; }
+
+/* Background Utilities */
+.u-bg-surface { background-color: var(--pf-surface) !important; }
+.u-bg-primary { background-color: var(--pf-primary) !important; }
+.u-bg-transparent { background-color: transparent !important; }
+
+/* Shadow Utilities */
+.u-shadow-sm { box-shadow: var(--pf-shadow-sm, 0 1px 2px rgba(0,0,0,0.05)) !important; }
+.u-shadow-md { box-shadow: var(--pf-shadow-md, 0 4px 6px rgba(0,0,0,0.07)) !important; }
+.u-shadow-lg { box-shadow: var(--pf-shadow-lg, 0 10px 15px rgba(0,0,0,0.1)) !important; }
+.u-shadow-none { box-shadow: none !important; }
+
+/* Overflow Utilities */
+.u-overflow-hidden { overflow: hidden !important; }
+.u-overflow-auto { overflow: auto !important; }
+.u-overflow-visible { overflow: visible !important; }
+
+/* Position Utilities */
+.u-relative { position: relative !important; }
+.u-absolute { position: absolute !important; }
+.u-fixed { position: fixed !important; }
+.u-sticky { position: sticky !important; }
+
+/* Aspect Ratio Utilities */
+.u-aspect-video {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+}
+.u-aspect-video > * {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+  .u-hidden-mobile { display: none !important; }
+}
+
+@media (min-width: 769px) {
+  .u-hidden-desktop { display: none !important; }
+}
+
+/* Accessibility */
+.u-sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}

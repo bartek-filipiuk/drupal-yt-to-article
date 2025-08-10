@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_llm_cost_usd
+    - node.type.article_cost_metrics
+id: node.article_cost_metrics.field_llm_cost_usd
+field_name: field_llm_cost_usd
+entity_type: node
+bundle: article_cost_metrics
+label: 'LLM Cost (USD)'
+description: 'Cost of LLM API calls in USD.'
+required: false
+translatable: false
+default_value: []
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: '$'
+  suffix: ''
+field_type: decimal

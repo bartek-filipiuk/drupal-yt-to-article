@@ -1,0 +1,99 @@
+:root {
+  --pf-bg: #ffffff;
+  --pf-surface: #f8f9fb;
+  --pf-border: #e6e8ef;
+  --pf-text: #0f172a;
+  --pf-muted: #6b7280;
+  --pf-primary: #00bcd4;
+  --pf-primary-strong: #00acc1;
+  --pf-link: #0ea5e9;
+  --pf-success: #22c55e;
+  --pf-warning: #f59e0b;
+  --pf-danger: #ef4444;
+  --pf-code-bg: #0f1115;
+  --pf-code-text: #e5e7eb;
+  --pf-max-content: 880px;
+}
+
+/* Dark mode defaults, will be activated in dark.css using prefers-color-scheme */
+html, body {
+  background-color: var(--pf-bg);
+  color: var(--pf-text);
+  font-family: Inter, "IBM Plex Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+a {
+  color: var(--pf-link);
+  text-decoration: none;
+}
+a:hover, a:focus {
+  text-decoration: underline;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+code, pre, kbd, samp {
+  font-family: "JetBrains Mono", "Fira Code", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+pre, code {
+  background: var(--pf-code-bg);
+  color: var(--pf-code-text);
+  border-radius: .375rem;
+}
+
+pre {
+  padding: 1rem;
+  overflow: auto;
+  margin: 1rem 0;
+}
+
+code {
+  padding: .125rem .375rem;
+}
+
+/* Headings scale optimized for docs */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--pf-text);
+  font-weight: 650;
+  line-height: 1.3;
+  margin-top: 1.5rem;
+  margin-bottom: .75rem;
+}
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; margin-top: 2rem; }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1.125rem; }
+h5 { font-size: 1rem; }
+h6 { font-size: .875rem; color: var(--pf-muted); }
+
+.pf-content {
+  max-width: var(--pf-max-content);
+  margin-inline: auto;
+}
+
+/* Buttons and links */
+.btn-primary, .button.button--primary {
+  background-color: var(--pf-primary);
+  border-color: var(--pf-primary-strong);
+}
+.btn-primary:hover, .button.button--primary:hover {
+  background-color: var(--pf-primary-strong);
+  border-color: var(--pf-primary-strong);
+}
+
+/* Alerts/messages */
+.alert, .messages {
+  border-radius: .5rem;
+}
+
+/* Utilities */
+.pf-muted { color: var(--pf-muted) !important; }
+.pf-border { border-color: var(--pf-border) !important; }
+.pf-surface { background: var(--pf-surface) !important; }

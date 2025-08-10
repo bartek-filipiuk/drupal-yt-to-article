@@ -1,0 +1,43 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pf-bg: #0f1115;
+    --pf-surface: #151823;
+    --pf-border: #232736;
+    --pf-text: #e5e7eb;
+    --pf-muted: #9aa3b2;
+    --pf-primary: #00bcd4;
+    --pf-primary-strong: #00acc1;
+    --pf-link: #38bdf8;
+    --pf-success: #22c55e;
+    --pf-warning: #f59e0b;
+    --pf-danger: #ef4444;
+    --pf-code-bg: #0b0d12;
+    --pf-code-text: #e5e7eb;
+    --pf-max-content: 880px;
+  }
+  body, html {
+    background: var(--pf-bg);
+    color: var(--pf-text);
+  }
+  .pf-card, .card {
+    background: #0f1115;
+    border-color: var(--pf-border);
+  }
+  .site-footer, header.site-header {
+    background: var(--pf-surface);
+    border-color: var(--pf-border);
+  }
+  .form-control, input[type="text"], input[type="url"], textarea, select {
+    background: #0f1115;
+    color: var(--pf-text);
+    border-color: var(--pf-border);
+  }
+  .breadcrumb {
+    color: var(--pf-muted);
+  }
+  .pf-log {
+    background: var(--pf-code-bg);
+    color: var(--pf-code-text);
+    border-color: var(--pf-border);
+  }
+}

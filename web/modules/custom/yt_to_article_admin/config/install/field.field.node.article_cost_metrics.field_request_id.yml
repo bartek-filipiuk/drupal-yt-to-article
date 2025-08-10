@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_request_id
+    - node.type.article_cost_metrics
+id: node.article_cost_metrics.field_request_id
+field_name: field_request_id
+entity_type: node
+bundle: article_cost_metrics
+label: 'Request ID'
+description: 'Unique identifier for the article request.'
+required: true
+translatable: false
+default_value: []
+default_value_callback: ''
+settings: {}
+field_type: string

@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * YT to Article Admin module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function yt_to_article_admin_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.yt_to_article_admin':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The YT to Article Admin module tracks cost metrics for YouTube to Article conversions.') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function yt_to_article_admin_theme() {
+  return [
+    'yt_article_cost_report' => [
+      'variables' => [
+        'summary' => [],
+        'recent_articles' => [],
+        'chart_data' => [],
+      ],
+      'template' => 'yt-article-cost-report',
+    ],
+  ];
+}

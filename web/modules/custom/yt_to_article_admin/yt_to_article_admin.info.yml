@@ -1,0 +1,11 @@
+name: 'YT to Article Admin'
+type: module
+description: 'Tracks cost metrics for YouTube to Article conversions.'
+package: Custom
+core_version_requirement: ^11
+dependencies:
+  - drupal:node
+  - drupal:field
+  - drupal:datetime
+  - drupal:link
+  - drupal:text

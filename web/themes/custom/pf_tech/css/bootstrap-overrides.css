@@ -1,0 +1,164 @@
+/**
+ * @file
+ * Bootstrap Barrio overrides for PF Tech theme.
+ *
+ * This file contains overrides for Bootstrap Barrio styles that conflict
+ * with our Tailwind-based approach or cause layout issues.
+ */
+
+/*
+ * Fix Bootstrap Barrio's fixed positioning for status messages
+ * The parent theme positions messages fixed at bottom-left, but we want them inline
+ */
+.alert-wrapper {
+  position: static !important;
+  bottom: auto !important;
+  left: auto !important;
+  width: auto !important;
+  max-height: none !important;
+  z-index: auto !important;
+}
+
+/* Reset any Bootstrap alert styles that conflict with our design */
+.alert-wrapper .alert {
+  margin-bottom: 1rem !important;
+  overflow-y: visible !important;
+}
+
+/* Remove the SVG icons from Bootstrap Barrio alerts if they cause issues */
+.alert-wrapper svg {
+  display: none;
+}
+
+/* Toast wrapper should remain fixed for actual toasts */
+.toast-wrapper {
+  /* Keep original positioning for actual toast notifications */
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+}
+
+/*
+ * Drupal Messages with Tailwind-friendly styling
+ * These styles work with both .messages and .alert classes
+ */
+.messages,
+.alert {
+  @apply relative w-full p-4 mb-4 rounded-lg border;
+}
+
+/* Status/Success messages */
+.messages--status,
+.alert-success {
+  @apply bg-green-50 border-green-200 text-green-800;
+}
+
+.messages--status::before,
+.alert-success::before {
+  @apply inline-flex items-center justify-center w-5 h-5 mr-2 text-white bg-green-500 rounded-full text-xs font-bold;
+}
+
+/* Warning messages */
+.messages--warning,
+.alert-warning {
+  @apply bg-yellow-50 border-yellow-200 text-yellow-800;
+}
+
+.messages--warning::before,
+.alert-warning::before {
+  content: "!";
+  @apply inline-flex items-center justify-center w-5 h-5 mr-2 text-white bg-yellow-500 rounded-full text-xs font-bold;
+}
+
+/* Error messages */
+.messages--error,
+.alert-danger {
+  @apply bg-red-50 border-red-200 text-red-800;
+}
+
+.messages--error::before,
+.alert-danger::before {
+  content: "✕";
+  @apply inline-flex items-center justify-center w-5 h-5 mr-2 text-white bg-red-500 rounded-full text-xs font-bold;
+}
+
+/* Info messages */
+.messages--info,
+.alert-info {
+  @apply bg-blue-50 border-blue-200 text-blue-800;
+}
+
+.messages--info::before,
+.alert-info::before {
+  content: "i";
+  @apply inline-flex items-center justify-center w-5 h-5 mr-2 text-white bg-blue-500 rounded-full text-xs font-bold;
+}
+
+/* Message close button styling */
+.messages .btn-close,
+.alert .btn-close {
+  @apply absolute top-4 right-4 p-0 bg-transparent border-0 text-current opacity-50 hover:opacity-100 transition-opacity;
+}
+
+/* Hide redundant alert headings */
+.alert-heading,
+.messages h2 {
+  @apply sr-only;
+}
+
+/* Message list styling */
+.messages__list {
+  @apply list-none p-0 m-0;
+}
+
+.messages__item {
+  @apply block;
+}
+
+/* Multiple messages in one alert */
+.messages hr,
+.alert hr {
+  @apply my-2 border-t border-current opacity-25;
+}
+
+/* Ensure messages appear in the correct place in the page flow */
+[data-drupal-messages],
+[data-drupal-messages-fallback] {
+  @apply block w-full;
+}
+
+/* Animation for message appearance */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.messages,
+.alert {
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Focus styles for accessibility */
+.messages:focus,
+.alert:focus {
+  @apply outline-none ring-2 ring-offset-2 ring-blue-500;
+}
+
+/* Print styles */
+@media print {
+  .messages,
+  .alert {
+    @apply border-2 !important;
+  }
+
+  .btn-close {
+    @apply hidden !important;
+  }
+}

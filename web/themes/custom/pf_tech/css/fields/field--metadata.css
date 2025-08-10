@@ -1,0 +1,219 @@
+/**
+ * Metadata Field Styles
+ * Reusable styles for metadata fields (date, author, etc.)
+ */
+
+/* Base metadata container */
+.node__meta,
+.field--metadata,
+.content-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pf-space-md, 1rem);
+  align-items: center;
+  font-size: var(--pf-font-size-sm, 0.875rem);
+  color: var(--pf-muted);
+}
+
+/* Date fields */
+.field--name-created,
+.field--name-changed,
+.field--type-created,
+.field--type-changed,
+.field--type-datetime,
+[class*="field--name-field-"][class*="-date"],
+.node__submitted time {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pf-space-xs, 0.25rem);
+  color: var(--pf-muted);
+}
+
+.field--type-datetime::before,
+.field--name-created::before,
+.node__submitted time::before {
+  content: "📅";
+  font-size: 1.1em;
+  opacity: 0.7;
+}
+
+/* Author fields */
+.field--name-uid,
+.field--type-entity-reference.field--label-author,
+.node__submitted .username,
+[class*="field--name-field-"][class*="-author"] {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pf-space-xs, 0.25rem);
+}
+
+.field--name-uid a,
+.field--type-entity-reference.field--label-author a,
+.node__submitted .username {
+  color: var(--pf-text);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.field--name-uid a:hover,
+.field--type-entity-reference.field--label-author a:hover,
+.node__submitted .username:hover {
+  color: var(--pf-primary);
+  text-decoration: underline;
+}
+
+.field--name-uid::before,
+.node__submitted .username::before {
+  content: "✍️";
+  font-size: 1.1em;
+  opacity: 0.7;
+}
+
+/* Reading time field */
+.field--name-field-reading-time,
+.reading-time {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pf-space-xs, 0.25rem);
+  color: var(--pf-muted);
+}
+
+.field--name-field-reading-time::before,
+.reading-time::before {
+  content: "⏱";
+  font-size: 1.1em;
+  opacity: 0.7;
+}
+
+/* View count field */
+.field--name-field-view-count,
+.view-count {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pf-space-xs, 0.25rem);
+  color: var(--pf-muted);
+}
+
+.field--name-field-view-count::before,
+.view-count::before {
+  content: "👁";
+  font-size: 1.1em;
+  opacity: 0.7;
+}
+
+/* Comment count */
+.field--name-comment-count,
+.comment-count {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pf-space-xs, 0.25rem);
+  color: var(--pf-muted);
+}
+
+.field--name-comment-count::before,
+.comment-count::before {
+  content: "💬";
+  font-size: 1.1em;
+  opacity: 0.7;
+}
+
+/* Metadata separator */
+.metadata-separator {
+  color: var(--pf-border);
+  font-weight: 300;
+  user-select: none;
+}
+
+.metadata-separator::before {
+  content: "•";
+}
+
+/* Metadata variations */
+
+/* Inline metadata bar */
+.metadata--inline {
+  padding: var(--pf-space-sm, 0.5rem) 0;
+  border-bottom: 1px solid var(--pf-border);
+  margin-bottom: var(--pf-space-lg, 1.5rem);
+}
+
+/* Card metadata */
+.metadata--card {
+  padding: var(--pf-space-sm, 0.5rem);
+  background: var(--pf-surface);
+  border-radius: var(--pf-radius-sm, 0.25rem);
+  font-size: var(--pf-font-size-xs, 0.75rem);
+}
+
+/* Vertical metadata */
+.metadata--vertical {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--pf-space-xs, 0.25rem);
+}
+
+/* Metadata with icons only */
+.metadata--icons-only [class*="::before"] {
+  margin-right: 0;
+}
+
+.metadata--icons-only .field__label,
+.metadata--icons-only .label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Status fields */
+.field--name-status,
+.field--name-field-status {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--pf-space-xs, 0.25rem) var(--pf-space-sm, 0.5rem);
+  border-radius: var(--pf-radius-sm, 0.25rem);
+  font-size: var(--pf-font-size-xs, 0.75rem);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.field--name-status.status--published,
+.field--name-field-status.status--published {
+  background: var(--pf-success);
+  color: white;
+}
+
+.field--name-status.status--unpublished,
+.field--name-field-status.status--unpublished {
+  background: var(--pf-muted);
+  color: white;
+}
+
+.field--name-status.status--draft,
+.field--name-field-status.status--draft {
+  background: var(--pf-warning);
+  color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .node__meta,
+  .field--metadata,
+  .content-metadata {
+    font-size: var(--pf-font-size-xs, 0.75rem);
+    gap: var(--pf-space-sm, 0.5rem);
+  }
+
+  .metadata--inline {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--pf-space-xs, 0.25rem);
+  }
+}

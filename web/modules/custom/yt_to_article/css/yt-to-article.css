@@ -1,0 +1,323 @@
+/**
+ * @file
+ * Styles for YT to Article module.
+ */
+
+/* Form wrapper */
+.yt-to-article-form-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.yt-to-article-form-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.yt-to-article-form-header h2 {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.yt-to-article-form-header p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* URL input field */
+.yt-to-article-url-input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+.yt-to-article-url-input:focus {
+  border-color: #0073e6;
+  outline: none;
+}
+
+/* Submit button */
+.yt-to-article-submit {
+  background-color: #0073e6;
+  color: white;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.yt-to-article-submit:hover {
+  background-color: #005bb5;
+}
+
+.yt-to-article-submit:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.yt-to-article-submit:disabled:hover {
+  background-color: #6c757d;
+}
+
+/* Progress wrapper */
+.yt-to-article-progress-wrapper {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+/* Connection status */
+.yt-to-article-connection-status {
+  text-align: center;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.status-connecting {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-connected {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-reconnecting {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.status-closed,
+.status-error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.status-completed {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+/* Messages container wrapper */
+.yt-to-article-messages-container {
+  margin-top: 1rem;
+}
+
+/* Messages container */
+.yt-to-article-messages {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  padding: 0.5rem;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.yt-to-article-messages .messages__wrapper {
+  margin: 0;
+}
+
+/* Custom message styles */
+.yt-to-article-message {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.25rem;
+  background: white;
+  border-left: 3px solid #0073e6;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  transition: all 0.2s ease;
+}
+
+.yt-to-article-message:hover {
+  background: #f0f7ff;
+}
+
+.yt-to-article-message:last-child {
+  margin-bottom: 0;
+}
+
+/* Message type variations */
+.yt-to-article-message--status {
+  border-left-color: #0073e6;
+}
+
+.yt-to-article-message--warning {
+  border-left-color: #f0ad4e;
+  background: #fffaf0;
+}
+
+.yt-to-article-message--error {
+  border-left-color: #d9534f;
+  background: #fff5f5;
+}
+
+/* Message components */
+.yt-to-article-message-time {
+  color: #6c757d;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+  min-width: 70px;
+}
+
+.yt-to-article-message-text {
+  flex: 1;
+  color: #333;
+}
+
+/* Stage-specific styling */
+.yt-to-article-message[data-message-stage="connected"] .yt-to-article-message-text {
+  font-weight: 600;
+}
+
+.yt-to-article-message[data-message-stage="finished"] {
+  border-left-color: #28a745;
+  background: #f0fff4;
+}
+
+.yt-to-article-message[data-message-stage="finished"] .yt-to-article-message-text {
+  color: #155724;
+  font-weight: 600;
+}
+
+/* Progress bar */
+.yt-to-article-progress {
+  margin-bottom: 1rem;
+}
+
+.yt-to-article-progress-container {
+  width: 100%;
+  height: 20px;
+  background-color: #e9ecef;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.yt-to-article-progress-bar {
+  height: 100%;
+  background-color: #0073e6;
+  transition: width 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.yt-to-article-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.2) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 20px 20px;
+  animation: progress-animation 1s linear infinite;
+}
+
+@keyframes progress-animation {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 20px 20px;
+  }
+}
+
+.yt-to-article-progress-text {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Scrollbar styling for messages container */
+.yt-to-article-messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.yt-to-article-messages::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.yt-to-article-messages::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.yt-to-article-messages::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Actions */
+.yt-to-article-actions {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.yt-to-article-actions .button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  margin: 0 0.5rem;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.yt-to-article-actions .button--primary {
+  background-color: #0073e6;
+  color: white;
+}
+
+.yt-to-article-actions .button--primary:hover {
+  background-color: #005bb5;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 115, 230, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 115, 230, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 115, 230, 0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .yt-to-article-form-wrapper {
+    padding: 1rem;
+  }
+  
+  .yt-to-article-messages {
+    max-height: 300px;
+  }
+}

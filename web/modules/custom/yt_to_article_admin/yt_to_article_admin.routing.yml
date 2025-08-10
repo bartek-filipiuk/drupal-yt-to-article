@@ -1,0 +1,31 @@
+yt_to_article_admin.cost_webhook:
+  path: '/api/yt-article-metrics/webhook'
+  defaults:
+    _controller: '\Drupal\yt_to_article_admin\Controller\CostMetricsWebhookController::handleWebhook'
+    _title: 'Cost Metrics Webhook'
+  requirements:
+    _permission: 'access content'
+    _method: 'POST'
+  options:
+    _auth: false
+    no_cache: true
+
+yt_to_article_admin.cost_report:
+  path: '/admin/reports/yt-article-costs'
+  defaults:
+    _controller: '\Drupal\yt_to_article_admin\Controller\CostMetricsReportController::report'
+    _title: 'YT Article Cost Report'
+  requirements:
+    _permission: 'view yt article cost reports'
+  options:
+    _admin_route: true
+
+yt_to_article_admin.settings:
+  path: '/admin/config/services/yt-article-admin'
+  defaults:
+    _form: '\Drupal\yt_to_article_admin\Form\CostMetricsSettingsForm'
+    _title: 'YT Article Admin Settings'
+  requirements:
+    _permission: 'administer yt article costs'
+  options:
+    _admin_route: true

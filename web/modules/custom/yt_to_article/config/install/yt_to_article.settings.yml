@@ -1,0 +1,6 @@
+api_url: 'http://localhost:8000/api/v1'
+websocket_url: 'ws://localhost:8000/api/v1/ws'
+timeout: 30
+retry_attempts: 3
+default_max_length: 2000
+default_style: 'informative'

@@ -1,0 +1,310 @@
+/**
+ * Tailwind Style Editor CSS
+ */
+
+/* Style editor mode indicator */
+body.tailwind-style-editor-active {
+  cursor: crosshair !important;
+}
+
+/* Highlight editable elements on hover */
+body.tailwind-style-editor-active *:hover {
+  outline: 2px dashed #0678BE !important;
+  outline-offset: 2px;
+  cursor: pointer !important;
+}
+
+/* Currently selected element */
+.tailwind-style-editor-selected {
+  outline: 2px solid #0678BE !important;
+  outline-offset: 2px;
+  position: relative;
+}
+
+/* Element label */
+.tailwind-style-editor-label {
+  position: absolute;
+  top: -24px;
+  left: 0;
+  background: #0678BE;
+  color: white;
+  padding: 2px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+  z-index: 10000;
+  white-space: nowrap;
+}
+
+/* Style panel */
+#tailwind-style-panel {
+  position: fixed;
+  right: -400px;
+  top: 0;
+  width: 400px;
+  height: 100vh;
+  background: white;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+#tailwind-style-panel.active {
+  right: 0;
+}
+
+/* Panel header */
+.tse-panel-header {
+  background: #0678BE;
+  color: white;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tse-panel-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.tse-panel-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.tse-panel-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Current classes display */
+.tse-current-classes {
+  padding: 16px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.tse-current-classes-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #495057;
+}
+
+.tse-class-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tse-class-tag {
+  background: white;
+  border: 1px solid #dee2e6;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tse-class-remove {
+  background: none;
+  border: none;
+  color: #dc3545;
+  cursor: pointer;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* Class categories */
+.tse-categories {
+  padding: 16px;
+}
+
+.tse-category {
+  margin-bottom: 16px;
+}
+
+.tse-category-header {
+  background: #f8f9fa;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 14px;
+  color: #495057;
+  transition: background 0.2s;
+}
+
+.tse-category-header:hover {
+  background: #e9ecef;
+}
+
+.tse-category-chevron {
+  transition: transform 0.2s;
+}
+
+.tse-category.expanded .tse-category-chevron {
+  transform: rotate(90deg);
+}
+
+.tse-category-content {
+  display: none;
+  padding: 8px 0;
+}
+
+.tse-category.expanded .tse-category-content {
+  display: block;
+}
+
+/* Class options */
+.tse-class-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.tse-class-option {
+  background: white;
+  border: 1px solid #dee2e6;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.tse-class-option:hover {
+  background: #f8f9fa;
+  border-color: #0678BE;
+}
+
+.tse-class-option.active {
+  background: #0678BE;
+  color: white;
+  border-color: #0678BE;
+}
+
+/* Search box */
+.tse-search {
+  padding: 16px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.tse-search-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.tse-search-input:focus {
+  outline: none;
+  border-color: #0678BE;
+  box-shadow: 0 0 0 2px rgba(6, 120, 190, 0.1);
+}
+
+/* Actions */
+.tse-actions {
+  padding: 16px;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  gap: 8px;
+}
+
+.tse-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.tse-button-primary {
+  background: #0678BE;
+  color: white;
+}
+
+.tse-button-primary:hover {
+  background: #045a8d;
+}
+
+.tse-button-secondary {
+  background: white;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+
+.tse-button-secondary:hover {
+  background: #f8f9fa;
+}
+
+/* Custom class input */
+.tse-custom-class {
+  padding: 16px;
+  border-top: 1px solid #e9ecef;
+}
+
+.tse-custom-class-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #495057;
+}
+
+.tse-custom-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.tse-custom-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Toolbar button */
+.tailwind-style-editor-toggle {
+  position: relative;
+}
+
+.tailwind-style-editor-toggle.active {
+  background: #0678BE !important;
+  color: white !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #tailwind-style-panel {
+    width: 100%;
+    right: -100%;
+  }
+}

@@ -1,0 +1,7 @@
+name: 'YT to Article'
+type: module
+description: 'Converts YouTube videos to articles using PocketFlow API with real-time WebSocket updates.'
+package: Custom
+core_version_requirement: ^11
+dependencies:
+  - drupal:system (>=11.0)

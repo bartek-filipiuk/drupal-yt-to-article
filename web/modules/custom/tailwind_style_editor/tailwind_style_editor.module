@@ -1,0 +1,107 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Tailwind Style Editor module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function tailwind_style_editor_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.tailwind_style_editor':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Tailwind Style Editor module provides a visual interface for applying Tailwind CSS classes to Drupal elements.') . '</p>';
+      $output .= '<h3>' . t('Uses') . '</h3>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Click any element to edit its Tailwind classes') . '</li>';
+      $output .= '<li>' . t('Visual class picker with categories') . '</li>';
+      $output .= '<li>' . t('Live preview of changes') . '</li>';
+      $output .= '<li>' . t('Save and export style configurations') . '</li>';
+      $output .= '</ul>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function tailwind_style_editor_page_attachments(array &$attachments) {
+  // Only attach on non-admin pages for users with permission
+  $user = \Drupal::currentUser();
+  $is_admin_route = \Drupal::service('router.admin_context')->isAdminRoute();
+  
+  if (!$is_admin_route && $user->hasPermission('use tailwind style editor')) {
+    $attachments['#attached']['library'][] = 'tailwind_style_editor/style-editor';
+    
+    // Pass settings to JavaScript
+    try {
+      $url_generator = \Drupal::service('url_generator');
+      $attachments['#attached']['drupalSettings']['tailwindStyleEditor'] = [
+        'enabled' => TRUE,
+        'saveUrl' => $url_generator->generateFromRoute('tailwind_style_editor.save_styles'),
+        'loadUrl' => $url_generator->generateFromRoute('tailwind_style_editor.load_styles'),
+        'userId' => $user->id(),
+      ];
+    }
+    catch (\Exception $e) {
+      // If routes are not available yet, use default paths
+      $attachments['#attached']['drupalSettings']['tailwindStyleEditor'] = [
+        'enabled' => TRUE,
+        'saveUrl' => '/tailwind-style-editor/save',
+        'loadUrl' => '/tailwind-style-editor/load',
+        'userId' => $user->id(),
+      ];
+    }
+  }
+}
+
+/**
+ * Implements hook_toolbar().
+ */
+function tailwind_style_editor_toolbar() {
+  $user = \Drupal::currentUser();
+  
+  $items = [];
+  
+  if ($user->hasPermission('use tailwind style editor')) {
+    $items['tailwind_style_editor'] = [
+      '#type' => 'toolbar_item',
+      'tab' => [
+        '#type' => 'button',
+        '#value' => t('Style Editor'),
+        '#attributes' => [
+          'id' => 'tailwind-style-editor-toggle',
+          'class' => ['toolbar-item', 'tailwind-style-editor-toggle'],
+          'aria-pressed' => 'false',
+        ],
+      ],
+      '#wrapper_attributes' => [
+        'class' => ['tailwind-style-editor-toolbar-tab'],
+      ],
+      '#attached' => [
+        'library' => ['tailwind_style_editor/style-editor'],
+      ],
+      '#weight' => 100,
+    ];
+  }
+  
+  return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function tailwind_style_editor_theme() {
+  return [
+    'tailwind_style_panel' => [
+      'variables' => [
+        'categories' => [],
+      ],
+      'template' => 'tailwind-style-panel',
+    ],
+  ];
+}

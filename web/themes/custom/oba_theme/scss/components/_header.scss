@@ -1,0 +1,19 @@
+.header {
+  padding: 1.25em;
+  .navbar {
+    background-color: #fff;
+
+    .navbar-brand {
+      color: #000;
+      font-weight: bold;
+    }
+
+    .nav-link {
+      color: #666;
+
+      &:hover {
+        color: #333;
+      }
+    }
+  }
+}

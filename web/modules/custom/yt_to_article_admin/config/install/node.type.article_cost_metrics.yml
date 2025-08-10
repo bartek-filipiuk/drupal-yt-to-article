@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - yt_to_article_admin
+name: 'Article Cost Metrics'
+type: article_cost_metrics
+description: 'Stores cost metrics for YouTube to Article conversions.'
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: true

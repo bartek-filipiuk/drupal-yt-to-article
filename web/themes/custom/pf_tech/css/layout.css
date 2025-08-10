@@ -1,0 +1,47 @@
+/* Layout wrappers */
+.pf-container {
+  max-width: var(--pf-max-content);
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+header.site-header {
+  border-bottom: 1px solid var(--pf-border);
+  background: var(--pf-surface);
+}
+
+.site-footer {
+  border-top: 1px solid var(--pf-border);
+  background: var(--pf-surface);
+  color: var(--pf-muted);
+  padding-block: 2rem;
+}
+
+/* Breadcrumbs */
+.breadcrumb {
+  margin-bottom: 1rem;
+  color: var(--pf-muted);
+}
+
+/* Content spacing */
+main[role="main"] {
+  padding-block: 2rem;
+}
+
+.pf-card {
+  background: #fff;
+  border: 1px solid var(--pf-border);
+  border-radius: .5rem;
+  padding: 1rem;
+}
+
+/* Reading width inside content region */
+.region-content .pf-content,
+#block-pf-content .pf-content {
+  max-width: var(--pf-max-content);
+}
+
+/* Off-canvas placeholder */
+.region-offcanvas {
+  display: none;
+}

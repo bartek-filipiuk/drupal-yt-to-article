@@ -1,0 +1,8 @@
+access yt to article:
+  title: 'Access YouTube to Article form'
+  description: 'Allow users to convert YouTube videos to articles.'
+
+administer yt to article:
+  title: 'Administer YT to Article'
+  description: 'Configure YT to Article module settings.'
+  restrict access: true

@@ -1,0 +1,13 @@
+.btn-blue {
+  background-color: #238fee;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px 40px;
+
+  &:hover, &:focus {
+    color: #fff;
+    background-color: lighten(#238fee, 10%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}

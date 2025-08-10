@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * YT to Article module file.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function yt_to_article_help($route_name, RouteMatchInterface $route_match): string {
+  return match($route_name) {
+    'help.page.yt_to_article' => '<p>' . t('The YT to Article module converts YouTube videos into articles using the PocketFlow API with real-time WebSocket updates.') . '</p>',
+    default => '',
+  };
+}
+
+/**
+ * Implements hook_theme().
+ */
+function yt_to_article_theme(): array {
+  return [
+    'yt_to_article_form' => [
+      'render element' => 'form',
+      'template' => 'yt-to-article-form',
+    ],
+    'yt_to_article_progress' => [
+      'variables' => [
+        'request_id' => NULL,
+        'initial_status' => NULL,
+      ],
+      'template' => 'yt-to-article-progress',
+    ],
+  ];
+}

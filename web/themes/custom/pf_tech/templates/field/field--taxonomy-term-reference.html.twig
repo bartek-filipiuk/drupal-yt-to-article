@@ -1,0 +1,61 @@
+{#
+/**
+ * @file
+ * Tailwind-styled template for taxonomy term reference fields.
+ * 
+ * This creates beautiful tag/category displays with hover effects.
+ */
+#}
+{% set classes = [
+  'field',
+  'field--name-' ~ field_name|clean_class,
+  'field--type-' ~ field_type|clean_class,
+  'field--label-' ~ label_display,
+  'mb-4',
+] %}
+{% set title_classes = [
+  'field__label',
+  'text-sm',
+  'font-semibold',
+  'text-drupal-muted',
+  'mb-2',
+  label_display == 'inline' ? 'inline-block mr-2',
+] %}
+
+<div{{ attributes.addClass(classes) }}>
+  {% if label_hidden %}
+    {% if multiple %}
+      <div class="field__items flex flex-wrap gap-2">
+        {% for item in items %}
+          <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+        {% endfor %}
+      </div>
+    {% else %}
+      {% for item in items %}
+        <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+      {% endfor %}
+    {% endif %}
+  {% else %}
+    <div class="flex {{ label_display == 'inline' ? 'items-center' : 'flex-col' }} gap-2">
+      <h3{{ title_attributes.addClass(title_classes) }}>{{ label }}</h3>
+      {% if multiple %}
+        <div class="field__items flex flex-wrap gap-2">
+          {% for item in items %}
+            <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+          {% endfor %}
+        </div>
+      {% else %}
+        {% for item in items %}
+          <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+
+{# Add Tailwind styles for taxonomy links #}
+<style>
+  .field--type-entity-reference .field__item a {
+    @apply inline-flex items-center px-3 py-1 bg-drupal-surface text-drupal-text text-sm rounded-full border border-drupal-border transition-all duration-200 hover:bg-drupal-primary hover:text-white hover:border-drupal-primary hover:-translate-y-0.5 hover:shadow-md;
+  }
+</style>

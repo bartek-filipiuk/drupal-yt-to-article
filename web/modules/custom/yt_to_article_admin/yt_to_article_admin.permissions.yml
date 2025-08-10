@@ -1,0 +1,12 @@
+administer yt article costs:
+  title: 'Administer YT Article Costs'
+  description: 'View and manage YouTube article cost metrics.'
+  restrict access: true
+
+view yt article cost reports:
+  title: 'View YT Article Cost Reports'
+  description: 'View cost reports for YouTube article generation.'
+
+receive cost webhook:
+  title: 'Receive Cost Webhook'
+  description: 'Allow webhook to create cost metric entries.'

@@ -1,0 +1,486 @@
+/**
+ * @file
+ * Modern tech-style overrides for YT to Article form.
+ * Creates a professional API monitoring dashboard aesthetic.
+ */
+
+/* Import tech fonts */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+/* CSS Variables for theming */
+:root {
+  --yt-primary: #00d4ff;
+  --yt-primary-dark: #0099cc;
+  --yt-primary-light: #66e2ff;
+  --yt-success: #00ff88;
+  --yt-error: #ff3366;
+  --yt-warning: #ffaa00;
+  --yt-dark-bg: #0a0e27;
+  --yt-darker-bg: #050714;
+  --yt-card-bg: rgba(13, 17, 43, 0.8);
+  --yt-text: #e0e6ed;
+  --yt-muted: #64748b;
+  --yt-border: rgba(0, 212, 255, 0.1);
+  --yt-glow: 0 0 15px rgba(0, 212, 255, 0.3);
+}
+
+.yt-to-article-form {
+  padding: 50px 0;
+}
+
+/* Progress Wrapper - Main Container */
+.yt-to-article-progress-wrapper {
+  background: var(--yt-card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--yt-border);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), var(--yt-glow);
+}
+
+/* Tech grid background pattern */
+.yt-to-article-progress-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  animation: grid-move 20s linear infinite;
+}
+
+@keyframes grid-move {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+/* Hide the separate connection status element */
+.yt-to-article-connection-status {
+  display: none;
+}
+
+/* Connection status messages in console */
+.yt-to-article-message[data-message-type="connection"] {
+  background: rgba(0, 212, 255, 0.08);
+  border-left-color: #0284c7;
+  font-weight: 600;
+}
+
+.yt-to-article-message[data-message-type="connection"] .yt-to-article-message-text::before {
+  content: '◉ ';
+  color: #0284c7;
+  margin-right: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.yt-to-article-message[data-message-type="connection"][data-status="connecting"] .yt-to-article-message-text {
+  color: #d97706;
+}
+
+.yt-to-article-message[data-message-type="connection"][data-status="connecting"] .yt-to-article-message-text::before {
+  color: #f59e0b;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.yt-to-article-message[data-message-type="connection"][data-status="connected"] .yt-to-article-message-text {
+  color: #059669;
+}
+
+.yt-to-article-message[data-message-type="connection"][data-status="connected"] .yt-to-article-message-text::before {
+  color: #10b981;
+}
+
+.yt-to-article-message[data-message-type="connection"][data-status="error"] .yt-to-article-message-text {
+  color: #dc2626;
+}
+
+.yt-to-article-message[data-message-type="connection"][data-status="error"] .yt-to-article-message-text::before {
+  content: '⚠ ';
+  color: #ef4444;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* Progress Container - Modern Tech Style */
+.yt-to-article-progress {
+  margin: 2rem 0;
+  position: relative;
+}
+
+.yt-to-article-progress-container {
+  width: 100%;
+  height: 32px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Progress Bar with Simplified Gradient */
+.yt-to-article-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg,
+    var(--yt-primary-dark) 0%,
+    var(--yt-primary) 50%,
+    var(--yt-primary-dark) 100%);
+  background-size: 200% 100%;
+  position: relative;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: gradient-shift 4s ease-in-out infinite;
+  box-shadow:
+    0 0 10px rgba(0, 212, 255, 0.5),
+    inset 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Subtle wave effect overlay */
+.yt-to-article-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent);
+  animation: wave-animation 2s linear infinite;
+}
+
+@keyframes wave-animation {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Progress Text - Terminal Style */
+.yt-to-article-progress-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--yt-primary);
+  text-align: center;
+  margin-top: 1rem;
+  text-shadow: 0 0 10px currentColor;
+  letter-spacing: 0.1em;
+}
+
+/* Messages Container - Light Terminal Style */
+.yt-to-article-messages-container {
+  margin-top: 2rem;
+}
+
+.yt-to-article-messages {
+  background: #f8f9fa;
+  border: 1px solid #e0e6ed;
+  border-radius: 12px;
+  padding: 1.5rem;
+  height: 300px;
+  overflow-y: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  position: relative;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Terminal prompt effect */
+.yt-to-article-messages::before {
+  content: 'WEBSOCKET LOG';
+  position: absolute;
+  top: 5px;
+  left: 1rem;
+  background: #f8f9fa;
+  padding: 0 0.5rem;
+  color: #6b7280;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+/* Message Wrapper */
+.yt-to-article-messages .messages__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Individual Messages - Light Terminal Style */
+.yt-to-article-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  opacity: 0;
+  animation: message-appear 0.3s ease forwards;
+  background: rgba(255, 255, 255, 0.6);
+  border-left: 2px solid #e0e6ed;
+}
+
+@keyframes message-appear {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.yt-to-article-message:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-left-color: var(--yt-primary);
+}
+
+/* Message Timestamps - ISO Format Style */
+.yt-to-article-message-time {
+  color: var(--yt-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  min-width: 80px;
+  opacity: 0.7;
+}
+
+.yt-to-article-message-time::before {
+  content: '[';
+  color: var(--yt-primary);
+  opacity: 0.5;
+}
+
+.yt-to-article-message-time::after {
+  content: ']';
+  color: var(--yt-primary);
+  opacity: 0.5;
+}
+
+/* Message Text with Syntax Highlighting */
+.yt-to-article-message-text {
+  flex: 1;
+  color: #1f2937;
+}
+
+/* Status-specific message colors */
+.yt-to-article-message--status .yt-to-article-message-text {
+  color: #059669;
+}
+
+.yt-to-article-message--status {
+  background: rgba(16, 185, 129, 0.1);
+  border-left-color: #10b981;
+}
+
+.yt-to-article-message--status::before {
+  content: '✓';
+  color: #10b981;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.yt-to-article-message--warning .yt-to-article-message-text {
+  color: #d97706;
+}
+
+.yt-to-article-message--warning {
+  background: rgba(251, 191, 36, 0.1);
+  border-left-color: #f59e0b;
+}
+
+.yt-to-article-message--warning::before {
+  content: '⚠';
+  color: #f59e0b;
+  margin-right: 0.5rem;
+}
+
+.yt-to-article-message--error .yt-to-article-message-text {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.yt-to-article-message--error {
+  background: rgba(239, 68, 68, 0.1);
+  border-left-color: #ef4444;
+}
+
+.yt-to-article-message--error::before {
+  content: '✕';
+  color: #ef4444;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+/* Special messages */
+.yt-to-article-message[data-message-stage="connected"] {
+  border-left-color: var(--yt-success);
+}
+
+.yt-to-article-message[data-message-stage="finished"] {
+  background: linear-gradient(90deg,
+    rgba(0, 255, 136, 0.1),
+    rgba(0, 212, 255, 0.1));
+  border-left-color: var(--yt-success);
+  font-weight: 600;
+}
+
+/* Terminal Cursor Effect */
+.yt-to-article-messages .messages__wrapper::after {
+  content: '▊';
+  color: #6b7280;
+  opacity: 1;
+  animation: cursor-blink 1s infinite;
+  font-weight: 400;
+}
+
+@keyframes cursor-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Custom Scrollbar for Terminal */
+.yt-to-article-messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.yt-to-article-messages::-webkit-scrollbar-track {
+  background: #e5e7eb;
+  border-radius: 4px;
+}
+
+.yt-to-article-messages::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 4px;
+}
+
+.yt-to-article-messages::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+/* Actions/Download Button Styling */
+.yt-to-article-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.yt-to-article-actions .button {
+  background: linear-gradient(135deg, var(--yt-primary), var(--yt-primary-dark));
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.yt-to-article-actions .button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.yt-to-article-actions .button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 212, 255, 0.5);
+}
+
+.yt-to-article-actions .button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .yt-to-article-progress-wrapper {
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+
+  .yt-to-article-messages {
+    height: 200px;
+    font-size: 0.75rem;
+  }
+
+  .yt-to-article-message-time {
+    display: none;
+  }
+
+  .yt-to-article-progress-text {
+    font-size: 1rem;
+  }
+}
+
+/* Loading/Processing Animation */
+@keyframes processing {
+  0% { content: 'Processing'; }
+  25% { content: 'Processing.'; }
+  50% { content: 'Processing..'; }
+  75% { content: 'Processing...'; }
+  100% { content: 'Processing'; }
+}
+
+.yt-to-article-progress-wrapper[data-status="processing"]::after {
+  content: 'Processing';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: var(--yt-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  animation: processing 2s infinite;
+}
+
+/* Glitch effect for errors */
+@keyframes glitch {
+  0%, 100% {
+    text-shadow:
+      2px 0 var(--yt-error),
+      -2px 0 var(--yt-primary);
+  }
+  25% {
+    text-shadow:
+      -2px 0 var(--yt-error),
+      2px 0 var(--yt-primary);
+  }
+  50% {
+    text-shadow:
+      2px 2px var(--yt-error),
+      -2px -2px var(--yt-primary);
+  }
+}
+
+.status-error {
+  animation: glitch 0.3s infinite;
+}

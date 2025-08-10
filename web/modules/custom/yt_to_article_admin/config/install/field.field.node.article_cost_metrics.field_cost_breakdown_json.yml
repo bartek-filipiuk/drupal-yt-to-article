@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_cost_breakdown_json
+    - node.type.article_cost_metrics
+  module:
+    - text
+id: node.article_cost_metrics.field_cost_breakdown_json
+field_name: field_cost_breakdown_json
+entity_type: node
+bundle: article_cost_metrics
+label: 'Cost Breakdown (JSON)'
+description: 'Full cost breakdown data in JSON format.'
+required: false
+translatable: false
+default_value: []
+default_value_callback: ''
+settings: {}
+field_type: text_long

@@ -1,0 +1,29 @@
+tailwind_style_editor.save_styles:
+  path: '/tailwind-style-editor/save'
+  defaults:
+    _controller: '\Drupal\tailwind_style_editor\Controller\StyleEditorController::saveStyles'
+  requirements:
+    _permission: 'use tailwind style editor'
+  options:
+    _admin_route: FALSE
+  methods: [POST]
+
+tailwind_style_editor.load_styles:
+  path: '/tailwind-style-editor/load'
+  defaults:
+    _controller: '\Drupal\tailwind_style_editor\Controller\StyleEditorController::loadStyles'
+  requirements:
+    _permission: 'use tailwind style editor'
+  options:
+    _admin_route: FALSE
+  methods: [GET]
+
+tailwind_style_editor.export_styles:
+  path: '/tailwind-style-editor/export'
+  defaults:
+    _controller: '\Drupal\tailwind_style_editor\Controller\StyleEditorController::exportStyles'
+  requirements:
+    _permission: 'use tailwind style editor'
+  options:
+    _admin_route: FALSE
+  methods: [GET]

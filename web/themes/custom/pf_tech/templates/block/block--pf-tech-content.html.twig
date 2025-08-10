@@ -1,0 +1,51 @@
+{#
+/**
+ * @file
+ * Theme override for PF Tech content blocks with Tailwind styling.
+ * 
+ * This template provides modern API documentation-style block styling
+ * specifically designed for forms and content blocks.
+ *
+ * Available variables:
+ * - plugin_id: The ID of the block implementation.
+ * - label: The configured label of the block if visible.
+ * - configuration: A list of the block's configuration values.
+ * - content: The content of this block.
+ * - attributes: array of HTML attributes populated by modules.
+ * - title_attributes: Same as attributes, except applied to the main title tag.
+ * - title_prefix: Additional output populated by modules.
+ * - title_suffix: Additional output populated by modules.
+ */
+#}
+{%
+  set classes = [
+    'block',
+    'block-' ~ configuration.provider|clean_class,
+    'block-' ~ plugin_id|clean_class,
+    'bg-white',
+    'rounded-xl',
+    'shadow-lg',
+    'overflow-hidden',
+    'transition-all',
+    'duration-300',
+    'hover:shadow-xl',
+    'border',
+    'border-gray-100'
+  ]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+  {{ title_prefix }}
+  {% if label %}
+    <div class="bg-gradient-to-r from-drupal-primary to-drupal-secondary text-white px-8 py-6">
+      <h2{{ title_attributes.addClass('text-2xl', 'font-bold', 'tracking-tight') }}>{{ label }}</h2>
+    </div>
+  {% endif %}
+  {{ title_suffix }}
+
+  <div class="p-8">
+    {% block content %}
+      {{ content }}
+    {% endblock %}
+  </div>
+</div>

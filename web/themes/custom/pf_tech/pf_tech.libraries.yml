@@ -1,0 +1,57 @@
+base:
+  version: 1.x
+  css:
+    base:
+      css/base.css: {}
+      css/layout.css: {}
+      css/yt-to-article-form.css: {}
+    component:
+      css/components.css: {}
+    theme:
+      css/utilities.css: {}
+      css/bootstrap-overrides.css: { weight: 100 }
+  js:
+    js/main.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/drupalSettings
+
+components:
+  version: 1.x
+  css:
+    component:
+      css/components.css: {}
+  dependencies:
+    - pf_tech/base
+
+code:
+  version: 1.x
+  css:
+    theme:
+      css/code.css: {}
+  js:
+    # Prism or Highlight can be swapped later; placeholders for now
+    js/toasts.js: {}
+    js/yt-article-overrides.js: {}
+  dependencies:
+    - pf_tech/base
+
+dark:
+  version: 1.x
+  css:
+    theme:
+      css/dark.css: {}
+  dependencies:
+    - pf_tech/base
+
+yt_article:
+  version: 1.x
+  css:
+    component:
+      css/content-types/youtube-article.css: {}
+    theme:
+      css/components.css: {}
+      css/code.css: {}
+  dependencies:
+    - pf_tech/base

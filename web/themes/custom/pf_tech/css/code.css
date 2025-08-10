@@ -1,0 +1,135 @@
+/* Code and documentation-focused styles */
+
+.pf-content pre,
+.pf-content code {
+  font-family: "JetBrains Mono", "Fira Code", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Inline code chip */
+.pf-content :not(pre) > code {
+  background: var(--pf-code-bg);
+  color: var(--pf-code-text);
+  padding: .125rem .375rem;
+  border-radius: .375rem;
+  border: 1px solid var(--pf-border);
+  box-decoration-break: clone;
+}
+
+/* Code block container */
+.pf-content pre {
+  background: var(--pf-code-bg);
+  color: var(--pf-code-text);
+  border: 1px solid var(--pf-border);
+  border-radius: .5rem;
+  padding: 1rem;
+  overflow: auto;
+  margin: 1rem 0 1.25rem;
+}
+
+/* Optional line numbers (for Prism or highlight.js plugins) */
+pre.line-numbers {
+  position: relative;
+  padding-left: 3.25rem;
+  counter-reset: linenumber;
+}
+pre.line-numbers > code > .line-numbers-rows {
+  position: absolute;
+  pointer-events: none;
+  top: 1rem;
+  left: .75rem;
+  width: 2.25rem;
+  letter-spacing: -1px;
+  border-right: 1px solid var(--pf-border);
+  user-select: none;
+}
+pre.line-numbers > code > .line-numbers-rows > span {
+  display: block;
+  counter-increment: linenumber;
+}
+pre.line-numbers > code > .line-numbers-rows > span:before {
+  content: counter(linenumber);
+  display: block;
+  text-align: right;
+  color: var(--pf-muted);
+}
+
+/* Copy-to-clipboard button container */
+.pf-code-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: .5rem;
+  margin-bottom: .25rem;
+}
+.pf-code-toolbar .btn,
+.pf-code-toolbar .button {
+  padding: .125rem .5rem;
+  font-size: .8rem;
+}
+
+/* Soft wrap toggle */
+.pf-soft-wrap pre,
+.pf-soft-wrap code {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Tables inside docs */
+.pf-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.5rem;
+  font-size: .95rem;
+}
+.pf-content table th,
+.pf-content table td {
+  border: 1px solid var(--pf-border);
+  padding: .5rem .75rem;
+  vertical-align: top;
+}
+.pf-content table thead th {
+  background: var(--pf-surface);
+}
+
+/* Blockquotes for notes/callouts */
+.pf-content blockquote {
+  margin: 1rem 0 1.25rem;
+  padding: .5rem .75rem;
+  border-left: 4px solid var(--pf-link);
+  background: var(--pf-surface);
+  color: var(--pf-text);
+  border-radius: .25rem;
+}
+
+/* KBD keys */
+.pf-content kbd {
+  background: var(--pf-surface);
+  border: 1px solid var(--pf-border);
+  border-bottom-width: 2px;
+  border-radius: .375rem;
+  padding: .05rem .35rem;
+  font-size: .85em;
+}
+
+/* Anchored headings (add anchor icon via CSS if desired) */
+.pf-content h2[id], .pf-content h3[id], .pf-content h4[id] {
+  scroll-margin-top: 6rem;
+}
+
+/* Prism.js/highlight.js default scoping (kept minimal, actual theme can be added later) */
+pre[class*="language-"], code[class*="language-"] {
+  background: var(--pf-code-bg);
+  color: var(--pf-code-text);
+}
+
+/* Collapsible log area (used by yt_to_article) */
+.pf-log {
+  background: var(--pf-code-bg);
+  color: var(--pf-code-text);
+  border: 1px solid var(--pf-border);
+  border-radius: .5rem;
+  padding: .75rem;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: .9rem;
+  max-height: 280px;
+  overflow: auto;
+}

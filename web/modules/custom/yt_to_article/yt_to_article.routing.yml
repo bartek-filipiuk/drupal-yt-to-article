@@ -1,0 +1,63 @@
+yt_to_article.form:
+  path: '/yt-to-article'
+  defaults:
+    _form: '\Drupal\yt_to_article\Form\YtToArticleForm'
+    _title: 'YouTube to Article'
+  requirements:
+    _permission: 'access yt to article'
+
+yt_to_article.admin_settings:
+  path: '/admin/config/services/yt-to-article'
+  defaults:
+    _form: '\Drupal\yt_to_article\Form\YtToArticleSettingsForm'
+    _title: 'YT to Article Settings'
+  requirements:
+    _permission: 'administer yt to article'
+
+yt_to_article.status:
+  path: '/yt-to-article/status/{request_id}'
+  defaults:
+    _controller: '\Drupal\yt_to_article\Controller\YtToArticleController::status'
+    _title: 'Article Generation Status'
+  requirements:
+    _permission: 'access yt to article'
+    request_id: '[a-zA-Z0-9_-]+'
+
+yt_to_article.node_by_request:
+  path: '/yt-to-article/node/{request_id}'
+  defaults:
+    _controller: '\Drupal\yt_to_article\Controller\YtToArticleController::getNodeByRequestId'
+    _title: 'Get Node by Request ID'
+  requirements:
+    _permission: 'access yt to article'
+    request_id: '[a-zA-Z0-9_-]+'
+
+yt_to_article.webhook:
+  path: '/api/yt-to-article/webhook'
+  defaults:
+    _controller: '\Drupal\yt_to_article\Controller\WebhookController::handleWebhook'
+    _title: 'YT to Article Webhook'
+  requirements:
+    _permission: 'access content'
+    _method: 'POST'
+  options:
+    _auth: ['basic_auth', 'cookie']
+    no_cache: TRUE
+
+yt_to_article.webhook_debug:
+  path: '/admin/config/services/yt-to-article/webhook-debug'
+  defaults:
+    _form: '\Drupal\yt_to_article\Form\WebhookDebugForm'
+    _title: 'Webhook Debug Tool'
+  requirements:
+    _permission: 'administer yt to article'
+  options:
+    _admin_route: TRUE
+
+yt_to_article.rating_form:
+  path: '/yt-to-article/rating'
+  defaults:
+    _controller: '\Drupal\yt_to_article\Controller\YtToArticleRatingController::ratingPage'
+    _title: 'Ocena Wideo YouTube'
+  requirements:
+    _permission: 'access yt to article'

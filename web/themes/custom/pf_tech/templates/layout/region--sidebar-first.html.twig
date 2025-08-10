@@ -1,0 +1,224 @@
+{#
+/**
+ * @file
+ * Theme override for the first sidebar region with API documentation styling.
+ * 
+ * This template provides modern API documentation-style sidebar design
+ * with sticky navigation and clear visual hierarchy.
+ *
+ * Available variables:
+ * - content: The content for this region, typically blocks.
+ * - attributes: HTML attributes for the region div.
+ * - region: The name of the region variable (sidebar_first).
+ *
+ * @see template_preprocess_region()
+ */
+#}
+{%
+  set classes = [
+    'region',
+    'region-' ~ region|clean_class,
+    'sidebar-api-docs',
+    'w-full',
+    'lg:w-1/4',
+    'px-4',
+    'mb-8',
+    'lg:mb-0',
+    'order-2',
+    'lg:order-1'
+  ]
+%}
+{% if content %}
+  <aside{{ attributes.addClass(classes) }}>
+    <div class="lg:sticky lg:top-24 space-y-6">
+      {{ content }}
+    </div>
+  </aside>
+{% endif %}
+
+{# Sidebar-specific Tailwind styling #}
+<style>
+  /* API Documentation Sidebar Styles */
+  .sidebar-api-docs .block {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mb-6;
+  }
+  
+  .sidebar-api-docs .block > h2,
+  .sidebar-api-docs .block__title {
+    @apply text-sm font-semibold text-gray-900 uppercase tracking-wider px-4 py-3 bg-gray-50 border-b border-gray-200;
+  }
+  
+  /* Navigation menu styling */
+  .sidebar-api-docs .menu {
+    @apply p-2;
+  }
+  
+  .sidebar-api-docs .menu-item {
+    @apply mb-1;
+  }
+  
+  .sidebar-api-docs .menu-item a {
+    @apply block px-3 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100 hover:text-drupal-primary transition-colors duration-150;
+  }
+  
+  .sidebar-api-docs .menu-item a.is-active {
+    @apply bg-drupal-primary text-white hover:bg-drupal-secondary;
+  }
+  
+  /* Nested menu items */
+  .sidebar-api-docs .menu-item--expanded > a {
+    @apply font-medium;
+  }
+  
+  .sidebar-api-docs .menu-item .menu {
+    @apply ml-3 mt-1 border-l-2 border-gray-200 pl-2;
+  }
+  
+  .sidebar-api-docs .menu-item .menu .menu-item a {
+    @apply text-xs py-1.5;
+  }
+  
+  /* Search block styling */
+  .sidebar-api-docs .search-block-form {
+    @apply p-4;
+  }
+  
+  .sidebar-api-docs .search-block-form input[type="search"] {
+    @apply w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-drupal-primary focus:border-transparent;
+  }
+  
+  /* Custom block content */
+  .sidebar-api-docs .block-content {
+    @apply p-4 text-sm text-gray-600;
+  }
+  
+  /* Quick links or tag cloud */
+  .sidebar-api-docs .tagcloud,
+  .sidebar-api-docs .links {
+    @apply p-4 flex flex-wrap gap-2;
+  }
+  
+  .sidebar-api-docs .tagcloud a,
+  .sidebar-api-docs .links a {
+    @apply inline-flex px-3 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-full hover:bg-drupal-primary hover:text-white transition-colors duration-150;
+  }
+  
+  /* Faceted search */
+  .sidebar-api-docs .facets-widget {
+    @apply p-4;
+  }
+  
+  .sidebar-api-docs .facet-item {
+    @apply flex items-center justify-between py-2 text-sm;
+  }
+  
+  .sidebar-api-docs .facet-item input[type="checkbox"] {
+    @apply mr-2 text-drupal-primary focus:ring-drupal-primary;
+  }
+  
+  .sidebar-api-docs .facet-item .count {
+    @apply text-xs text-gray-500;
+  }
+  
+  /* Version selector */
+  .sidebar-api-docs .version-selector {
+    @apply p-4;
+  }
+  
+  .sidebar-api-docs .version-selector select {
+    @apply w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-drupal-primary focus:border-transparent;
+  }
+  
+  /* TOC (Table of Contents) styling */
+  .sidebar-api-docs .toc-block {
+    @apply p-4;
+  }
+  
+  .sidebar-api-docs .toc-block .toc-title {
+    @apply text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3;
+  }
+  
+  .sidebar-api-docs .toc-block ul {
+    @apply space-y-2;
+  }
+  
+  .sidebar-api-docs .toc-block a {
+    @apply text-sm text-gray-600 hover:text-drupal-primary transition-colors duration-150;
+  }
+  
+  .sidebar-api-docs .toc-block .active {
+    @apply text-drupal-primary font-medium;
+  }
+  
+  /* Smooth scroll behavior for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Mobile sidebar toggle button (if needed) */
+  @media (max-width: 1023px) {
+    .sidebar-api-docs {
+      display: none;
+    }
+    
+    .sidebar-api-docs.mobile-open {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      background: white;
+      z-index: 40;
+      overflow-y: auto;
+      box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+    }
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Add smooth scrolling to sidebar navigation
+  const sidebarLinks = document.querySelectorAll('.sidebar-api-docs a[href^="#"]');
+  sidebarLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      if (targetId && targetId !== '#') {
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          e.preventDefault();
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          
+          // Update active state
+          sidebarLinks.forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+        }
+      }
+    });
+  });
+  
+  // Highlight current section in TOC on scroll
+  const observerOptions = {
+    root: null,
+    rootMargin: '-20% 0px -70% 0px',
+    threshold: 0
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        const tocLink = document.querySelector(`.sidebar-api-docs a[href="#${id}"]`);
+        if (tocLink) {
+          document.querySelectorAll('.sidebar-api-docs .toc-block a').forEach(a => a.classList.remove('active'));
+          tocLink.classList.add('active');
+        }
+      }
+    });
+  }, observerOptions);
+  
+  // Observe all sections with IDs
+  document.querySelectorAll('section[id], h2[id], h3[id]').forEach(section => {
+    observer.observe(section);
+  });
+});
+</script>

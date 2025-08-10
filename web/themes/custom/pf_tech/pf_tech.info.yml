@@ -1,0 +1,40 @@
+name: 'PF Tech'
+type: theme
+description: 'PF Tech — Bootstrap Barrio subtheme optimized for API/docs and modern tech UI.'
+core_version_requirement: ^11
+base theme: bootstrap_barrio
+
+libraries:
+  - pf_tech/base
+  - pf_tech/components
+  - pf_tech/code
+  - pf_tech/dark
+
+regions:
+  header: Header
+  primary_menu: 'Primary menu'
+  secondary_menu: 'Secondary menu'
+  hero: Hero
+  highlighted: Highlighted
+  breadcrumb: Breadcrumb
+  content: Content
+  sidebar_first: 'Sidebar first'
+  sidebar_second: 'Sidebar second'
+  featured_top: 'Featured top'
+  featured_bottom_first: 'Featured bottom first'
+  featured_bottom_second: 'Featured bottom second'
+  featured_bottom_third: 'Featured bottom third'
+  footer_first: 'Footer first'
+  footer_second: 'Footer second'
+  footer_third: 'Footer third'
+  footer_fourth: 'Footer fourth'
+  footer_fifth: 'Footer fifth'
+  footer_top: 'Footer top'
+  footer_bottom: 'Footer bottom'
+  offcanvas: 'Off-canvas'
+
+regions_hidden: {  }
+
+# Optional: Uncomment to force container behavior via settings later
+# settings:
+#   pf_tech_container: container-xl

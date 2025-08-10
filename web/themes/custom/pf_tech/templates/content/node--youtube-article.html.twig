@@ -1,0 +1,203 @@
+{#
+/**
+ * @file
+ * YouTube Article template with Tailwind CSS
+ * 
+ * This template provides a beautiful, modern layout for YouTube articles
+ * using Tailwind utility classes for easy customization.
+ */
+#}
+{{ attach_library('bootstrap_barrio/node') }}
+
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+  ]
+%}
+
+<article{{ attributes.addClass(classes).addClass('bg-white rounded-xl shadow-lg overflow-hidden') }}>
+  {# Article Header #}
+  <header class="px-6 lg:px-12 py-8 border-b border-gray-100">
+    {{ title_prefix }}
+    {% if label and not page %}
+      <h2 class="text-3xl lg:text-4xl font-bold text-drupal-text mb-4 hover:text-drupal-primary transition-colors">
+        <a href="{{ url }}" rel="bookmark" class="no-underline">{{ label }}</a>
+      </h2>
+    {% elseif label %}
+      <h1 class="text-4xl lg:text-5xl font-bold text-drupal-text mb-6 leading-tight">{{ label }}</h1>
+    {% endif %}
+    {{ title_suffix }}
+    
+    {# Article Metadata #}
+    {% if display_submitted %}
+      <div class="flex flex-wrap items-center gap-4 text-sm text-drupal-muted">
+        {% if author_picture %}
+          <div class="flex-shrink-0">
+            {{ author_picture }}
+          </div>
+        {% endif %}
+        
+        <div class="flex flex-wrap items-center gap-4">
+          {% block submitted %}
+            <span class="flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+              <span>By <strong class="text-drupal-text">{{ author_name }}</strong></span>
+            </span>
+            
+            <span class="flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              <time datetime="{{ date }}">{{ date }}</time>
+            </span>
+          {% endblock %}
+          
+          {# Additional metadata like reading time, views, etc. #}
+          {{ metadata }}
+        </div>
+      </div>
+    {% endif %}
+  </header>
+
+  {# Main Content Area #}
+  <div{{ content_attributes.addClass('px-6 lg:px-12 py-8') }}>
+    {# YouTube Video Embed - Full Width with Aspect Ratio #}
+    {% if content.field_youtube_url or content.field_youtube_video %}
+      <div class="mb-10 -mx-6 lg:-mx-12">
+        <div class="relative w-full aspect-w-16 aspect-h-9 bg-black">
+          {{ content.field_youtube_url }}
+          {{ content.field_youtube_video }}
+        </div>
+      </div>
+    {% endif %}
+    
+    {# Video Duration or Other Quick Info #}
+    {% if content.field_video_duration %}
+      <div class="flex flex-wrap gap-4 mb-8 text-sm">
+        <span class="flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          {{ content.field_video_duration }}
+        </span>
+      </div>
+    {% endif %}
+    
+    {# Main Body Content with Prose Styling #}
+    <div class="drupal-prose prose-lg prose-headings:font-bold prose-h2:text-3xl prose-h2:mt-8 prose-h2:mb-4 prose-h3:text-2xl prose-h3:mt-6 prose-h3:mb-3 prose-p:mb-6 prose-ul:my-6 prose-li:mb-2 prose-blockquote:border-l-4 prose-blockquote:border-drupal-primary prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:my-8">
+      {{ content.body }}
+    </div>
+    
+    {# Video Transcript Section #}
+    {% if content.field_transcript %}
+      <div class="mt-12 p-6 bg-gray-50 rounded-lg border border-gray-200">
+        <details class="group">
+          <summary class="cursor-pointer flex items-center justify-between p-4 -m-6 mb-0 hover:bg-gray-100 rounded-lg transition-colors">
+            <h3 class="text-xl font-semibold flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              Video Transcript
+            </h3>
+            <svg class="w-5 h-5 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </summary>
+          <div class="mt-6 max-h-96 overflow-y-auto prose prose-sm">
+            {{ content.field_transcript }}
+          </div>
+        </details>
+      </div>
+    {% endif %}
+    
+    {# Tags Section #}
+    {% if content.field_tags %}
+      <div class="mt-12 pt-8 border-t border-gray-200">
+        <div class="flex items-start gap-3">
+          <span class="text-sm font-semibold text-drupal-muted mt-1">Tags:</span>
+          <div class="flex flex-wrap gap-2">
+            {{ content.field_tags }}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    
+    {# Categories #}
+    {% if content.field_categories %}
+      <div class="mt-6">
+        <div class="flex items-start gap-3">
+          <span class="text-sm font-semibold text-drupal-muted mt-1">Categories:</span>
+          <div class="flex flex-wrap gap-2">
+            {{ content.field_categories }}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    
+    {# Related Content #}
+    {% if content.field_related_content %}
+      <div class="mt-12 p-6 bg-drupal-surface rounded-lg">
+        <h3 class="text-xl font-semibold mb-4">Related Videos</h3>
+        {{ content.field_related_content }}
+      </div>
+    {% endif %}
+    
+    {# Render any remaining content #}
+    {{ content|without('body', 'field_youtube_url', 'field_youtube_video', 'field_video_duration', 'field_transcript', 'field_tags', 'field_categories', 'field_related_content') }}
+  </div>
+  
+  {# Article Footer Actions #}
+  <footer class="px-6 lg:px-12 py-6 bg-gray-50 border-t border-gray-100">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      {# Social Share Buttons #}
+      <div class="flex items-center gap-2">
+        <span class="text-sm text-drupal-muted">Share:</span>
+        <button class="p-2 rounded-full bg-white hover:bg-drupal-primary hover:text-white transition-colors" title="Share on Twitter">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+          </svg>
+        </button>
+        <button class="p-2 rounded-full bg-white hover:bg-drupal-primary hover:text-white transition-colors" title="Share on Facebook">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+          </svg>
+        </button>
+      </div>
+      
+      {# Action Links #}
+      {% if content.links %}
+        <div class="flex gap-4">
+          {{ content.links }}
+        </div>
+      {% endif %}
+    </div>
+  </footer>
+</article>
+
+{# Add Tailwind styles for field tags #}
+<style>
+  /* Style tag links if they're not already styled */
+  .field--name-field-tags a,
+  .field--name-field-categories a {
+    @apply drupal-tag;
+  }
+  
+  /* Ensure video embeds are responsive */
+  .media-oembed-content iframe,
+  .field--name-field-youtube-video iframe {
+    @apply absolute top-0 left-0 w-full h-full;
+  }
+  
+  .media-oembed-content,
+  .field--name-field-youtube-video {
+    @apply relative w-full;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  }
+</style>

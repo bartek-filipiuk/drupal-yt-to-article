@@ -1,0 +1,16 @@
+{
+  "name": "drupal/yt_to_article",
+  "description": "Converts YouTube videos to articles using PocketFlow API with real-time WebSocket updates",
+  "type": "drupal-module",
+  "license": "GPL-2.0+",
+  "require": {
+    "php": ">=8.3",
+    "textalk/websocket": "^1.5",
+    "league/commonmark": "^2.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Drupal\\yt_to_article\\": "src/"
+    }
+  }
+}

@@ -1,0 +1,98 @@
+/**
+ * Tag Field Styles
+ * Reusable styles for taxonomy term reference fields
+ */
+
+/* Base tag field styling */
+.field--type-entity-reference.field--label-tags,
+.field--name-field-tags,
+.field--name-field-categories,
+[class*="field--name-field-"][class*="-tags"] {
+  margin-top: var(--pf-space-lg, 1.5rem);
+}
+
+/* Tag field label */
+.field--type-entity-reference .field__label {
+  display: inline-block;
+  font-size: var(--pf-font-size-sm, 0.875rem);
+  font-weight: 600;
+  margin-right: var(--pf-space-sm, 0.5rem);
+  color: var(--pf-muted);
+}
+
+/* Tag container */
+.field--type-entity-reference .field__items {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--pf-space-sm, 0.5rem);
+}
+
+/* Individual tag styling */
+.field--type-entity-reference .field__item {
+  display: inline-block;
+}
+
+.field--type-entity-reference .field__item a,
+.taxonomy-term-reference-link {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--pf-space-xs, 0.25rem) var(--pf-space-sm, 0.5rem);
+  background: var(--pf-surface);
+  border: 1px solid var(--pf-border);
+  border-radius: var(--pf-radius-sm, 0.25rem);
+  font-size: var(--pf-font-size-sm, 0.875rem);
+  color: var(--pf-text);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+/* Tag hover state */
+.field--type-entity-reference .field__item a:hover,
+.taxonomy-term-reference-link:hover {
+  background: var(--pf-primary);
+  border-color: var(--pf-primary);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: var(--pf-shadow-sm);
+}
+
+/* Tag variations */
+.field--type-entity-reference .field__item a.tag--primary {
+  background: var(--pf-primary);
+  border-color: var(--pf-primary);
+  color: white;
+}
+
+.field--type-entity-reference .field__item a.tag--secondary {
+  background: transparent;
+  border-color: var(--pf-primary);
+  color: var(--pf-primary);
+}
+
+.field--type-entity-reference .field__item a.tag--small {
+  padding: 0.125rem 0.375rem;
+  font-size: var(--pf-font-size-xs, 0.75rem);
+}
+
+/* Inline tag display variant */
+.field--type-entity-reference.field--tags-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pf-space-sm, 0.5rem);
+}
+
+.field--type-entity-reference.field--tags-inline .field__label {
+  margin-bottom: 0;
+}
+
+/* Cloud tag display variant */
+.field--type-entity-reference.field--tags-cloud .field__items {
+  justify-content: center;
+  text-align: center;
+  gap: var(--pf-space-xs, 0.25rem);
+}
+
+.field--type-entity-reference.field--tags-cloud .field__item a {
+  font-size: calc(var(--pf-font-size-sm) * var(--tag-weight, 1));
+  opacity: calc(0.6 + (0.4 * var(--tag-weight, 1)));
+}

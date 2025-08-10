@@ -1,0 +1,4 @@
+services:
+  logger.channel.yt_to_article_admin:
+    parent: logger.channel_base
+    arguments: ['yt_to_article_admin']

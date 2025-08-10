@@ -1,0 +1,27 @@
+services:
+  yt_to_article.api_client:
+    class: Drupal\yt_to_article\Service\YtToArticleApiClient
+    arguments:
+      - '@config.factory'
+      - '@http_client'
+      - '@logger.channel.yt_to_article'
+      - '@cache.default'
+      - '@datetime.time'
+    tags:
+      - { name: backend_overridable }
+
+  yt_to_article.websocket_client:
+    class: Drupal\yt_to_article\Service\YtToArticleWebSocketClient
+    arguments:
+      - '@config.factory'
+      - '@logger.channel.yt_to_article'
+
+  logger.channel.yt_to_article:
+    parent: logger.channel_base
+    arguments: ['yt_to_article']
+
+  yt_to_article.webhook:
+    class: Drupal\yt_to_article\Service\WebhookService
+    arguments:
+      - '@entity_type.manager'
+      - '@logger.channel.yt_to_article'

@@ -1,0 +1,9 @@
+use tailwind style editor:
+  title: 'Use Tailwind Style Editor'
+  description: 'Access the visual Tailwind CSS style editor'
+  restrict access: false
+
+administer tailwind style editor:
+  title: 'Administer Tailwind Style Editor'
+  description: 'Configure Tailwind Style Editor settings'
+  restrict access: true

@@ -1,0 +1,14 @@
+.site-footer {
+  background: #fff !important;
+  color: #fff;
+  padding: 10px 0;
+  .content {
+    text-align: center;
+    a {
+      color: #666;
+      &:hover {
+        color: #333;
+      }
+    }
+  }
+}

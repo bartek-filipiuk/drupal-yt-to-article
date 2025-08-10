@@ -1,0 +1,11 @@
+name: 'Tailwind Style Editor'
+type: module
+description: 'Visual style editor for applying Tailwind CSS classes to Drupal elements'
+package: Custom
+version: 1.0.0
+core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:toolbar
+  - drupal:user
+libraries:
+  - tailwind_style_editor/style-editor

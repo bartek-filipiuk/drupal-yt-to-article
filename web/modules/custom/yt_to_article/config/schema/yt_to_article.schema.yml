@@ -1,0 +1,22 @@
+yt_to_article.settings:
+  type: config_object
+  label: 'YT to Article settings'
+  mapping:
+    api_url:
+      type: string
+      label: 'API Base URL'
+    websocket_url:
+      type: string
+      label: 'WebSocket Base URL'
+    timeout:
+      type: integer
+      label: 'Request timeout in seconds'
+    retry_attempts:
+      type: integer
+      label: 'Number of retry attempts'
+    default_max_length:
+      type: integer
+      label: 'Default maximum article length'
+    default_style:
+      type: string
+      label: 'Default writing style'

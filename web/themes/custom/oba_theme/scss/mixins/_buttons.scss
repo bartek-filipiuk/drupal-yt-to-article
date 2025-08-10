@@ -1,0 +1,47 @@
+// Button mixins
+@mixin button-base {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  border: none;
+}
+
+@mixin button-primary {
+  @include button-base;
+  background-color: #4a4a4a;
+  color: #fff;
+
+  &:hover, &:focus {
+    background-color: lighten(#4a4a4a, 10%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background-color: #238fee;
+  color: #fff;
+  font-weight: bold;
+
+  &:hover, &:focus {
+    background-color: lighten(#238fee, 10%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}

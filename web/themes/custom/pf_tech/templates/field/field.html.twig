@@ -1,0 +1,137 @@
+{#
+/**
+ * @file
+ * Generic field template with Tailwind CSS styling.
+ *
+ * To override output, copy the "field.html.twig" from the templates directory
+ * to your theme's directory and customize it, just like customizing other
+ * Drupal templates such as page.html.twig or node.html.twig.
+ *
+ * Instead of overriding the theming for all fields, you can also just override
+ * theming for a subset of fields using
+ * @link themeable Theme hook suggestions. @endlink For example,
+ * here are some theme hook suggestions that can be used for a field_foo field
+ * on an article node type:
+ * - field--node--field-foo--article.html.twig
+ * - field--node--field-foo.html.twig
+ * - field--node--article.html.twig
+ * - field--field-foo.html.twig
+ * - field--text-with-summary.html.twig
+ * - field.html.twig
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the containing element.
+ * - label_hidden: Whether to show the field label or not.
+ * - title_attributes: HTML attributes for the title.
+ * - label: The label for the field.
+ * - multiple: TRUE if a field can contain multiple items.
+ * - items: List of all the field items. Each item contains:
+ *   - attributes: List of HTML attributes for each item.
+ *   - content: The field item's content.
+ * - entity_type: The entity type to which the field belongs.
+ * - field_name: The name of the field.
+ * - field_type: The type of the field.
+ * - label_display: The display settings for the label.
+ *
+ *
+ * @see template_preprocess_field()
+ */
+#}
+{%
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'field--label-' ~ label_display,
+    'mb-6',
+    field_type == 'image' ? 'field--type-image-custom',
+    field_type == 'text_long' ? 'prose prose-lg max-w-none',
+  ]
+%}
+{%
+  set title_classes = [
+    'field__label',
+    'drupal-field-label',
+    'text-lg',
+    'font-semibold', 
+    'text-drupal-text',
+    'mb-3',
+    label_display == 'visually_hidden' ? 'sr-only',
+    label_display == 'inline' ? 'inline-block mr-3' : 'block',
+  ]
+%}
+
+{% if label_hidden %}
+  {% if multiple %}
+    <div{{ attributes.addClass(classes) }}>
+      <div class="field__items space-y-4">
+        {% for item in items %}
+          <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    {% for item in items %}
+      <div{{ attributes.addClass(classes, 'field__item') }}>{{ item.content }}</div>
+    {% endfor %}
+  {% endif %}
+{% else %}
+  <div{{ attributes.addClass(classes) }}>
+    <h3{{ title_attributes.addClass(title_classes) }}>{{ label }}</h3>
+    {% if multiple %}
+      <div class="field__items space-y-4">
+        {% for item in items %}
+          <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+        {% endfor %}
+      </div>
+    {% else %}
+      {% for item in items %}
+        <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endif %}
+
+{# Field-specific Tailwind enhancements #}
+<style>
+  /* Text fields */
+  .field--type-text-long p {
+    @apply mb-4;
+  }
+  
+  .field--type-text-long ul,
+  .field--type-text-long ol {
+    @apply my-4 ml-6;
+  }
+  
+  .field--type-text-long li {
+    @apply mb-2;
+  }
+  
+  .field--type-text-long blockquote {
+    @apply my-6 pl-6 border-l-4 border-drupal-primary italic text-drupal-muted;
+  }
+  
+  /* Image fields */
+  .field--type-image img {
+    @apply rounded-lg shadow-md;
+  }
+  
+  .field--type-image figure {
+    @apply mb-6;
+  }
+  
+  .field--type-image figcaption {
+    @apply mt-2 text-sm text-drupal-muted text-center;
+  }
+  
+  /* Link fields */
+  .field--type-link a {
+    @apply text-drupal-primary hover:text-drupal-secondary underline transition-colors;
+  }
+  
+  /* Entity reference fields */
+  .field--type-entity-reference .field__items {
+    @apply flex flex-wrap gap-2;
+  }
+</style>

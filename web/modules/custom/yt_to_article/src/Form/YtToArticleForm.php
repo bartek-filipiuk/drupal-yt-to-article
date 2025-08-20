@@ -155,12 +155,12 @@ final class YtToArticleForm extends FormBase {
       '#type' => 'select',
       '#title' => $this->t('Output format'),
       '#options' => [
-        'markdown' => $this->t('Markdown - Standard Markdown format'),
+        //'markdown' => $this->t('Markdown - Standard Markdown format'),
         'html' => $this->t('HTML - Clean HTML with semantic tags'),
-        'faq' => $this->t('FAQ - Question-and-answer format'),
-        'listicle' => $this->t('Listicle - Numbered list with key takeaways'),
+        //'faq' => $this->t('FAQ - Question-and-answer format'),
+        //'listicle' => $this->t('Listicle - Numbered list with key takeaways'),
       ],
-      '#default_value' => 'markdown',
+      '#default_value' => 'html',
       '#description' => $this->t('Choose how you want the content formatted.'),
     ];
 

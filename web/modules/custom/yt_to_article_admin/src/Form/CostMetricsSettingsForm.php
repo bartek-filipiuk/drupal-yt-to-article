@@ -32,7 +32,31 @@ class CostMetricsSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('yt_to_article_admin.settings');
 
-    $form['webhook_secret'] = [
+    $form['api_settings'] = [
+      '#type' => 'details',
+      '#title' => $this->t('API Settings'),
+      '#open' => TRUE,
+    ];
+
+    $form['api_settings']['api_admin_token'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('API Admin Token'),
+      '#description' => $this->t('Admin API token for accessing user metrics. This token must have admin privileges. Format: yt_xxx...'),
+      '#default_value' => $config->get('api_admin_token'),
+      '#required' => FALSE,
+      '#maxlength' => 255,
+      '#attributes' => [
+        'placeholder' => 'yt_YOUR_ADMIN_TOKEN_HERE',
+      ],
+    ];
+
+    $form['webhook_settings'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Webhook Settings'),
+      '#open' => TRUE,
+    ];
+
+    $form['webhook_settings']['webhook_secret'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Webhook Secret'),
       '#description' => $this->t('The shared secret for authenticating webhook requests. This must match the secret configured in the PocketFlow API.'),
@@ -71,6 +95,7 @@ Content-Type: application/json</pre>',
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('yt_to_article_admin.settings')
+      ->set('api_admin_token', $form_state->getValue('api_admin_token'))
       ->set('webhook_secret', $form_state->getValue('webhook_secret'))
       ->save();
 

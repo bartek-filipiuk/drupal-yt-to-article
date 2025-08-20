@@ -7,6 +7,10 @@ view yt article cost reports:
   title: 'View YT Article Cost Reports'
   description: 'View cost reports for YouTube article generation.'
 
+view yt article user metrics:
+  title: 'View YT Article User Metrics'
+  description: 'View API user metrics, balances, and transaction history.'
+
 receive cost webhook:
   title: 'Receive Cost Webhook'
   description: 'Allow webhook to create cost metric entries.'

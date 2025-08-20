@@ -1,0 +1,16 @@
+# DDEV Docker Compose override to connect to external API network
+# This allows DDEV containers to communicate with the API containers
+
+networks:
+  yt-to-article-network:
+    external: true
+
+services:
+  web:
+    networks:
+      - default
+      - yt-to-article-network
+  db:
+    networks:
+      - default
+      - yt-to-article-network

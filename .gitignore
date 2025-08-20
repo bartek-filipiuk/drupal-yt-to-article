@@ -3,3 +3,5 @@ vendor
 private
 web/themes/contrib
 web/modules/contrib
+.idea
+

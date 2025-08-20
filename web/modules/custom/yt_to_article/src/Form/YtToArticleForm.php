@@ -269,7 +269,7 @@ final class YtToArticleForm extends FormBase {
         'language' => $form_state->getValue('language', 'en'),
         // Hardcoded LLM configuration
         'llm_provider' => 'openrouter',
-        'llm_model' => 'google/gemini-2.5-flash-lite',
+        'llm_model' => 'google/gemini-2.5-flash',
       ];
 
       // Add custom instructions if needed

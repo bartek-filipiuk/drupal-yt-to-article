@@ -32,5 +32,15 @@ function yt_to_article_admin_theme() {
       ],
       'template' => 'yt-article-cost-report',
     ],
+    'yt_user_metrics' => [
+      'variables' => [
+        'summary' => [],
+        'users' => [],
+        'search' => NULL,
+        'pagination' => [],
+        'refresh_form' => NULL,
+      ],
+      'template' => 'yt-user-metrics',
+    ],
   ];
 }

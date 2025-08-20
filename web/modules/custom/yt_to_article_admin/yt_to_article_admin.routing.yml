@@ -29,3 +29,24 @@ yt_to_article_admin.settings:
     _permission: 'administer yt article costs'
   options:
     _admin_route: true
+
+yt_to_article_admin.user_metrics:
+  path: '/admin/reports/yt-article-users'
+  defaults:
+    _controller: '\Drupal\yt_to_article_admin\Controller\UserMetricsController::metrics'
+    _title: 'API User Metrics'
+  requirements:
+    _permission: 'view yt article user metrics'
+  options:
+    _admin_route: true
+
+yt_to_article_admin.user_details:
+  path: '/admin/reports/yt-article-users/{user_id}'
+  defaults:
+    _controller: '\Drupal\yt_to_article_admin\Controller\UserMetricsController::userDetails'
+    _title: 'User Details'
+  requirements:
+    _permission: 'view yt article user metrics'
+    user_id: '\d+'
+  options:
+    _admin_route: true

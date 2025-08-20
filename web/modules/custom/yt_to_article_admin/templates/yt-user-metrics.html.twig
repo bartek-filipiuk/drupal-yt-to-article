@@ -1,0 +1,250 @@
+{#
+/**
+ * @file
+ * Template for displaying API user metrics.
+ *
+ * Available variables:
+ * - summary: Summary statistics about users
+ * - users: Array of user data
+ * - search: Current search term
+ * - pagination: Pagination information
+ * - refresh_form: The refresh/filter form
+ */
+#}
+<div id="user-metrics-wrapper" class="yt-user-metrics">
+  
+  {# Display the refresh/filter form #}
+  {{ refresh_form }}
+  
+  {# Summary Statistics #}
+  {% if summary %}
+    <div class="user-metrics-summary">
+      <h2>{{ 'Summary Statistics'|t }}</h2>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <span class="label">{{ 'Total Users'|t }}:</span>
+          <span class="value">{{ summary.total_users|default(0) }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">{{ 'Active Users'|t }}:</span>
+          <span class="value">{{ summary.active_users|default(0) }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">{{ 'Total Credits'|t }}:</span>
+          <span class="value">{{ summary.total_credits|default(0)|number_format }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">{{ 'Total Balance'|t }}:</span>
+          <span class="value">${{ summary.total_balance|default(0)|number_format(2) }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">{{ 'Users with Credits'|t }}:</span>
+          <span class="value">{{ summary.users_with_credits|default(0) }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">{{ 'Users with Balance'|t }}:</span>
+          <span class="value">{{ summary.users_with_balance|default(0) }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">{{ 'Active API Tokens'|t }}:</span>
+          <span class="value">{{ summary.active_api_tokens|default(0) }} / {{ summary.total_api_tokens|default(0) }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">{{ 'New Users (7d)'|t }}:</span>
+          <span class="value">{{ summary.recent_signups_7d|default(0) }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">{{ 'New Users (30d)'|t }}:</span>
+          <span class="value">{{ summary.recent_signups_30d|default(0) }}</span>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  
+  {# User Table #}
+  <div class="user-metrics-table">
+    <h2>{{ 'API Users'|t }}</h2>
+    
+    {% if users %}
+      <table class="responsive-enabled">
+        <thead>
+          <tr>
+            <th>{{ 'Username'|t }}</th>
+            <th>{{ 'Email'|t }}</th>
+            <th>{{ 'Credits'|t }}</th>
+            <th>{{ 'Balance'|t }}</th>
+            <th>{{ 'Tokens'|t }}</th>
+            <th>{{ 'Status'|t }}</th>
+            <th>{{ 'Created'|t }}</th>
+            <th>{{ 'Actions'|t }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+            <tr>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.credits }}</td>
+              <td>${{ user.balance }}</td>
+              <td>{{ user.token_count }}</td>
+              <td>{{ user.status }}</td>
+              <td>{{ user.created }}</td>
+              <td>
+                <a href="{{ user.view_details_url }}" class="button button--small">{{ 'View Details'|t }}</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      
+      {# Pagination #}
+      {% if pagination.total > pagination.limit %}
+        <div class="user-metrics-pagination">
+          <div class="pagination-info">
+            {{ 'Showing @start-@end of @total users'|t({
+              '@start': pagination.offset + 1,
+              '@end': min(pagination.offset + pagination.limit, pagination.total),
+              '@total': pagination.total
+            }) }}
+          </div>
+          <div class="pagination-controls">
+            {% if pagination.offset > 0 %}
+              {% set prev_offset = max(0, pagination.offset - pagination.limit) %}
+              <a href="?offset={{ prev_offset }}&limit={{ pagination.limit }}{% if search %}&search={{ search }}{% endif %}" class="button">
+                {{ '← Previous'|t }}
+              </a>
+            {% endif %}
+            
+            {% if pagination.has_more %}
+              {% set next_offset = pagination.offset + pagination.limit %}
+              <a href="?offset={{ next_offset }}&limit={{ pagination.limit }}{% if search %}&search={{ search }}{% endif %}" class="button">
+                {{ 'Next →'|t }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+      
+    {% else %}
+      <p class="no-results">
+        {% if search %}
+          {{ 'No users found matching "@search".'|t({'@search': search}) }}
+        {% else %}
+          {{ 'No users found.'|t }}
+        {% endif %}
+      </p>
+    {% endif %}
+  </div>
+  
+</div>
+
+<style>
+  .yt-user-metrics {
+    padding: 20px 0;
+  }
+  
+  .user-metrics-summary {
+    background: #f5f5f5;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 4px;
+  }
+  
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+  }
+  
+  .summary-item {
+    background: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  .summary-item .label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+    font-size: 0.9em;
+  }
+  
+  .summary-item .value {
+    font-size: 1.2em;
+    color: #333;
+  }
+  
+  .user-metrics-table {
+    margin-top: 30px;
+  }
+  
+  .user-metrics-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .user-metrics-table th {
+    background: #f0f0f0;
+    padding: 10px;
+    text-align: left;
+    font-weight: bold;
+  }
+  
+  .user-metrics-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .user-metrics-table tr:hover {
+    background: #f9f9f9;
+  }
+  
+  .user-metrics-pagination {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .pagination-controls {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .user-metrics-refresh-form {
+    background: white;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  
+  .user-metrics-refresh-form .form--inline {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+  }
+  
+  .user-metrics-refresh-form .form-item {
+    margin: 0;
+  }
+  
+  .user-metrics-refresh-form .form-actions {
+    margin: 0;
+  }
+  
+  .no-results {
+    padding: 30px;
+    text-align: center;
+    background: #f5f5f5;
+    border-radius: 4px;
+    color: #666;
+  }
+</style>

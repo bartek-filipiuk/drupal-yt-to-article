@@ -2,3 +2,11 @@ services:
   logger.channel.yt_to_article_admin:
     parent: logger.channel_base
     arguments: ['yt_to_article_admin']
+  
+  yt_to_article_admin.api_user_service:
+    class: Drupal\yt_to_article_admin\Service\ApiUserService
+    arguments:
+      - '@http_client'
+      - '@config.factory'
+      - '@cache.default'
+      - '@logger.channel.yt_to_article_admin'

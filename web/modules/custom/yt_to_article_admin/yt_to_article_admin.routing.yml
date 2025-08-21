@@ -50,3 +50,23 @@ yt_to_article_admin.user_details:
     user_id: '\d+'
   options:
     _admin_route: true
+
+yt_to_article_admin.user_management:
+  path: '/admin/config/services/yt-article-users/manage'
+  defaults:
+    _form: '\Drupal\yt_to_article_admin\Form\UserManagementForm'
+    _title: 'Manage API Users'
+  requirements:
+    _permission: 'manage yt article users'
+  options:
+    _admin_route: true
+
+yt_to_article_admin.user_autocomplete:
+  path: '/admin/yt-article/user-autocomplete'
+  defaults:
+    _controller: '\Drupal\yt_to_article_admin\Controller\UserMetricsController::autocomplete'
+    _format: json
+  requirements:
+    _permission: 'manage yt article users'
+  options:
+    _admin_route: true

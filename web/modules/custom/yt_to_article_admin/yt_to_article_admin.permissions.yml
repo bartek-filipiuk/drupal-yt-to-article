@@ -11,6 +11,11 @@ view yt article user metrics:
   title: 'View YT Article User Metrics'
   description: 'View API user metrics, balances, and transaction history.'
 
+manage yt article users:
+  title: 'Manage YT Article Users'
+  description: 'Create and manage API users, update credits and balances.'
+  restrict access: true
+
 receive cost webhook:
   title: 'Receive Cost Webhook'
   description: 'Allow webhook to create cost metric entries.'

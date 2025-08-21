@@ -45,19 +45,16 @@ jobs:
             # Inline deployment commands if script doesn't exist
 
             # Install composer dependencies (production mode)
-            # composer install --no-dev --optimize-autoloader --no-interaction
+            composer install --no-dev --optimize-autoloader --no-interaction
 
             # Run database updates
-            # drush updatedb -y
+            drush updatedb -y
 
             # Import configuration if exists
             drush config:import -y
 
             # Clear all caches
             drush cache:rebuild
-
-            # Protect settings file
-            chmod 444 web/sites/default/settings.php || true
 
       - name: Health check
         run: |

@@ -400,6 +400,26 @@ final class YtToArticleForm extends FormBase {
       // Check if this is a 402 error that wasn't caught by InsufficientFundsException
       if (strpos($e->getMessage(), '402 Payment Required') !== false) {
         $message = $this->t('Unable to generate article: Insufficient funds. Please contact your administrator to purchase credits or add funds to your account.');
+      } elseif ($e->getCode() === 422) {
+        // This is a validation error
+        $context = $e->getContext();
+        if (isset($context['error_type']) && $context['error_type'] === 'security_violation') {
+          $message = $this->t('Security violation detected: Your custom instructions contain prohibited patterns that attempt to override system behavior. Please rephrase your instructions without trying to manipulate the system.');
+        } elseif (isset($context['response_body'])) {
+          $response_data = json_decode($context['response_body'], true);
+          if (isset($response_data['error_type']) && $response_data['error_type'] === 'security_violation') {
+            $message = $this->t('Security violation detected: Your custom instructions contain prohibited patterns that attempt to override system behavior. Please rephrase your instructions without trying to manipulate the system.');
+          } else {
+            // Other validation errors
+            $message = $this->t('Invalid input: Please check your custom instructions and ensure they meet the requirements (10-500 characters, plain text only).');
+          }
+        } else {
+          // Generic validation error
+          $message = $this->t('Invalid input: Please check your custom instructions and ensure they meet the requirements (10-500 characters, plain text only).');
+        }
+      } elseif (strpos($e->getMessage(), '422 Unprocessable Entity') !== false) {
+        // Legacy handling for string-based 422 detection
+        $message = $this->t('Invalid input: Please check your custom instructions and ensure they meet the requirements (10-500 characters, plain text only).');
       } else {
         // For other API errors, show a generic message
         $message = $this->t('Unable to connect to the article generation service. Please try again later.');

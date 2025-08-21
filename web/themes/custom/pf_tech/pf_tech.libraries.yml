@@ -7,6 +7,9 @@ base:
       css/yt-to-article-form.css: {}
     component:
       css/components.css: {}
+      css/navigation/menu-main.css: {}
+      css/views/article-list.css: {}
+      css/views/pagination.css: {}
     theme:
       css/utilities.css: {}
       css/bootstrap-overrides.css: { weight: 100 }

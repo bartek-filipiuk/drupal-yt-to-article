@@ -6,6 +6,9 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_help().
@@ -43,4 +46,26 @@ function yt_to_article_admin_theme() {
       'template' => 'yt-user-metrics',
     ],
   ];
+}
+
+/**
+ * Implements hook_node_access().
+ */
+function yt_to_article_admin_node_access(NodeInterface $node, $op, AccountInterface $account) {
+  // Check if this is an article_cost_metrics node
+  if ($node->getType() === 'article_cost_metrics') {
+    // Only allow access for administrators
+    if ($op === 'view') {
+      // Check if user has administrator role
+      if ($account->hasPermission('administer nodes') || in_array('administrator', $account->getRoles())) {
+        return AccessResult::allowed()->cachePerPermissions();
+      }
+      // Deny access for non-administrators
+      return AccessResult::forbidden('Access to cost metrics is restricted to administrators.')
+        ->cachePerPermissions();
+    }
+  }
+  
+  // No opinion for other content types or operations
+  return AccessResult::neutral();
 }

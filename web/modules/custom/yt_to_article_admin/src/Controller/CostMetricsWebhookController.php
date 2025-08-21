@@ -70,9 +70,9 @@ class CostMetricsWebhookController extends ControllerBase {
     $this->logger->info('Cost metrics webhook received');
 
     try {
-      // Get the webhook secret from config
-      $config = $this->config('yt_to_article_admin.settings');
-      $expectedSecret = $config->get('webhook_secret');
+      // Get the webhook secret from settings.php instead of config
+      $settings = \Drupal::service('settings')->get('yt_to_article_admin', []);
+      $expectedSecret = $settings['webhook_secret'] ?? '';
 
       // Get the secret from header
       $providedSecret = $request->headers->get('X-Webhook-Secret', '');

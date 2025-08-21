@@ -56,13 +56,11 @@ class CostMetricsSettingsForm extends ConfigFormBase {
       '#open' => TRUE,
     ];
 
-    $form['webhook_settings']['webhook_secret'] = [
-      '#type' => 'textfield',
+    $form['webhook_settings']['webhook_secret_info'] = [
+      '#type' => 'item',
       '#title' => $this->t('Webhook Secret'),
-      '#description' => $this->t('The shared secret for authenticating webhook requests. This must match the secret configured in the PocketFlow API.'),
-      '#default_value' => $config->get('webhook_secret'),
-      '#required' => TRUE,
-      '#maxlength' => 255,
+      '#markup' => '<em>' . $this->t('Configured in settings.php for security') . '</em>',
+      '#description' => $this->t('The webhook secret is stored in settings.php under $settings[\'yt_to_article_admin\'][\'webhook_secret\'] for security reasons. This prevents it from being exported with configuration.'),
     ];
 
     $form['webhook_info'] = [
@@ -96,7 +94,6 @@ Content-Type: application/json</pre>',
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('yt_to_article_admin.settings')
       ->set('api_admin_token', $form_state->getValue('api_admin_token'))
-      ->set('webhook_secret', $form_state->getValue('webhook_secret'))
       ->save();
 
     parent::submitForm($form, $form_state);

@@ -169,6 +169,11 @@ class WebhookService {
         $node->set('field_video_url', $videoInfo['url']);
       }
 
+      // Also set the YouTube embed field with the same URL
+      if ($node->hasField('field_youtube_embed') && !empty($videoInfo['url'])) {
+        $node->set('field_youtube_embed', $videoInfo['url']);
+      }
+
       if ($node->hasField('field_request_id') && !empty($requestId)) {
         $node->set('field_request_id', $requestId);
       }
@@ -183,6 +188,23 @@ class WebhookService {
 
       if ($node->hasField('field_generation_time') && isset($metadata['generation_time_seconds'])) {
         $node->set('field_generation_time', $metadata['generation_time_seconds']);
+      }
+
+      // Add article type (length) field
+      $articleLength = $data['article_length'] ?? $metadata['article_length'] ?? null;
+      if ($node->hasField('field_article_type') && !empty($articleLength)) {
+        // Load the taxonomy term by name
+        $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
+          ->loadByProperties(['name' => $articleLength, 'vid' => 'article_type']);
+        
+        if (!empty($terms)) {
+          // Use the first matching term
+          $term = reset($terms);
+          $node->set('field_article_type', $term->id());
+        } else {
+          // Log if term not found
+          $this->logger->warning('Article type taxonomy term not found: @type', ['@type' => $articleLength]);
+        }
       }
 
       // Add cost tracking fields

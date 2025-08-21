@@ -38,7 +38,7 @@
     <head-placeholder token="{{ placeholder_token|raw }}">
     <title>{{ head_title|safe_join(' | ') }}</title>
     <css-placeholder token="{{ placeholder_token|raw }}">
-    
+
     {# Tailwind CSS CDN for Development - Replace with production build later #}
     <script src="https://cdn.tailwindcss.com?plugins=typography,aspect-ratio,forms"></script>
     <script>
@@ -80,48 +80,45 @@
         }
       }
     </script>
-    
+
     {# Custom Tailwind styles for Drupal-specific components #}
     <style type="text/tailwindcss">
       @layer components {
         .drupal-button {
           @apply inline-flex items-center px-4 py-2 bg-drupal-primary text-white font-medium rounded-md hover:bg-drupal-secondary transition-colors duration-200;
         }
-        
+
         .drupal-card {
           @apply bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200;
         }
-        
+
         .drupal-field-label {
           @apply font-semibold text-drupal-text mb-2;
         }
-        
+
         .drupal-tag {
           @apply inline-block px-3 py-1 bg-drupal-surface text-drupal-text text-sm rounded-full border border-drupal-border hover:bg-drupal-primary hover:text-white hover:border-drupal-primary transition-all duration-200;
         }
-        
+
         .drupal-prose {
           @apply prose prose-lg max-w-none prose-headings:text-drupal-text prose-p:text-drupal-text prose-a:text-drupal-primary prose-a:no-underline hover:prose-a:underline;
         }
       }
-      
+
       @layer utilities {
         .drupal-container {
           @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
         }
-        
+
         .drupal-section {
           @apply py-8 sm:py-12 lg:py-16;
         }
       }
     </style>
-    
+
     <js-placeholder token="{{ placeholder_token|raw }}">
   </head>
   <body{{ attributes.addClass(body_classes) }}>
-    <a href="#main-content" class="visually-hidden-focusable">
-      {{ 'Skip to main content'|t }}
-    </a>
     {{ page_top }}
     {{ page }}
     {{ page_bottom }}

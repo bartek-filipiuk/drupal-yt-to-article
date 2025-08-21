@@ -316,6 +316,18 @@ final class YtToArticleForm extends FormBase {
       // Update the result container
       $response->addCommand(new HtmlCommand('#yt-to-article-result', $renderedProgress));
 
+      // Clear previous messages before starting new generation
+      $response->addCommand(new InvokeCommand(
+        '#yt-to-article-messages-container .messages__wrapper',
+        'empty'
+      ));
+
+      // Clear previous action buttons (View Article link)
+      $response->addCommand(new InvokeCommand(
+        '.yt-to-article-actions',
+        'remove'
+      ));
+
 
       // Pass WebSocket configuration to JavaScript
       $wsSettings = [

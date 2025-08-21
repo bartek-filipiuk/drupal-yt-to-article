@@ -114,6 +114,21 @@
       this.reconnectAttempts = 0;
       this.updateStatus('Connected', 'connected');
       
+      // Clear previous messages when new connection opens
+      const messagesWrapper = document.querySelector('#yt-to-article-messages-container .messages__wrapper') || 
+                            document.querySelector('.yt-to-article-messages .messages__wrapper');
+      if (messagesWrapper) {
+        console.log('[YtToArticle] Clearing previous messages');
+        messagesWrapper.innerHTML = '';
+      }
+      
+      // Clear previous action buttons (View Article link)
+      const actionsDiv = document.querySelector('.yt-to-article-actions');
+      if (actionsDiv) {
+        console.log('[YtToArticle] Removing previous action buttons');
+        actionsDiv.remove();
+      }
+      
       // Display initial connection message
       this.displayMessage('Connected to article generation service', 'connected');
       

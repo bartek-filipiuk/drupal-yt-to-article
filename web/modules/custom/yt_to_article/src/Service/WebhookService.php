@@ -170,8 +170,16 @@ class WebhookService {
       }
 
       // Also set the YouTube embed field with the same URL
+      // The YouTube field requires both 'input' (URL) and 'video_id' properties
       if ($node->hasField('field_youtube_embed') && !empty($videoInfo['url'])) {
-        $node->set('field_youtube_embed', $videoInfo['url']);
+        // Extract video ID using the YouTube module's helper function
+        $video_id = youtube_get_video_id($videoInfo['url']);
+        
+        // Set both required properties for the YouTube field
+        $node->set('field_youtube_embed', [
+          'input' => $videoInfo['url'],
+          'video_id' => $video_id ?: '',
+        ]);
       }
 
       if ($node->hasField('field_request_id') && !empty($requestId)) {

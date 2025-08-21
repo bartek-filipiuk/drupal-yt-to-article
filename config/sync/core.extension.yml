@@ -26,6 +26,8 @@ module:
   layout_builder: 0
   layout_discovery: 0
   link: 0
+  media: 0
+  media_library: 0
   menu_link_content: 0
   menu_ui: 0
   mysql: 0
@@ -41,12 +43,15 @@ module:
   tailwind_style_editor: 0
   taxonomy: 0
   text: 0
+  token: 0
   toolbar: 0
   update: 0
   user: 0
   views_ui: 0
+  youtube: 0
   yt_to_article: 0
   yt_to_article_admin: 0
+  pathauto: 1
   views: 10
   standard: 1000
 theme:

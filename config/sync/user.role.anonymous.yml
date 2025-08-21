@@ -9,6 +9,7 @@ dependencies:
     - comment
     - contact
     - filter
+    - media
     - search
     - system
     - yt_to_article
@@ -26,3 +27,4 @@ permissions:
   - 'search content'
   - 'use text format full_html'
   - 'use text format restricted_html'
+  - 'view media'

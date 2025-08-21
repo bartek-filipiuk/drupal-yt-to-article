@@ -11,7 +11,7 @@ _core:
 id: pf_tech_search_form_narrow
 theme: pf_tech
 region: primary_menu
-weight: -4
+weight: -5
 provider: null
 plugin: search_form_block
 settings:

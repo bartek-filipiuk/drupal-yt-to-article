@@ -1,3 +1,4 @@
 _core:
   default_config_hash: 0xl7QfaSGaH9VsgaQzaNd5sVnIWWTWPywYtNbpBlaB8
-# webhook_secret has been moved to settings.php for security
+webhook_secret: oFVadNSSx3LeD8AtZCxslLFgwRE1fpiKY51YTnC5LO8=
+api_admin_token: yt__nRHtaXepEiwXm8djjTDgf7s3YarmKC5xWPXfYsm2Wk

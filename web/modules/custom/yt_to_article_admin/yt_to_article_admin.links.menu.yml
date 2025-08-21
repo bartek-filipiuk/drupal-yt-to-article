@@ -1,0 +1,27 @@
+yt_to_article_admin.settings:
+  title: 'YT Article Admin Settings'
+  route_name: yt_to_article_admin.settings
+  parent: system.admin_config_services
+  description: 'Configure API settings and webhook secrets.'
+  weight: 10
+
+yt_to_article_admin.cost_report:
+  title: 'YT Article Cost Report'
+  route_name: yt_to_article_admin.cost_report
+  parent: system.admin_reports
+  description: 'View cost reports for YouTube article generation.'
+  weight: 20
+
+yt_to_article_admin.user_metrics:
+  title: 'API User Metrics'
+  route_name: yt_to_article_admin.user_metrics
+  parent: system.admin_reports
+  description: 'View API user metrics and billing information.'
+  weight: 21
+
+yt_to_article_admin.user_management:
+  title: 'Manage API Users'
+  route_name: yt_to_article_admin.user_management
+  parent: system.admin_config_services
+  description: 'Create and manage API users, update credits and balances.'
+  weight: 11

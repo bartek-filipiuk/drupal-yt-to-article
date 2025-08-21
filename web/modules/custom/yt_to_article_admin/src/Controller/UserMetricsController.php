@@ -228,4 +228,35 @@ class UserMetricsController extends ControllerBase {
     return $date;
   }
 
+  /**
+   * Autocomplete callback for user search.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The current request.
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   *   JSON response with matching users.
+   */
+  public function autocomplete(Request $request) {
+    $matches = [];
+    $string = $request->query->get('q');
+    
+    if ($string) {
+      // Fetch users matching the search string
+      $users_data = $this->apiUserService->fetchUsers(0, 10, $string);
+      
+      if ($users_data && isset($users_data['users'])) {
+        foreach ($users_data['users'] as $user) {
+          $label = sprintf('%s (%s)', $user['username'], $user['email']);
+          $matches[] = [
+            'value' => $user['id'] . '|' . $user['username'],
+            'label' => $label,
+          ];
+        }
+      }
+    }
+    
+    return new \Symfony\Component\HttpFoundation\JsonResponse($matches);
+  }
+
 }

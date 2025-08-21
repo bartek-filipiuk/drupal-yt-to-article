@@ -351,4 +351,270 @@ class ApiUserService {
     $this->cache->invalidateTags([self::CACHE_TAG]);
   }
 
+  /**
+   * Create a new user via the API.
+   *
+   * @param string $email
+   *   User email address.
+   * @param string $username
+   *   Username.
+   * @param string|null $external_user_id
+   *   External user ID.
+   * @param int $initial_credits
+   *   Initial credits to assign.
+   * @param float $initial_balance
+   *   Initial balance to assign.
+   *
+   * @return array|null
+   *   The created user data or null on error.
+   */
+  public function createUser(string $email, string $username, ?string $external_user_id = NULL, int $initial_credits = 0, float $initial_balance = 0.00): ?array {
+    $admin_token = $this->getAdminToken();
+    if (!$admin_token) {
+      $this->logger->error('Admin API token not configured for user creation');
+      return NULL;
+    }
+
+    try {
+      $api_url = $this->getApiBaseUrl();
+      
+      // Generate external_user_id if not provided (required field in API)
+      if (empty($external_user_id)) {
+        $external_user_id = 'drupal_' . uniqid();
+      }
+      
+      $data = [
+        'email' => $email,
+        'username' => $username,
+        'external_user_id' => $external_user_id,
+      ];
+      
+      // Create the user
+      $response = $this->httpClient->request('POST', $api_url . '/admin/users', [
+        'headers' => [
+          'Authorization' => 'Bearer ' . $admin_token,
+          'Content-Type' => 'application/json',
+          'Accept' => 'application/json',
+        ],
+        'json' => $data,
+        'timeout' => 30,
+      ]);
+
+      $user_data = json_decode($response->getBody()->getContents(), TRUE);
+      
+      // If user created successfully and we have initial credits/balance, update them
+      if ($user_data && isset($user_data['id'])) {
+        if ($initial_credits > 0) {
+          $this->updateUserCredits($user_data['id'], $initial_credits);
+        }
+        if ($initial_balance > 0) {
+          $this->updateUserBalance($user_data['id'], $initial_balance);
+        }
+      }
+      
+      // Clear cache to reflect new user
+      $this->clearCache();
+      
+      return $user_data;
+    }
+    catch (GuzzleException $e) {
+      $this->logger->error('Failed to create user via API: @error', [
+        '@error' => $e->getMessage(),
+      ]);
+      return NULL;
+    }
+  }
+
+  /**
+   * Create an API token for a user.
+   *
+   * @param int $user_id
+   *   The user ID.
+   * @param string $name
+   *   Token name/description.
+   * @param string $tier
+   *   Token tier (basic/premium).
+   * @param bool $is_admin
+   *   Whether to grant admin privileges.
+   *
+   * @return array|null
+   *   The token data including the full token (only shown once) or null on error.
+   */
+  public function createUserToken(int $user_id, string $name, string $tier = 'basic', bool $is_admin = FALSE): ?array {
+    $admin_token = $this->getAdminToken();
+    if (!$admin_token) {
+      $this->logger->error('Admin API token not configured for token creation');
+      return NULL;
+    }
+
+    try {
+      $api_url = $this->getApiBaseUrl();
+      
+      $response = $this->httpClient->request('POST', $api_url . '/admin/users/' . $user_id . '/tokens', [
+        'headers' => [
+          'Authorization' => 'Bearer ' . $admin_token,
+          'Content-Type' => 'application/json',
+          'Accept' => 'application/json',
+        ],
+        'json' => [
+          'name' => $name,
+          'tier' => $tier,
+          'is_admin' => $is_admin,
+        ],
+        'timeout' => 30,
+      ]);
+
+      return json_decode($response->getBody()->getContents(), TRUE);
+    }
+    catch (GuzzleException $e) {
+      $this->logger->error('Failed to create user token via API: @error', [
+        '@error' => $e->getMessage(),
+      ]);
+      return NULL;
+    }
+  }
+
+  /**
+   * Update user credits.
+   *
+   * @param int $user_id
+   *   The user ID.
+   * @param int $credits
+   *   The new credit amount.
+   *
+   * @return array|null
+   *   The updated billing info or null on error.
+   */
+  public function updateUserCredits(int $user_id, int $credits): ?array {
+    $admin_token = $this->getAdminToken();
+    if (!$admin_token) {
+      $this->logger->error('Admin API token not configured for credit update');
+      return NULL;
+    }
+
+    try {
+      $api_url = $this->getApiBaseUrl();
+      
+      $response = $this->httpClient->request('PUT', $api_url . '/admin/users/' . $user_id . '/credits', [
+        'headers' => [
+          'Authorization' => 'Bearer ' . $admin_token,
+          'Content-Type' => 'application/json',
+          'Accept' => 'application/json',
+        ],
+        'json' => [
+          'credits' => $credits,
+        ],
+        'timeout' => 30,
+      ]);
+
+      // Clear cache for this user
+      $this->cache->invalidateTags([self::CACHE_TAG]);
+      
+      return json_decode($response->getBody()->getContents(), TRUE);
+    }
+    catch (GuzzleException $e) {
+      $this->logger->error('Failed to update user credits via API: @error', [
+        '@error' => $e->getMessage(),
+      ]);
+      return NULL;
+    }
+  }
+
+  /**
+   * Update user balance (set to specific amount).
+   *
+   * @param int $user_id
+   *   The user ID.
+   * @param float $balance
+   *   The new balance amount.
+   *
+   * @return array|null
+   *   The updated billing info or null on error.
+   */
+  public function updateUserBalance(int $user_id, float $balance): ?array {
+    $admin_token = $this->getAdminToken();
+    if (!$admin_token) {
+      $this->logger->error('Admin API token not configured for balance update');
+      return NULL;
+    }
+
+    try {
+      $api_url = $this->getApiBaseUrl();
+      
+      $response = $this->httpClient->request('PUT', $api_url . '/admin/users/' . $user_id . '/balance', [
+        'headers' => [
+          'Authorization' => 'Bearer ' . $admin_token,
+          'Content-Type' => 'application/json',
+          'Accept' => 'application/json',
+        ],
+        'json' => [
+          'balance' => $balance,
+        ],
+        'timeout' => 30,
+      ]);
+
+      // Clear cache for this user
+      $this->cache->invalidateTags([self::CACHE_TAG]);
+      
+      return json_decode($response->getBody()->getContents(), TRUE);
+    }
+    catch (GuzzleException $e) {
+      $this->logger->error('Failed to update user balance via API: @error', [
+        '@error' => $e->getMessage(),
+      ]);
+      return NULL;
+    }
+  }
+
+  /**
+   * Add to user balance (increment).
+   *
+   * @param int $user_id
+   *   The user ID.
+   * @param float $amount
+   *   The amount to add.
+   * @param string|null $description
+   *   Optional description for the transaction.
+   *
+   * @return array|null
+   *   The updated billing info or null on error.
+   */
+  public function addToUserBalance(int $user_id, float $amount, ?string $description = NULL): ?array {
+    $admin_token = $this->getAdminToken();
+    if (!$admin_token) {
+      $this->logger->error('Admin API token not configured for balance addition');
+      return NULL;
+    }
+
+    try {
+      $api_url = $this->getApiBaseUrl();
+      
+      $data = ['amount' => $amount];
+      if ($description) {
+        $data['description'] = $description;
+      }
+      
+      $response = $this->httpClient->request('POST', $api_url . '/admin/users/' . $user_id . '/balance/add', [
+        'headers' => [
+          'Authorization' => 'Bearer ' . $admin_token,
+          'Content-Type' => 'application/json',
+          'Accept' => 'application/json',
+        ],
+        'json' => $data,
+        'timeout' => 30,
+      ]);
+
+      // Clear cache for this user
+      $this->cache->invalidateTags([self::CACHE_TAG]);
+      
+      return json_decode($response->getBody()->getContents(), TRUE);
+    }
+    catch (GuzzleException $e) {
+      $this->logger->error('Failed to add to user balance via API: @error', [
+        '@error' => $e->getMessage(),
+      ]);
+      return NULL;
+    }
+  }
+
 }

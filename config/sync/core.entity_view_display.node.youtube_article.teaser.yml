@@ -6,6 +6,7 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.youtube_article.body
     - field.field.node.youtube_article.field_accuracy_score
+    - field.field.node.youtube_article.field_article_type
     - field.field.node.youtube_article.field_cost_breakdown
     - field.field.node.youtube_article.field_generation_time
     - field.field.node.youtube_article.field_input_tokens
@@ -18,6 +19,7 @@ dependencies:
     - field.field.node.youtube_article.field_transcription_cost
     - field.field.node.youtube_article.field_video_url
     - field.field.node.youtube_article.field_word_count
+    - field.field.node.youtube_article.field_youtube_embed
     - node.type.youtube_article
   module:
     - text
@@ -42,6 +44,7 @@ content:
     region: content
 hidden:
   field_accuracy_score: true
+  field_article_type: true
   field_cost_breakdown: true
   field_generation_time: true
   field_input_tokens: true
@@ -54,3 +57,4 @@ hidden:
   field_transcription_cost: true
   field_video_url: true
   field_word_count: true
+  field_youtube_embed: true

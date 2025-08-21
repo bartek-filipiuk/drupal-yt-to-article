@@ -30,34 +30,32 @@ jobs:
           script: |
             # Navigate to Drupal production directory
             cd /var/www/yt.hardsocket.com/app
-            
+
             # Backup database before deployment
             drush sql-dump --gzip --result-file=/var/www/yt.hardsocket.com/app/backups/db-backup-$(date +%Y%m%d-%H%M%S).sql.gz || true
-            
+
             drush cache:rebuild
-            
+
             # Pull latest code
             git fetch origin
             git pull origin main
-            
+
             # Run deployment script
-            
+
             # Inline deployment commands if script doesn't exist
-            
+
             # Install composer dependencies (production mode)
             # composer install --no-dev --optimize-autoloader --no-interaction
-            
+
             # Run database updates
             # drush updatedb -y
-            
+
             # Import configuration if exists
-            # if [ -d "config/sync" ]; then
-            #   drush config:import -y || true
-            # fi
-            
+            drush config:import -y
+
             # Clear all caches
             drush cache:rebuild
-            
+
             # Protect settings file
             chmod 444 web/sites/default/settings.php || true
 

@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.youtube_article.body
     - field.field.node.youtube_article.field_accuracy_score
+    - field.field.node.youtube_article.field_article_type
     - field.field.node.youtube_article.field_cost_breakdown
     - field.field.node.youtube_article.field_generation_time
     - field.field.node.youtube_article.field_input_tokens
@@ -17,11 +18,13 @@ dependencies:
     - field.field.node.youtube_article.field_transcription_cost
     - field.field.node.youtube_article.field_video_url
     - field.field.node.youtube_article.field_word_count
+    - field.field.node.youtube_article.field_youtube_embed
     - node.type.youtube_article
   module:
     - link
     - text
     - user
+    - youtube
 id: node.youtube_article.default
 targetEntityType: node
 bundle: youtube_article
@@ -32,7 +35,15 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 2
+    region: content
+  field_article_type:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
     region: content
   field_video_url:
     type: link
@@ -44,7 +55,23 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 0
+    weight: 1
+    region: content
+  field_youtube_embed:
+    type: youtube_video
+    label: hidden
+    settings:
+      youtube_size: 450x315
+      youtube_width: ''
+      youtube_height: ''
+      youtube_autoplay: false
+      youtube_mute: false
+      youtube_loop: false
+      youtube_controls: false
+      youtube_autohide: false
+      youtube_iv_load_policy: false
+    third_party_settings: {  }
+    weight: 3
     region: content
 hidden:
   field_accuracy_score: true

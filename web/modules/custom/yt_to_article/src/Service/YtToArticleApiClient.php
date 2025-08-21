@@ -99,6 +99,15 @@ final class YtToArticleApiClient {
           currentBalance: is_array($body['detail']) ? ($body['detail']['current_balance'] ?? 0.0) : ($body['current_balance'] ?? 0.0),
           minimumBalance: is_array($body['detail']) ? ($body['detail']['minimum_balance'] ?? 0.30) : ($body['minimum_balance'] ?? 0.30)
         ),
+        422 => throw new ApiException(
+          message: is_string($body['detail']) ? $body['detail'] : 'Validation error',
+          code: $statusCode,
+          context: [
+            'response' => $body,
+            'response_body' => json_encode($body),
+            'error_type' => $body['error_type'] ?? null
+          ]
+        ),
         429 => throw new RateLimitException(
           message: $body['detail'] ?? 'Rate limit exceeded',
           retryAfter: $this->parseRetryAfter($response->getHeader('Retry-After'))

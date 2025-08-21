@@ -1,0 +1,227 @@
+/**
+ * Main Menu Navigation Styles
+ * Modern horizontal navigation matching the tech theme
+ */
+
+/* Main menu container */
+.menu--main {
+  margin-bottom: 0 !important;
+}
+
+/* Remove Bootstrap's default styling */
+.menu--main .navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-direction: row;
+}
+
+/* Menu items */
+.menu--main .nav-item {
+  display: inline-flex;
+  margin: 0;
+  padding: 0;
+}
+
+/* Menu links */
+.menu--main .nav-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--pf-text);
+  text-decoration: none;
+  border-radius: 0.375rem;
+  transition: all 0.15s ease;
+  position: relative;
+  white-space: nowrap;
+}
+
+/* Hover state */
+.menu--main .nav-link:hover {
+  color: var(--pf-primary);
+  background: rgba(0, 188, 212, 0.05);
+  text-decoration: none;
+}
+
+/* Active/Current page state */
+.menu--main .nav-link.is-active,
+.menu--main .nav-link.active,
+.menu--main .nav-link[aria-current="page"] {
+  color: var(--pf-primary);
+  background: rgba(0, 188, 212, 0.08);
+  position: relative;
+}
+
+/* Active indicator line */
+.menu--main .nav-link.is-active::after,
+.menu--main .nav-link.active::after,
+.menu--main .nav-link[aria-current="page"]::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 1rem;
+  right: 1rem;
+  height: 2px;
+  background: var(--pf-primary);
+  border-radius: 2px;
+  animation: slideIn 0.2s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Focus state for accessibility */
+.menu--main .nav-link:focus {
+  outline: 2px solid var(--pf-primary);
+  outline-offset: 2px;
+  border-radius: 0.375rem;
+}
+
+/* Dropdown menus (if they exist) */
+.menu--main .dropdown-menu {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: var(--pf-bg);
+  border: 1px solid var(--pf-border);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.menu--main .dropdown-item {
+  padding: 0.5rem 0.75rem;
+  color: var(--pf-text);
+  font-size: 0.9375rem;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease;
+}
+
+.menu--main .dropdown-item:hover {
+  background: var(--pf-surface);
+  color: var(--pf-primary);
+}
+
+/* Mobile menu (when shown via button) */
+#mobile-menu .menu--main .navbar-nav {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.25rem;
+  padding: 0.5rem 0;
+}
+
+#mobile-menu .menu--main .nav-item {
+  width: 100%;
+}
+
+#mobile-menu .menu--main .nav-link {
+  width: 100%;
+  justify-content: flex-start;
+  padding: 0.75rem 1rem;
+}
+
+#mobile-menu .menu--main .nav-link.is-active::after,
+#mobile-menu .menu--main .nav-link.active::after,
+#mobile-menu .menu--main .nav-link[aria-current="page"]::after {
+  display: none;
+}
+
+#mobile-menu .menu--main .nav-link.is-active,
+#mobile-menu .menu--main .nav-link.active,
+#mobile-menu .menu--main .nav-link[aria-current="page"] {
+  background: rgba(0, 188, 212, 0.1);
+  border-left: 3px solid var(--pf-primary);
+  padding-left: calc(1rem - 3px);
+}
+
+/* Header integration */
+header .menu--main {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* Brand/Logo styles when near menu */
+.navbar-brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--pf-text);
+  text-decoration: none;
+  transition: color 0.15s ease;
+  letter-spacing: -0.025em;
+}
+
+.navbar-brand:hover {
+  color: var(--pf-primary);
+  text-decoration: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .menu--main .nav-link {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Hide desktop menu on mobile */
+  nav.hidden.lg\\:block {
+    display: none !important;
+  }
+  
+  /* Show mobile menu when toggled */
+  #mobile-menu:not(.hidden) {
+    display: block !important;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .menu--main .nav-link {
+    color: var(--pf-text);
+  }
+  
+  .menu--main .nav-link:hover {
+    background: rgba(0, 188, 212, 0.1);
+  }
+  
+  .menu--main .nav-link.is-active,
+  .menu--main .nav-link.active,
+  .menu--main .nav-link[aria-current="page"] {
+    background: rgba(0, 188, 212, 0.15);
+  }
+  
+  .menu--main .dropdown-menu {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(71, 85, 105, 0.5);
+  }
+  
+  .menu--main .dropdown-item:hover {
+    background: rgba(71, 85, 105, 0.3);
+  }
+}
+
+/* Icon support in menu items */
+.menu--main .nav-link svg,
+.menu--main .nav-link i {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-right: 0.375rem;
+  opacity: 0.7;
+  transition: opacity 0.15s ease;
+}
+
+.menu--main .nav-link:hover svg,
+.menu--main .nav-link:hover i {
+  opacity: 1;
+}

@@ -1,0 +1,29 @@
+uuid: f6695987-76a8-43fa-ace1-1c3b62757760
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_article_type
+    - node.type.youtube_article
+    - taxonomy.vocabulary.article_type
+id: node.youtube_article.field_article_type
+field_name: field_article_type
+entity_type: node
+bundle: youtube_article
+label: 'Article Type'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      article_type: article_type
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

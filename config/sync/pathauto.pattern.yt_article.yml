@@ -1,0 +1,22 @@
+uuid: d61dcbd3-7c77-44d5-957f-7485093351d3
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: yt_article
+label: 'YT article'
+type: 'canonical_entities:node'
+pattern: 'yt/[node:title]'
+selection_criteria:
+  b7b10431-bb9c-4af7-a410-ae5cd9656e60:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: b7b10431-bb9c-4af7-a410-ae5cd9656e60
+    context_mapping:
+      node: node
+    bundles:
+      youtube_article: youtube_article
+selection_logic: and
+weight: -5
+relationships: {  }

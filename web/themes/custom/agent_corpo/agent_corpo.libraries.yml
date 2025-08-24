@@ -10,6 +10,7 @@ global-styling:
       css/components/site-branding.css: {}
       css/components/menu.css: {}
       css/components/yt-to-article-websocket.css: { weight: 150 }
+      css/components/view-all-articles.css: {}
     layout:
       css/layout/layout.css: {}
     theme:

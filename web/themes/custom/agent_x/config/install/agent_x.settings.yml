@@ -1,0 +1,19 @@
+# Agent X Theme Settings
+agent_x_container_width: '1200px'
+agent_x_enable_mobile_menu: true
+agent_x_sticky_header: true
+
+# Features
+features:
+  node_user_picture: false
+  comment_user_picture: true
+  comment_user_verification: true
+  favicon: true
+
+# Logo settings
+logo:
+  use_default: true
+
+# Favicon settings
+favicon:
+  use_default: true

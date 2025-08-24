@@ -1,0 +1,70 @@
+{#
+/**
+ * @file
+ * Agent X theme implementation to display a node.
+ *
+ * Available variables:
+ * - node: The node entity.
+ * - label: The title of the node.
+ * - content: All node items.
+ * - metadata: Metadata for this node.
+ * - date: Formatted creation date.
+ * - author_name: Formatted author name.
+ * - url: Direct URL of the current node.
+ * - display_submitted: Whether submission information should be displayed.
+ * - attributes: HTML attributes for the node.
+ * - title_attributes: HTML attributes for the title.
+ * - content_attributes: HTML attributes for the content.
+ * - author_attributes: HTML attributes for the author.
+ * - view_mode: View mode; for example, "teaser" or "full".
+ * - logged_in: Flag for authenticated user status.
+ * - page: Flag for the node being displayed on its own page.
+ */
+#}
+{%
+  set classes = [
+    'agent-article',
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+  ]
+%}
+{{ attach_library('agent_x/global') }}
+<article{{ attributes.addClass(classes) }}>
+  
+  {{ title_prefix }}
+  {% if label and not page %}
+    <h2{{ title_attributes.addClass('agent-article-title') }}>
+      <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+    </h2>
+  {% elseif label %}
+    <h1{{ title_attributes.addClass('agent-article-title') }}>{{ label }}</h1>
+  {% endif %}
+  {{ title_suffix }}
+
+  {% if display_submitted %}
+    <header class="agent-article-header">
+      <div class="agent-article-meta">
+        {% if author_picture %}
+          <div class="agent-article-author-picture">
+            {{ author_picture }}
+          </div>
+        {% endif %}
+        <div class="agent-article-meta-item">
+          <span class="agent-article-author">{{ author_name }}</span>
+        </div>
+        <div class="agent-article-meta-item">
+          <time class="agent-article-date" datetime="{{ date }}">{{ date }}</time>
+        </div>
+      </div>
+    </header>
+  {% endif %}
+
+  <div{{ content_attributes.addClass('agent-article-body', 'node__content') }}>
+    {{ content }}
+  </div>
+
+</article>

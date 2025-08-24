@@ -1,0 +1,132 @@
+{#
+/**
+ * @file
+ * Agent X theme implementation to display a single page.
+ *
+ * Available variables:
+ * - General utility variables:
+ *   - base_path: The base URL path of the Drupal installation.
+ *   - is_front: A flag indicating if the current page is the front page.
+ * - Site identity:
+ *   - logo: The url of the logo image, as defined in theme settings.
+ * - Page content (in order of occurrence in the default page.html.twig):
+ *   - node: Fully loaded node, if there is an automatically-loaded node.
+ */
+#}
+{% set container = container_width|default('1200px') %}
+{% set has_sidebar_first = page.sidebar_first|render|trim is not empty %}
+{% set has_sidebar_second = page.sidebar_second|render|trim is not empty %}
+{% set content_classes = [
+  has_sidebar_first or has_sidebar_second ? 'has-sidebars',
+  has_sidebar_first ? 'has-sidebar-first',
+  has_sidebar_second ? 'has-sidebar-second',
+] %}
+
+<div class="agent-page">
+  {# Top Header #}
+  {% if page.top_header %}
+    <div class="region-top-header">
+      <div class="agent-container">
+        {{ page.top_header }}
+      </div>
+    </div>
+  {% endif %}
+
+  {# Header #}
+  <header class="region-header{{ sticky_header ? ' sticky' : '' }}" role="banner">
+    <div class="agent-container">
+      <div class="agent-flex agent-justify-between agent-items-center">
+        {# Site Branding #}
+        <div class="site-branding">
+          {{ page.header }}
+        </div>
+
+        {# Desktop Navigation #}
+        <nav class="agent-nav agent-hide-lg" role="navigation" aria-label="Main navigation">
+          {{ page.primary_menu }}
+        </nav>
+
+        {# Mobile Menu Toggle #}
+        <button class="agent-mobile-toggle agent-show-lg" aria-label="Toggle navigation" aria-expanded="false">
+          <span class="agent-mobile-toggle-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  {# Mobile Menu #}
+  <div class="agent-mobile-menu" role="dialog" aria-label="Mobile navigation">
+    <div class="agent-mobile-menu-panel">
+      <div class="agent-mobile-menu-header">
+        <div class="site-name">Menu</div>
+        <button class="agent-mobile-menu-close" aria-label="Close menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <nav class="agent-mobile-menu-nav">
+        {{ page.primary_menu }}
+      </nav>
+    </div>
+  </div>
+
+  {# Highlighted #}
+  {% if page.highlighted %}
+    <div class="region-highlighted">
+      <div class="agent-container">
+        {{ page.highlighted }}
+      </div>
+    </div>
+  {% endif %}
+
+  {# Breadcrumb #}
+  {% if page.breadcrumb %}
+    <div class="region-breadcrumb">
+      <div class="agent-container">
+        {{ page.breadcrumb }}
+      </div>
+    </div>
+  {% endif %}
+
+  {# Main Content #}
+  <main class="agent-main" id="main-content" role="main">
+    <div class="agent-container">
+      <div class="agent-content-wrapper {{ content_classes|join(' ') }}">
+        
+        {# Sidebar First #}
+        {% if has_sidebar_first %}
+          <aside class="region-sidebar-first" role="complementary">
+            {{ page.sidebar_first }}
+          </aside>
+        {% endif %}
+
+        {# Content #}
+        <div class="agent-content-main">
+          <a id="main-content" tabindex="-1"></a>
+          {{ page.content }}
+        </div>
+
+        {# Sidebar Second #}
+        {% if has_sidebar_second %}
+          <aside class="region-sidebar-second" role="complementary">
+            {{ page.sidebar_second }}
+          </aside>
+        {% endif %}
+
+      </div>
+    </div>
+  </main>
+
+  {# Footer #}
+  {% if page.footer %}
+    <footer class="agent-footer" role="contentinfo">
+      <div class="agent-container">
+        <div class="region-footer">
+          {{ page.footer }}
+        </div>
+      </div>
+    </footer>
+  {% endif %}
+</div>

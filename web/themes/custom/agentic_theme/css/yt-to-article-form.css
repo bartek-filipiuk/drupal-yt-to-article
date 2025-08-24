@@ -1,0 +1,694 @@
+/**
+ * YT to Article Form - Modern Tech Dashboard Styles
+ * Ultra-modern API monitoring dashboard aesthetic for Agentic Theme
+ */
+
+/* Import tech fonts */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+/* Form Container */
+.yt-to-article-form {
+  padding: 3rem 0;
+}
+
+.yt-to-article-form-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.95) 100%);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 
+    0 10px 40px rgba(0, 188, 212, 0.1),
+    0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 188, 212, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Tech grid background pattern */
+.yt-to-article-form-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(rgba(0, 188, 212, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 188, 212, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  animation: grid-move 20s linear infinite;
+}
+
+@keyframes grid-move {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+/* Form Header */
+.yt-to-article-form-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.yt-to-article-form-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--ag-primary) 0%, var(--ag-primary-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.yt-to-article-form-header p {
+  color: var(--ag-text-muted);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+/* Form Elements */
+.yt-to-article-form .js-form-item {
+  margin-bottom: 1.5rem;
+}
+
+.yt-to-article-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--ag-text);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.yt-to-article-form label.js-form-required::after,
+.yt-to-article-form label.form-required::after {
+  content: " *";
+  color: var(--ag-danger);
+  font-weight: 700;
+}
+
+/* URL Input Field */
+.yt-to-article-url-input,
+.yt-to-article-form input[type="text"],
+.yt-to-article-form input[type="url"] {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  background: white;
+  border: 2px solid var(--ag-border);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.yt-to-article-url-input:focus,
+.yt-to-article-form input[type="text"]:focus {
+  outline: none;
+  border-color: var(--ag-primary);
+  background: white;
+  box-shadow: 
+    0 0 0 4px rgba(0, 188, 212, 0.1),
+    0 2px 8px rgba(0, 188, 212, 0.2);
+}
+
+.yt-to-article-url-input::placeholder {
+  color: var(--ag-text-light);
+  font-style: italic;
+}
+
+/* Details/Summary (Collapsible Options) */
+.yt-to-article-form details {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--ag-border-light);
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.yt-to-article-form details[open] {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-color: var(--ag-primary);
+}
+
+.yt-to-article-form summary {
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, var(--ag-gray-100) 0%, white 100%);
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--ag-text);
+  user-select: none;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.yt-to-article-form summary:hover {
+  background: linear-gradient(135deg, var(--ag-gray-200) 0%, var(--ag-gray-100) 100%);
+}
+
+.yt-to-article-form summary::marker,
+.yt-to-article-form summary::-webkit-details-marker {
+  display: none;
+}
+
+.yt-to-article-form summary::after {
+  content: '▼';
+  font-size: 0.75rem;
+  color: var(--ag-primary);
+  transition: transform 0.3s ease;
+}
+
+.yt-to-article-form details[open] summary::after {
+  transform: rotate(180deg);
+}
+
+.yt-to-article-form .details-wrapper {
+  padding: 1.25rem;
+  background: white;
+}
+
+/* Select and Textarea */
+.yt-to-article-form select,
+.yt-to-article-form .form-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  padding-right: 2.5rem;
+  font-size: 1rem;
+  background: white;
+  border: 2px solid var(--ag-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2300bcd4' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+}
+
+.yt-to-article-form select:focus,
+.yt-to-article-form .form-select:focus {
+  outline: none;
+  border-color: var(--ag-primary);
+  box-shadow: 0 0 0 4px rgba(0, 188, 212, 0.1);
+}
+
+.yt-to-article-form textarea,
+.yt-to-article-form .form-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  background: white;
+  border: 2px solid var(--ag-border);
+  border-radius: 8px;
+  resize: vertical;
+  min-height: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  transition: all 0.3s ease;
+}
+
+.yt-to-article-form textarea:focus {
+  outline: none;
+  border-color: var(--ag-primary);
+  box-shadow: 0 0 0 4px rgba(0, 188, 212, 0.1);
+}
+
+/* Progress Container */
+.yt-to-article-progress-wrapper {
+  background: linear-gradient(135deg, rgba(13, 17, 43, 0.95) 0%, rgba(10, 14, 39, 0.95) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 188, 212, 0.3);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    0 0 80px rgba(0, 188, 212, 0.1),
+    inset 0 0 20px rgba(0, 188, 212, 0.05);
+}
+
+/* Progress Bar Container */
+.yt-to-article-progress {
+  margin: 1.5rem 0;
+}
+
+.yt-to-article-progress-container {
+  width: 100%;
+  height: 32px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
+  border: 1px solid rgba(0, 188, 212, 0.3);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(0, 188, 212, 0.1);
+}
+
+/* Progress Bar */
+.yt-to-article-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg,
+    var(--ag-primary-dark) 0%,
+    var(--ag-primary) 50%,
+    var(--ag-primary-dark) 100%);
+  background-size: 200% 100%;
+  position: relative;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: gradient-shift 3s ease-in-out infinite;
+  box-shadow:
+    0 0 20px rgba(0, 188, 212, 0.6),
+    inset 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Wave effect overlay */
+.yt-to-article-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent);
+  animation: wave-animation 2s linear infinite;
+}
+
+@keyframes wave-animation {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Progress Text */
+.yt-to-article-progress-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ag-primary);
+  text-align: center;
+  margin-top: 1rem;
+  text-shadow: 0 0 20px currentColor;
+  letter-spacing: 0.1em;
+}
+
+/* Messages Container - Terminal Style */
+.yt-to-article-messages-container {
+  margin-top: 2rem;
+}
+
+.yt-to-article-messages {
+  background: linear-gradient(135deg, #1a1f2e 0%, #0f1419 100%);
+  border: 1px solid rgba(0, 188, 212, 0.3);
+  border-radius: 8px;
+  padding: 1.5rem;
+  height: 300px;
+  overflow-y: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  position: relative;
+  box-shadow:
+    inset 0 2px 10px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(0, 188, 212, 0.05);
+}
+
+/* Terminal header */
+.yt-to-article-messages::before {
+  content: 'WEBSOCKET LOG';
+  position: absolute;
+  top: 0.5rem;
+  left: 1rem;
+  color: var(--ag-primary);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+/* Messages wrapper */
+.yt-to-article-messages .messages__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-top: 1.5rem;
+}
+
+/* Individual Messages */
+.yt-to-article-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  opacity: 0;
+  animation: message-appear 0.3s ease forwards;
+  background: rgba(0, 188, 212, 0.05);
+  border-left: 2px solid var(--ag-primary);
+  color: #e0e6ed;
+}
+
+@keyframes message-appear {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.yt-to-article-message:hover {
+  background: rgba(0, 188, 212, 0.1);
+}
+
+/* Message Time */
+.yt-to-article-message-time {
+  color: var(--ag-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  min-width: 80px;
+  opacity: 0.8;
+}
+
+.yt-to-article-message-time::before {
+  content: '[';
+  opacity: 0.5;
+}
+
+.yt-to-article-message-time::after {
+  content: ']';
+  opacity: 0.5;
+}
+
+/* Message Text */
+.yt-to-article-message-text {
+  flex: 1;
+  color: #a0aec0;
+}
+
+/* Message type variations */
+.yt-to-article-message--status {
+  border-left-color: #00e676;
+}
+
+.yt-to-article-message--status .yt-to-article-message-text {
+  color: #00e676;
+}
+
+.yt-to-article-message--warning {
+  border-left-color: #ffc107;
+  background: rgba(255, 193, 7, 0.05);
+}
+
+.yt-to-article-message--warning .yt-to-article-message-text {
+  color: #ffc107;
+}
+
+.yt-to-article-message--error {
+  border-left-color: #ff5252;
+  background: rgba(255, 82, 82, 0.05);
+}
+
+.yt-to-article-message--error .yt-to-article-message-text {
+  color: #ff5252;
+  font-weight: 600;
+}
+
+/* Special stage messages */
+.yt-to-article-message[data-message-stage="connected"] {
+  border-left-color: #00e676;
+  background: rgba(0, 230, 118, 0.1);
+}
+
+.yt-to-article-message[data-message-stage="finished"] {
+  border-left-color: #00e676;
+  background: linear-gradient(90deg, 
+    rgba(0, 230, 118, 0.15), 
+    rgba(0, 188, 212, 0.15));
+  font-weight: 600;
+}
+
+/* Terminal cursor */
+.yt-to-article-messages .messages__wrapper::after {
+  content: '▊';
+  color: var(--ag-primary);
+  animation: cursor-blink 1s infinite;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+@keyframes cursor-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Custom scrollbar */
+.yt-to-article-messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.yt-to-article-messages::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+.yt-to-article-messages::-webkit-scrollbar-thumb {
+  background: var(--ag-primary);
+  border-radius: 4px;
+  opacity: 0.5;
+}
+
+.yt-to-article-messages::-webkit-scrollbar-thumb:hover {
+  opacity: 0.8;
+}
+
+/* Submit Button and Actions */
+.yt-to-article-form .form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--ag-border-light);
+}
+
+/* All button variations */
+.yt-to-article-submit,
+.yt-to-article-form .button,
+.yt-to-article-form .btn,
+.yt-to-article-form button[type="submit"],
+.yt-to-article-form .js-form-submit,
+.yt-to-article-form .form-submit {
+  background: linear-gradient(135deg, var(--ag-primary) 0%, var(--ag-primary-dark) 100%);
+  color: white !important;
+  padding: 0.875rem 2.5rem !important;
+  font-size: 1.125rem !important;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 15px rgba(0, 188, 212, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+/* Ripple effect on hover */
+.yt-to-article-submit::before,
+.yt-to-article-form .button::before,
+.yt-to-article-form .btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.yt-to-article-submit:hover,
+.yt-to-article-form .button:hover,
+.yt-to-article-form .btn:hover,
+.yt-to-article-form button[type="submit"]:hover {
+  background: linear-gradient(135deg, var(--ag-primary-dark) 0%, var(--ag-primary) 100%);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 20px rgba(0, 188, 212, 0.4),
+    0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.yt-to-article-submit:hover::before,
+.yt-to-article-form .button:hover::before,
+.yt-to-article-form .btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.yt-to-article-submit:active,
+.yt-to-article-form .button:active,
+.yt-to-article-form .btn:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 2px 8px rgba(0, 188, 212, 0.3),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.yt-to-article-submit:disabled,
+.yt-to-article-form .button:disabled,
+.yt-to-article-form .btn:disabled {
+  background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+  cursor: not-allowed;
+  opacity: 0.7;
+  box-shadow: none;
+}
+
+.yt-to-article-submit:disabled:hover,
+.yt-to-article-form .button:disabled:hover {
+  transform: none;
+  background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+}
+
+/* Download/Action buttons */
+.yt-to-article-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.yt-to-article-actions .button,
+.yt-to-article-actions a {
+  background: linear-gradient(135deg, #00e676 0%, #00c853 100%);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 230, 118, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.yt-to-article-actions .button:hover,
+.yt-to-article-actions a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 230, 118, 0.4);
+}
+
+/* Help text styling */
+.yt-to-article-form .description,
+.yt-to-article-form .form-text,
+.yt-to-article-form small {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--ag-text-muted);
+  font-style: italic;
+}
+
+/* Loading state */
+.yt-to-article-form.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.yt-to-article-form.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--ag-gray-300);
+  border-top-color: var(--ag-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .yt-to-article-form-wrapper {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .yt-to-article-form-header h2 {
+    font-size: 2rem;
+  }
+  
+  .yt-to-article-messages {
+    height: 200px;
+    font-size: 0.75rem;
+  }
+  
+  .yt-to-article-message-time {
+    display: none;
+  }
+  
+  .yt-to-article-submit,
+  .yt-to-article-form .button,
+  .yt-to-article-form .btn {
+    padding: 0.75rem 1.5rem !important;
+    font-size: 1rem !important;
+  }
+}
+
+/* Processing animation */
+@keyframes processing {
+  0% { content: 'Processing'; }
+  25% { content: 'Processing.'; }
+  50% { content: 'Processing..'; }
+  75% { content: 'Processing...'; }
+  100% { content: 'Processing'; }
+}
+
+.yt-to-article-progress-wrapper[data-status="processing"]::after {
+  content: 'Processing';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: var(--ag-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  animation: processing 2s infinite;
+  text-shadow: 0 0 10px currentColor;
+}

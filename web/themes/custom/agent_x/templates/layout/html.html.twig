@@ -1,0 +1,62 @@
+{#
+/**
+ * @file
+ * Agent X theme implementation for the HTML element.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the HTML element.
+ * - logged_in: A flag indicating if user is logged in.
+ * - root_path: The root path of the current page.
+ * - node_type: The content type for the current node.
+ * - head_title: Page title tags.
+ * - page: The rendered page.
+ * - page_top: Initial markup from any modules.
+ * - page_bottom: Final closing markup from any modules.
+ */
+#}
+<!DOCTYPE html>
+<html{{ attributes }}>
+  <head>
+    <head-placeholder token="{{ placeholder_token }}">
+    <title>{{ head_title|safe_join(' | ') }}</title>
+    
+    {# Preconnect to Google Fonts #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <css-placeholder token="{{ placeholder_token }}">
+    <js-placeholder token="{{ placeholder_token }}">
+    
+    {# Responsive viewport meta tag #}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    
+    {# Theme color for mobile browsers #}
+    <meta name="theme-color" content="#0066cc">
+    
+    {# Optimize for mobile browsers #}
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    {# DNS prefetch for performance #}
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    
+  </head>
+  <body{{ attributes.addClass([
+    'agent-x-body',
+    logged_in ? 'user-logged-in' : 'user-logged-out',
+    node_type ? 'node-type-' ~ node_type|clean_class,
+    root_path ? 'path-' ~ root_path|clean_class,
+  ]) }}>
+    {#
+      Keyboard navigation/accessibility link to main content section in
+      page.html.twig.
+    #}
+    <a href="#main-content" class="visually-hidden focusable skip-link">
+      {{ 'Skip to main content'|t }}
+    </a>
+    {{ page_top }}
+    {{ page }}
+    {{ page_bottom }}
+    <js-bottom-placeholder token="{{ placeholder_token }}">
+  </body>
+</html>

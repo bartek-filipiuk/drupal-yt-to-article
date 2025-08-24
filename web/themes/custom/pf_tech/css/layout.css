@@ -5,9 +5,26 @@
   padding-inline: 1rem;
 }
 
-header.site-header {
+/* Fix header positioning - ensure it's a block element at top */
+header.site-header,
+header {
+  display: block !important;
+  position: relative;
   border-bottom: 1px solid var(--pf-border);
   background: var(--pf-surface);
+  width: 100%;
+  clear: both;
+}
+
+/* Ensure body uses vertical layout */
+body {
+  display: block !important;
+}
+
+/* Main container should be block level */
+main[role="main"] {
+  display: block !important;
+  clear: both;
 }
 
 .site-footer {
@@ -23,7 +40,8 @@ header.site-header {
   color: var(--pf-muted);
 }
 
-/* Content spacing */
+/* Content spacing - moved to earlier in file */
+/* Padding is now set above with display: block */
 main[role="main"] {
   padding-block: 2rem;
 }
@@ -44,4 +62,32 @@ main[role="main"] {
 /* Off-canvas placeholder */
 .region-offcanvas {
   display: none;
+}
+
+/* Fallback styles for Tailwind classes in templates */
+/* Ensures proper layout even if Tailwind isn't compiled */
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.flex {
+  display: flex !important;
+}
+
+.flex-col {
+  flex-direction: column !important;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.drupal-container {
+  max-width: var(--pf-max-content, 1200px);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.drupal-section {
+  padding: 2rem 0;
 }

@@ -1,0 +1,204 @@
+{#
+/**
+ * @file
+ * Agent Corpo theme override for the YT to Article form.
+ * Professional corporate styling for the YouTube to Article conversion form.
+ *
+ * Available variables:
+ * - form: The form array.
+ * - attributes: HTML attributes for the form element.
+ */
+#}
+<div class="yt-to-article-form-wrapper">
+  {# Form Header #}
+  <div class="yt-to-article-form-header">
+    <h2>{{ 'YouTube to Article Converter'|t }}</h2>
+    <p>{{ 'Transform video content into professional articles'|t }}</p>
+  </div>
+
+  {# Main Form Container #}
+  <div class="yt-to-article-form-container">
+    {# URL Input Section #}
+    <div class="form-section">
+      {{ form.youtube_url }}
+    </div>
+
+    {# Generation Options #}
+    {% if form.generation_options %}
+      <div class="form-section generation-options">
+        {{ form.generation_options }}
+      </div>
+    {% endif %}
+
+    {# Submit Actions #}
+    <div class="form-section form-actions">
+      {{ form.actions }}
+    </div>
+
+    {# Hidden form elements #}
+    {{ form.form_build_id }}
+    {{ form.form_token }}
+    {{ form.form_id }}
+  </div>
+
+  {# WebSocket Messages Container - Critical for WebSocket functionality #}
+  <div class="websocket-section">
+    {{ form.messages_container }}
+  </div>
+
+  {# Results Container #}
+  {% if form.result_container %}
+    <div class="results-section">
+      {{ form.result_container }}
+    </div>
+  {% endif %}
+</div>
+
+{# Add corporate styling enhancements #}
+<style>
+  .yt-to-article-form-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .yt-to-article-form-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  .yt-to-article-form-header h2 {
+    color: #2d3748;
+    font-size: 1.875rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .yt-to-article-form-header p {
+    color: #718096;
+    font-size: 1.125rem;
+  }
+
+  .yt-to-article-form-container {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  }
+
+  .form-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .generation-options {
+    padding-top: 1rem;
+    border-top: 1px solid #f7fafc;
+  }
+
+  .websocket-section {
+    margin-top: 2rem;
+  }
+
+  .results-section {
+    margin-top: 2rem;
+  }
+
+  /* Style form inputs */
+  .yt-to-article-form-wrapper input[type="text"],
+  .yt-to-article-form-wrapper input[type="url"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+  }
+
+  .yt-to-article-form-wrapper input[type="text"]:focus,
+  .yt-to-article-form-wrapper input[type="url"]:focus {
+    outline: none;
+    border-color: #4a7db7;
+    box-shadow: 0 0 0 3px rgba(74, 125, 183, 0.1);
+  }
+
+  .yt-to-article-form-wrapper label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+
+  .yt-to-article-form-wrapper .description {
+    margin-top: 0.375rem;
+    color: #718096;
+    font-size: 0.8125rem;
+  }
+
+  /* Style details/summary elements */
+  .yt-to-article-form-wrapper details {
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    margin-top: 1rem;
+  }
+
+  .yt-to-article-form-wrapper summary {
+    padding: 0.875rem 1rem;
+    cursor: pointer;
+    font-weight: 500;
+    color: #2d3748;
+    user-select: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .yt-to-article-form-wrapper summary:hover {
+    background: #edf2f7;
+  }
+
+  .yt-to-article-form-wrapper details[open] summary {
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .yt-to-article-form-wrapper .details-wrapper {
+    padding: 1rem;
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .yt-to-article-form-wrapper {
+      padding: 1rem;
+    }
+
+    .yt-to-article-form-container {
+      padding: 1.25rem;
+    }
+
+    .yt-to-article-form-header h2 {
+      font-size: 1.5rem;
+    }
+
+    .yt-to-article-form-header p {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .yt-to-article-form-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+    }
+
+    .yt-to-article-form-container {
+      padding: 1rem;
+      border-radius: 6px;
+    }
+  }
+</style>

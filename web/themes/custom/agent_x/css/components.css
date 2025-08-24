@@ -1,0 +1,491 @@
+/**
+ * Agent X Theme - Components
+ * Reusable UI components for API documentation
+ */
+
+/* Buttons */
+.agent-btn {
+  display: inline-block;
+  padding: var(--agent-space-sm) var(--agent-space-lg);
+  font-family: var(--agent-font-family);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--agent-radius-md);
+  transition: all var(--agent-transition-base);
+  white-space: nowrap;
+}
+
+.agent-btn:hover {
+  text-decoration: none;
+}
+
+.agent-btn:focus {
+  outline: 2px solid var(--agent-blue-light);
+  outline-offset: 2px;
+}
+
+.agent-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Button Variants */
+.agent-btn-primary {
+  color: var(--agent-white);
+  background-color: var(--agent-blue);
+  border-color: var(--agent-blue);
+}
+
+.agent-btn-primary:hover {
+  color: var(--agent-white);
+  background-color: var(--agent-blue-hover);
+  border-color: var(--agent-blue-hover);
+}
+
+.agent-btn-secondary {
+  color: var(--agent-text);
+  background-color: var(--agent-white);
+  border-color: var(--agent-border);
+}
+
+.agent-btn-secondary:hover {
+  color: var(--agent-text);
+  background-color: var(--agent-bg);
+  border-color: var(--agent-text-muted);
+}
+
+.agent-btn-outline {
+  color: var(--agent-blue);
+  background-color: transparent;
+  border-color: var(--agent-blue);
+}
+
+.agent-btn-outline:hover {
+  color: var(--agent-white);
+  background-color: var(--agent-blue);
+  border-color: var(--agent-blue);
+}
+
+.agent-btn-ghost {
+  color: var(--agent-text);
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.agent-btn-ghost:hover {
+  color: var(--agent-text);
+  background-color: var(--agent-bg);
+  border-color: transparent;
+}
+
+/* Button Sizes */
+.agent-btn-sm {
+  padding: var(--agent-space-xs) var(--agent-space-md);
+  font-size: 0.875rem;
+  border-radius: var(--agent-radius-sm);
+}
+
+.agent-btn-lg {
+  padding: var(--agent-space-md) var(--agent-space-xl);
+  font-size: 1rem;
+  border-radius: var(--agent-radius-lg);
+}
+
+/* Cards */
+.agent-card {
+  background-color: var(--agent-white);
+  border: 1px solid var(--agent-border-light);
+  border-radius: var(--agent-radius-lg);
+  box-shadow: var(--agent-shadow-sm);
+  overflow: hidden;
+  transition: box-shadow var(--agent-transition-base);
+}
+
+.agent-card:hover {
+  box-shadow: var(--agent-shadow-md);
+}
+
+.agent-card-header {
+  padding: var(--agent-space-lg);
+  border-bottom: 1px solid var(--agent-border-light);
+  background-color: var(--agent-bg);
+}
+
+.agent-card-body {
+  padding: var(--agent-space-lg);
+}
+
+.agent-card-footer {
+  padding: var(--agent-space-md) var(--agent-space-lg);
+  border-top: 1px solid var(--agent-border-light);
+  background-color: var(--agent-bg);
+}
+
+.agent-card-title {
+  margin-bottom: var(--agent-space-sm);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--agent-text);
+}
+
+.agent-card-subtitle {
+  margin-bottom: var(--agent-space-md);
+  font-size: 0.875rem;
+  color: var(--agent-text-muted);
+}
+
+/* Alerts / Messages */
+.agent-alert {
+  position: relative;
+  padding: var(--agent-space-md) var(--agent-space-lg);
+  margin-bottom: var(--agent-space-md);
+  border: 1px solid transparent;
+  border-radius: var(--agent-radius-md);
+}
+
+.agent-alert-info {
+  color: #004085;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+.agent-alert-success {
+  color: #155724;
+  background-color: var(--agent-success-light);
+  border-color: #c3e6cb;
+}
+
+.agent-alert-warning {
+  color: #856404;
+  background-color: var(--agent-warning-light);
+  border-color: #ffeaa7;
+}
+
+.agent-alert-error {
+  color: #721c24;
+  background-color: var(--agent-error-light);
+  border-color: #f5c6cb;
+}
+
+/* Badges */
+.agent-badge {
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: var(--agent-radius-sm);
+  transition: all var(--agent-transition-fast);
+}
+
+.agent-badge-primary {
+  color: var(--agent-white);
+  background-color: var(--agent-blue);
+}
+
+.agent-badge-secondary {
+  color: var(--agent-white);
+  background-color: var(--agent-text-muted);
+}
+
+.agent-badge-success {
+  color: var(--agent-white);
+  background-color: var(--agent-success);
+}
+
+.agent-badge-warning {
+  color: var(--agent-text);
+  background-color: var(--agent-warning);
+}
+
+.agent-badge-error {
+  color: var(--agent-white);
+  background-color: var(--agent-error);
+}
+
+/* API Method Badges */
+.agent-method {
+  display: inline-block;
+  padding: 0.25em 0.75em;
+  font-family: var(--agent-font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: var(--agent-radius-sm);
+  letter-spacing: 0.025em;
+}
+
+.agent-method-get {
+  color: var(--agent-white);
+  background-color: #61affe;
+}
+
+.agent-method-post {
+  color: var(--agent-white);
+  background-color: #49cc90;
+}
+
+.agent-method-put {
+  color: var(--agent-white);
+  background-color: #fca130;
+}
+
+.agent-method-delete {
+  color: var(--agent-white);
+  background-color: #f93e3e;
+}
+
+.agent-method-patch {
+  color: var(--agent-white);
+  background-color: #50e3c2;
+}
+
+/* Code Blocks */
+.agent-code-block {
+  position: relative;
+  margin-bottom: var(--agent-space-lg);
+  background-color: var(--agent-code-bg);
+  border: 1px solid var(--agent-code-border);
+  border-radius: var(--agent-radius-md);
+  overflow: hidden;
+}
+
+.agent-code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--agent-space-sm) var(--agent-space-md);
+  background-color: var(--agent-border-light);
+  border-bottom: 1px solid var(--agent-code-border);
+  font-size: 0.875rem;
+  color: var(--agent-text-muted);
+}
+
+.agent-code-content {
+  padding: var(--agent-space-md);
+  overflow-x: auto;
+}
+
+.agent-code-content pre {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
+
+/* Copy Button for Code */
+.agent-copy-btn {
+  padding: var(--agent-space-xs) var(--agent-space-sm);
+  font-size: 0.75rem;
+  color: var(--agent-text-muted);
+  background-color: var(--agent-white);
+  border: 1px solid var(--agent-border);
+  border-radius: var(--agent-radius-sm);
+  cursor: pointer;
+  transition: all var(--agent-transition-fast);
+}
+
+.agent-copy-btn:hover {
+  color: var(--agent-text);
+  background-color: var(--agent-bg);
+}
+
+.agent-copy-btn.copied {
+  color: var(--agent-success);
+  border-color: var(--agent-success);
+}
+
+/* API Endpoint Display */
+.agent-endpoint {
+  display: flex;
+  align-items: center;
+  gap: var(--agent-space-md);
+  padding: var(--agent-space-md);
+  background-color: var(--agent-bg);
+  border: 1px solid var(--agent-border-light);
+  border-radius: var(--agent-radius-md);
+  font-family: var(--agent-font-mono);
+  font-size: 0.9375rem;
+}
+
+.agent-endpoint-path {
+  flex: 1;
+  color: var(--agent-text);
+}
+
+/* Tabs */
+.agent-tabs {
+  margin-bottom: var(--agent-space-lg);
+}
+
+.agent-tabs-nav {
+  display: flex;
+  gap: var(--agent-space-xs);
+  border-bottom: 2px solid var(--agent-border-light);
+  margin-bottom: var(--agent-space-lg);
+}
+
+.agent-tab {
+  padding: var(--agent-space-sm) var(--agent-space-lg);
+  font-weight: 500;
+  color: var(--agent-text-muted);
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--agent-transition-fast);
+  margin-bottom: -2px;
+}
+
+.agent-tab:hover {
+  color: var(--agent-text);
+  background-color: var(--agent-bg);
+}
+
+.agent-tab.active {
+  color: var(--agent-blue);
+  border-bottom-color: var(--agent-blue);
+}
+
+.agent-tab-content {
+  padding: var(--agent-space-lg) 0;
+}
+
+/* Lists */
+.agent-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.agent-list-item {
+  padding: var(--agent-space-sm) 0;
+  border-bottom: 1px solid var(--agent-border-light);
+}
+
+.agent-list-item:last-child {
+  border-bottom: none;
+}
+
+/* Definition Lists for API Parameters */
+.agent-def-list {
+  margin: 0;
+}
+
+.agent-def-term {
+  font-weight: 600;
+  color: var(--agent-text);
+  margin-bottom: var(--agent-space-xs);
+}
+
+.agent-def-desc {
+  color: var(--agent-text-muted);
+  margin-bottom: var(--agent-space-md);
+  margin-left: var(--agent-space-lg);
+}
+
+/* Pagination */
+.agent-pagination {
+  display: flex;
+  gap: var(--agent-space-xs);
+  justify-content: center;
+  margin: var(--agent-space-2xl) 0;
+}
+
+.agent-page-link {
+  display: inline-block;
+  padding: var(--agent-space-sm) var(--agent-space-md);
+  font-size: 0.9375rem;
+  color: var(--agent-text);
+  background-color: var(--agent-white);
+  border: 1px solid var(--agent-border);
+  border-radius: var(--agent-radius-sm);
+  text-decoration: none;
+  transition: all var(--agent-transition-fast);
+}
+
+.agent-page-link:hover {
+  color: var(--agent-blue);
+  background-color: var(--agent-bg);
+  border-color: var(--agent-blue);
+}
+
+.agent-page-link.active {
+  color: var(--agent-white);
+  background-color: var(--agent-blue);
+  border-color: var(--agent-blue);
+}
+
+.agent-page-link.disabled {
+  color: var(--agent-text-light);
+  background-color: var(--agent-bg);
+  border-color: var(--agent-border-light);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Loading Spinner */
+.agent-spinner {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: text-bottom;
+  border: 0.25em solid var(--agent-blue-light);
+  border-right-color: var(--agent-blue);
+  border-radius: 50%;
+  animation: agent-spinner-rotate 0.75s linear infinite;
+}
+
+@keyframes agent-spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Tooltips */
+.agent-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.agent-tooltip-text {
+  visibility: hidden;
+  min-width: 120px;
+  background-color: var(--agent-text);
+  color: var(--agent-white);
+  text-align: center;
+  padding: var(--agent-space-xs) var(--agent-space-sm);
+  border-radius: var(--agent-radius-sm);
+  font-size: 0.875rem;
+  position: absolute;
+  z-index: var(--agent-z-tooltip);
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity var(--agent-transition-fast);
+}
+
+.agent-tooltip:hover .agent-tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Dividers */
+.agent-divider {
+  height: 1px;
+  background-color: var(--agent-border-light);
+  margin: var(--agent-space-xl) 0;
+  border: none;
+}

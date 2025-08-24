@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the Agent X theme.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_preprocess_HOOK() for html templates.
+ */
+function agent_x_preprocess_html(&$variables) {
+  // Add custom classes to body.
+  $variables['attributes']['class'][] = 'agent-x-theme';
+  
+  // Add viewport meta tag for mobile responsiveness.
+  $viewport = [
+    '#type' => 'html_tag',
+    '#tag' => 'meta',
+    '#attributes' => [
+      'name' => 'viewport',
+      'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no',
+    ],
+  ];
+  $variables['page']['#attached']['html_head'][] = [$viewport, 'viewport'];
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function agent_x_preprocess_page(&$variables) {
+  // Add theme settings to page template.
+  $variables['container_width'] = theme_get_setting('agent_x_container_width', 'agent_x');
+  $variables['sticky_header'] = theme_get_setting('agent_x_sticky_header', 'agent_x');
+  
+  // Check if sidebars have content.
+  $variables['has_sidebar_first'] = !empty($variables['page']['sidebar_first']);
+  $variables['has_sidebar_second'] = !empty($variables['page']['sidebar_second']);
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for blocks.
+ */
+function agent_x_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  // Add block region suggestion.
+  if (!empty($variables['elements']['#configuration']['region'])) {
+    $suggestions[] = 'block__' . $variables['elements']['#configuration']['region'];
+  }
+}
+
+/**
+ * Implements hook_preprocess_block().
+ */
+function agent_x_preprocess_block(&$variables) {
+  // Add region class to blocks.
+  if (!empty($variables['elements']['#configuration']['region'])) {
+    $variables['attributes']['class'][] = 'block-' . str_replace('_', '-', $variables['elements']['#configuration']['region']);
+  }
+}
+
+/**
+ * Implements hook_preprocess_menu().
+ */
+function agent_x_preprocess_menu(&$variables) {
+  // Add classes for menu styling.
+  $variables['attributes']['class'][] = 'agent-x-menu';
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function agent_x_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Add custom classes to search forms.
+  if (strpos($form_id, 'search') !== FALSE) {
+    $form['#attributes']['class'][] = 'agent-x-search-form';
+  }
+}

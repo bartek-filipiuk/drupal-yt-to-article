@@ -1,0 +1,318 @@
+/**
+ * Views Styles
+ * Styling for Drupal views
+ */
+
+/* Base views styles */
+.view {
+  margin-bottom: var(--ag-space-2xl);
+}
+
+.view-header {
+  margin-bottom: var(--ag-space-lg);
+  padding-bottom: var(--ag-space-md);
+  border-bottom: 2px solid var(--ag-border);
+}
+
+.view-header h2 {
+  font-size: var(--ag-font-size-2xl);
+  color: var(--ag-text);
+  margin-bottom: 0;
+}
+
+.view-content {
+  margin-bottom: var(--ag-space-xl);
+}
+
+.view-footer {
+  margin-top: var(--ag-space-xl);
+  padding-top: var(--ag-space-lg);
+  border-top: 1px solid var(--ag-border-light);
+}
+
+.view-empty {
+  padding: var(--ag-space-2xl);
+  text-align: center;
+  background: var(--ag-gray-100);
+  border-radius: var(--ag-radius-lg);
+  color: var(--ag-text-muted);
+}
+
+/* Grid view */
+.views-view-grid {
+  display: grid;
+  gap: var(--ag-space-xl);
+}
+
+.views-view-grid.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.views-view-grid.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.views-view-grid.cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.views-view-grid .views-col {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* List view */
+.views-view-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.views-view-list .views-row {
+  padding: var(--ag-space-lg);
+  border-bottom: 1px solid var(--ag-border-light);
+  transition: background var(--ag-transition-fast);
+}
+
+.views-view-list .views-row:last-child {
+  border-bottom: none;
+}
+
+.views-view-list .views-row:hover {
+  background: var(--ag-gray-100);
+}
+
+/* Table view */
+.views-view-table {
+  width: 100%;
+  background: var(--ag-surface);
+  border-radius: var(--ag-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--ag-shadow-sm);
+}
+
+.views-view-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.views-view-table thead th {
+  background: var(--ag-gray-100);
+  padding: var(--ag-space-md);
+  text-align: left;
+  font-weight: 600;
+  color: var(--ag-text);
+  border-bottom: 2px solid var(--ag-border);
+}
+
+.views-view-table tbody td {
+  padding: var(--ag-space-md);
+  border-bottom: 1px solid var(--ag-border-light);
+}
+
+.views-view-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.views-view-table tbody tr:hover {
+  background: var(--ag-gray-100);
+}
+
+/* Unformatted view */
+.views-view-unformatted .views-row {
+  margin-bottom: var(--ag-space-xl);
+}
+
+/* Card view */
+.views-view--card .views-row {
+  background: var(--ag-surface);
+  border-radius: var(--ag-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--ag-shadow-sm);
+  transition: all var(--ag-transition-base);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.views-view--card .views-row:hover {
+  box-shadow: var(--ag-shadow-lg);
+  transform: translateY(-4px);
+}
+
+.views-view--card .views-field-title {
+  font-size: var(--ag-font-size-xl);
+  font-weight: 600;
+  margin-bottom: var(--ag-space-sm);
+}
+
+.views-view--card .views-field-title a {
+  color: var(--ag-text);
+  text-decoration: none;
+}
+
+.views-view--card .views-field-title a:hover {
+  color: var(--ag-primary);
+}
+
+.views-view--card .views-field-body {
+  color: var(--ag-text-muted);
+  line-height: 1.6;
+  flex: 1;
+}
+
+/* Exposed filters */
+.views-exposed-form {
+  background: var(--ag-gray-100);
+  padding: var(--ag-space-lg);
+  border-radius: var(--ag-radius-lg);
+  margin-bottom: var(--ag-space-xl);
+}
+
+.views-exposed-form .form-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ag-space-md);
+  align-items: flex-end;
+}
+
+.views-exposed-form .form-item {
+  flex: 1;
+  min-width: 200px;
+}
+
+.views-exposed-form .form-actions {
+  flex: 0 0 auto;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+/* Pager */
+.view .pager {
+  margin-top: var(--ag-space-xl);
+  padding-top: var(--ag-space-lg);
+  border-top: 1px solid var(--ag-border-light);
+}
+
+/* Summary */
+.view-summary {
+  margin-bottom: var(--ag-space-lg);
+  padding: var(--ag-space-md);
+  background: var(--ag-gray-100);
+  border-radius: var(--ag-radius-md);
+  font-size: var(--ag-font-size-sm);
+  color: var(--ag-text-muted);
+}
+
+/* Attachment views */
+.attachment {
+  margin-top: var(--ag-space-xl);
+  padding-top: var(--ag-space-lg);
+  border-top: 2px solid var(--ag-border);
+}
+
+.attachment-before {
+  margin-bottom: var(--ag-space-xl);
+  padding-bottom: var(--ag-space-lg);
+  border-bottom: 2px solid var(--ag-border);
+}
+
+/* View more link */
+.more-link {
+  text-align: center;
+  margin-top: var(--ag-space-xl);
+}
+
+.more-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ag-space-sm);
+  padding: var(--ag-space-sm) var(--ag-space-lg);
+  background: var(--ag-primary);
+  color: white;
+  border-radius: var(--ag-radius-full);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all var(--ag-transition-fast);
+}
+
+.more-link a:hover {
+  background: var(--ag-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--ag-shadow-md);
+}
+
+/* Grouping */
+.view-grouping {
+  margin-bottom: var(--ag-space-2xl);
+}
+
+.view-grouping-header {
+  font-size: var(--ag-font-size-xl);
+  font-weight: 600;
+  margin-bottom: var(--ag-space-lg);
+  padding-bottom: var(--ag-space-sm);
+  border-bottom: 2px solid var(--ag-primary);
+  color: var(--ag-text);
+}
+
+.view-grouping-content {
+  padding-left: var(--ag-space-lg);
+}
+
+/* AJAX throbber */
+.ajax-progress-throbber {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ag-space-sm);
+  padding: var(--ag-space-sm) var(--ag-space-md);
+  background: var(--ag-gray-100);
+  border-radius: var(--ag-radius-md);
+  font-size: var(--ag-font-size-sm);
+}
+
+.ajax-progress-throbber .throbber {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--ag-gray-300);
+  border-top-color: var(--ag-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .views-view-grid.cols-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .views-view-grid.cols-2,
+  .views-view-grid.cols-3,
+  .views-view-grid.cols-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .views-exposed-form .form-inline {
+    flex-direction: column;
+  }
+  
+  .views-exposed-form .form-item {
+    width: 100%;
+  }
+  
+  .views-view-table {
+    overflow-x: auto;
+  }
+  
+  .views-view-table table {
+    min-width: 600px;
+  }
+}

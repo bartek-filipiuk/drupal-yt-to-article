@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * Agent X theme implementation to display a block.
+ *
+ * Available variables:
+ * - plugin_id: The ID of the block implementation.
+ * - label: The configured label of the block if visible.
+ * - configuration: A list of the block's configuration values.
+ * - content: The content of this block.
+ * - attributes: HTML attributes for the block.
+ * - title_attributes: HTML attributes for the title.
+ * - content_attributes: HTML attributes for the content.
+ */
+#}
+{%
+  set classes = [
+    'agent-block',
+    'block',
+    'block-' ~ configuration.provider|clean_class,
+    'block-' ~ plugin_id|clean_class,
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  {{ title_prefix }}
+  {% if label %}
+    <h2{{ title_attributes.addClass('agent-block-title') }}>{{ label }}</h2>
+  {% endif %}
+  {{ title_suffix }}
+  {% block content %}
+    <div{{ content_attributes.addClass('agent-block-content') }}>
+      {{ content }}
+    </div>
+  {% endblock %}
+</div>

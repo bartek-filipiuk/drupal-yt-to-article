@@ -1,0 +1,139 @@
+{#
+/**
+ * @file
+ * YouTube Article template with Bootstrap 5
+ * 
+ * Modern, clean layout for YouTube articles using Bootstrap components
+ */
+#}
+{{ attach_library('bootstrap_barrio/node') }}
+{{ attach_library('agentic_theme/youtube_article') }}
+
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+    'youtube-article-wrapper'
+  ]
+%}
+
+<article{{ attributes.addClass(classes).addClass('card shadow-sm border-0 mb-4') }}>
+  {# Article Header #}
+  <header class="card-header bg-white border-bottom py-4">
+    <div class="container-fluid px-lg-5">
+      {{ title_prefix }}
+      {% if label and not page %}
+        <h2 class="card-title h2 mb-3">
+          <a href="{{ url }}" rel="bookmark" class="text-decoration-none text-dark">{{ label }}</a>
+        </h2>
+      {% elseif label %}
+        <h1 class="display-5 fw-bold text-dark mb-4">{{ label }}</h1>
+      {% endif %}
+      {{ title_suffix }}
+      
+      {# Article Metadata #}
+      {% if display_submitted %}
+        <div class="d-flex flex-wrap align-items-center gap-3 text-muted small">
+          {% if author_picture %}
+            <div class="flex-shrink-0">
+              {{ author_picture }}
+            </div>
+          {% endif %}
+          
+          <div class="d-flex flex-wrap align-items-center gap-3">
+            {% block submitted %}
+              <span class="d-flex align-items-center gap-2">
+                <i class="bi bi-person-circle"></i>
+                {{ author_name }}
+              </span>
+              <span class="d-flex align-items-center gap-2">
+                <i class="bi bi-calendar3"></i>
+                {% if node.created.value %}
+                  <time datetime="{{ node.created.value|date('c') }}" class="text-muted">{{ node.created.value|date('F j, Y') }}</time>
+                {% else %}
+                  {{ date }}
+                {% endif %}
+              </span>
+            {% endblock %}
+            
+            {# Video Duration #}
+            {% if content.field_video_duration|render %}
+              <span class="d-flex align-items-center gap-2">
+                <i class="bi bi-clock"></i>
+                {{ content.field_video_duration }}
+              </span>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </header>
+
+  {# Main Content #}
+  <div class="card-body">
+    <div class="container-fluid px-lg-5 py-4">
+      {# YouTube Video Embed #}
+      {% if content.field_youtube_url|render or content.field_youtube_video|render %}
+        <div class="video-container mb-5">
+          <div class="ratio ratio-16x9 rounded shadow">
+            {{ content.field_youtube_url }}
+            {{ content.field_youtube_video }}
+          </div>
+        </div>
+      {% endif %}
+
+      {# Main Article Content #}
+      <div class="article-content">
+        {{ content.body }}
+      </div>
+
+      {# Transcript Section #}
+      {% if content.field_transcript|render %}
+        <div class="transcript-section mt-5 p-4 bg-light rounded">
+          <h3 class="h5 fw-bold mb-3">
+            <i class="bi bi-file-text me-2"></i>Video Transcript
+          </h3>
+          <div class="transcript-content overflow-auto" style="max-height: 400px;">
+            {{ content.field_transcript }}
+          </div>
+        </div>
+      {% endif %}
+
+      {# Tags Section #}
+      {% if content.field_tags|render %}
+        <div class="tags-section mt-4 pt-4 border-top">
+          <div class="d-flex align-items-center flex-wrap gap-2">
+            <span class="fw-semibold text-muted small">Tags:</span>
+            <div class="d-flex flex-wrap gap-2">
+              {{ content.field_tags }}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {# Related Content #}
+      {% if content.field_related_content|render %}
+        <div class="related-content mt-5 p-4 bg-light rounded">
+          <h3 class="h5 fw-bold mb-3">Related Content</h3>
+          {{ content.field_related_content }}
+        </div>
+      {% endif %}
+
+      {# Render remaining fields #}
+      {{ content|without('body', 'field_youtube_url', 'field_youtube_video', 'field_transcript', 'field_tags', 'field_related_content', 'field_video_duration') }}
+    </div>
+  </div>
+
+  {# Article Footer #}
+  {% if content.links %}
+    <div class="card-footer bg-white border-top">
+      <div class="container-fluid px-lg-5 py-3">
+        {{ content.links }}
+      </div>
+    </div>
+  {% endif %}
+</article>

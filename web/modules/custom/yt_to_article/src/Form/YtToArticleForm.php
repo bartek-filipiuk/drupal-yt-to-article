@@ -460,10 +460,36 @@ final class YtToArticleForm extends FormBase {
 
   /**
    * Get the WebSocket URL from configuration.
+   * Includes fallback protocol detection for mobile compatibility.
    */
   private function getWebSocketUrl(): string {
     $settings = \Drupal::service('settings')->get('yt_to_article', []);
-    return $settings['websocket_url'] ?? 'ws://localhost:8000/api/v1/ws';
+    $wsUrl = $settings['websocket_url'] ?? null;
+    
+    // If no URL is configured or it's using localhost (which mobile can't access)
+    if (!$wsUrl || (strpos($wsUrl, 'localhost') !== false && $this->isMobileRequest())) {
+      // Build a WebSocket URL using the current request's host
+      $request = \Drupal::request();
+      $isHttps = $request->isSecure();
+      $protocol = $isHttps ? 'wss' : 'ws';
+      $host = $request->getHost();
+      
+      // Use the same host as the current request for mobile compatibility
+      $wsUrl = $protocol . '://' . $host . '/api/v1/ws';
+      
+      // Log this for debugging
+      \Drupal::logger('yt_to_article')->info('Generated WebSocket URL for mobile: @url', ['@url' => $wsUrl]);
+    }
+    
+    return $wsUrl;
+  }
+  
+  /**
+   * Check if the current request is likely from a mobile device.
+   */
+  private function isMobileRequest(): bool {
+    $userAgent = \Drupal::request()->headers->get('User-Agent', '');
+    return preg_match('/Mobile|Android|iPhone|iPad/i', $userAgent) !== 0;
   }
 
   /**

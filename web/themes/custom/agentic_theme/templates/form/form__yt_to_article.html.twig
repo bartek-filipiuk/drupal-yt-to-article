@@ -1,0 +1,285 @@
+{#
+/**
+ * @file
+ * Theme override for the YT to Article form with modern API doc styling.
+ *
+ * Available variables:
+ * - form: The form array.
+ * - attributes: HTML attributes for the form element.
+ */
+#}
+<div class="yt-to-article-form-wrapper max-w-4xl mx-auto">
+  {# Hero Header Section #}
+  <div class="yt-to-article-form-header text-center mb-12">
+    <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl shadow-lg mb-6">
+      <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+      </svg>
+    </div>
+    <h1 class="text-4xl font-bold text-gray-900 mb-3">{{ 'Convert YouTube to Article'|t }}</h1>
+    <p class="text-lg text-gray-600 max-w-2xl mx-auto">{{ 'Transform any YouTube video into a professionally written article with AI-powered content generation.'|t }}</p>
+  </div>
+
+  {# Main Form Container #}
+  <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+    {# URL Input Section #}
+    <div class="p-8 border-b border-gray-100">
+      <div class="youtube-url-field">
+        {{ form.youtube_url }}
+      </div>
+    </div>
+
+    {# Generation Options Section #}
+    <div class="p-8 bg-gray-50">
+      <div class="generation-options-wrapper">
+        {{ form.generation_options }}
+      </div>
+    </div>
+
+    {# Actions Section #}
+    <div class="p-8 bg-white border-t border-gray-100">
+      <div class="form-actions-wrapper">
+        {{ form.actions }}
+      </div>
+    </div>
+
+    {# Hidden form elements #}
+    <div class="hidden">
+      {{ form.form_build_id }}
+      {{ form.form_token }}
+      {{ form.form_id }}
+    </div>
+  </div>
+
+  {# Messages Container #}
+  <div class="mt-8">
+    {{ form.messages_container }}
+  </div>
+
+  {# Results Container #}
+  <div class="mt-8">
+    {{ form.result_container }}
+  </div>
+</div>
+
+{# Tailwind form styling script #}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Style the URL input field
+  const urlInput = document.querySelector('.youtube-url-field');
+  if (urlInput) {
+    const label = urlInput.querySelector('label');
+    const input = urlInput.querySelector('input[type="text"]');
+    const description = urlInput.querySelector('.description');
+    
+    if (label) {
+      label.classList.add('block', 'text-sm', 'font-medium', 'text-gray-700', 'mb-2');
+    }
+    
+    if (input) {
+      input.classList.remove('form-text');
+      input.classList.add(
+        'w-full', 'px-4', 'py-3', 'text-lg', 'border', 'border-gray-300', 
+        'rounded-lg', 'focus:ring-2', 'focus:ring-drupal-primary', 
+        'focus:border-transparent', 'transition-all', 'duration-200',
+        'placeholder-gray-400'
+      );
+    }
+    
+    if (description) {
+      description.classList.add('mt-2', 'text-sm', 'text-gray-500');
+    }
+  }
+
+  // Style the details/summary element
+  const details = document.querySelector('.generation-options-wrapper details');
+  if (details) {
+    details.classList.add('bg-white', 'rounded-xl', 'shadow-sm', 'border', 'border-gray-200', 'overflow-hidden');
+    
+    const summary = details.querySelector('summary');
+    if (summary) {
+      summary.classList.add(
+        'px-6', 'py-4', 'cursor-pointer', 'hover:bg-gray-50', 
+        'transition-colors', 'duration-200', 'font-medium', 'text-lg',
+        'text-gray-900', 'select-none', 'flex', 'items-center', 'justify-between'
+      );
+      
+      // Add chevron icon
+      const chevron = document.createElement('span');
+      chevron.innerHTML = '<svg class="w-5 h-5 text-gray-500 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>';
+      summary.appendChild(chevron);
+      
+      // Rotate chevron on open/close
+      details.addEventListener('toggle', function() {
+        if (details.open) {
+          chevron.querySelector('svg').classList.add('rotate-180');
+        } else {
+          chevron.querySelector('svg').classList.remove('rotate-180');
+        }
+      });
+    }
+    
+    // Style the content inside details
+    const detailsContent = details.querySelector('.details-wrapper');
+    if (detailsContent) {
+      detailsContent.classList.add('px-6', 'py-6', 'space-y-6', 'bg-gray-50');
+    }
+  }
+
+  // Style all select elements
+  document.querySelectorAll('.generation-options-wrapper select').forEach(function(select) {
+    select.classList.remove('form-select');
+    select.classList.add(
+      'w-full', 'px-4', 'py-2.5', 'border', 'border-gray-300', 
+      'rounded-lg', 'focus:ring-2', 'focus:ring-drupal-primary', 
+      'focus:border-transparent', 'bg-white', 'text-gray-900',
+      'transition-all', 'duration-200'
+    );
+  });
+
+  // Style all textareas
+  document.querySelectorAll('.generation-options-wrapper textarea').forEach(function(textarea) {
+    textarea.classList.remove('form-textarea');
+    textarea.classList.add(
+      'w-full', 'px-4', 'py-3', 'border', 'border-gray-300', 
+      'rounded-lg', 'focus:ring-2', 'focus:ring-drupal-primary', 
+      'focus:border-transparent', 'resize-none', 'text-gray-900',
+      'transition-all', 'duration-200'
+    );
+  });
+
+  // Style all form labels
+  document.querySelectorAll('.generation-options-wrapper label').forEach(function(label) {
+    if (!label.classList.contains('option')) {
+      label.classList.add('block', 'text-sm', 'font-medium', 'text-gray-700', 'mb-2');
+    }
+  });
+
+  // Style all descriptions
+  document.querySelectorAll('.generation-options-wrapper .description').forEach(function(desc) {
+    desc.classList.add('mt-1', 'text-sm', 'text-gray-500');
+  });
+
+  // Style form items
+  document.querySelectorAll('.generation-options-wrapper .form-item').forEach(function(item) {
+    item.classList.add('space-y-1');
+  });
+
+  // Style the submit button
+  const submitButton = document.querySelector('.form-actions-wrapper input[type="submit"]');
+  if (submitButton) {
+    submitButton.classList.remove('button', 'button--primary', 'js-form-submit', 'form-submit');
+    submitButton.classList.add(
+      'w-full', 'sm:w-auto', 'px-8', 'py-3', 'bg-gradient-to-r', 
+      'from-drupal-primary', 'to-drupal-secondary', 'text-white', 
+      'font-medium', 'rounded-lg', 'shadow-lg', 'hover:shadow-xl',
+      'transform', 'hover:scale-105', 'transition-all', 'duration-200',
+      'focus:outline-none', 'focus:ring-2', 'focus:ring-offset-2',
+      'focus:ring-drupal-primary'
+    );
+  }
+
+  // Style messages container
+  const messagesContainer = document.querySelector('.yt-to-article-messages-container');
+  if (messagesContainer) {
+    messagesContainer.classList.add('space-y-4');
+  }
+
+  // Style result container
+  const resultContainer = document.querySelector('.yt-to-article-result-container');
+  if (resultContainer) {
+    resultContainer.classList.add(
+      'bg-white', 'rounded-xl', 'shadow-lg', 'border', 'border-gray-100',
+      'overflow-hidden', 'transition-all', 'duration-300'
+    );
+  }
+
+  // Add hover effects to form elements
+  document.querySelectorAll('input, select, textarea').forEach(function(element) {
+    element.addEventListener('focus', function() {
+      this.parentElement.classList.add('form-item-focused');
+    });
+    element.addEventListener('blur', function() {
+      this.parentElement.classList.remove('form-item-focused');
+    });
+  });
+});
+</script>
+
+{# Additional CSS for custom styling #}
+<style>
+  .yt-to-article-form-wrapper {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Custom focus styles */
+  .form-item-focused {
+    position: relative;
+  }
+
+  .form-item-focused::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 0.75rem;
+    padding: 2px;
+    background: linear-gradient(45deg, var(--drupal-primary), var(--drupal-secondary));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.5;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+  }
+
+  /* Progress indicator styling */
+  .ajax-progress-throbber {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 1rem;
+  }
+
+  .ajax-progress-throbber .throbber {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-top-color: var(--drupal-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Smooth height transitions for details element */
+  details[open] .details-wrapper {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

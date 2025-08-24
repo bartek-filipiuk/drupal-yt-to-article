@@ -112,7 +112,7 @@
 
 /* Messages container wrapper */
 .yt-to-article-messages-container {
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 /* Messages container */
@@ -316,7 +316,7 @@
   .yt-to-article-form-wrapper {
     padding: 1rem;
   }
-  
+
   .yt-to-article-messages {
     max-height: 300px;
   }

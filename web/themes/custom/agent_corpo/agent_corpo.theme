@@ -1,0 +1,21 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @file
+ * Functions to support theming in the Agent Corpo theme.
+ */
+
+/**
+ * Implements hook_preprocess_HOOK() for html.html.twig.
+ */
+function agent_corpo_preprocess_html(array &$variables): void {
+  $color_scheme_library = 'agent_corpo/color-'.theme_get_setting('color_scheme');
+  $variables['#attached']['library'][] = $color_scheme_library;
+  $variables['attributes']['class'][] = 'mt-color-scheme-' . theme_get_setting('color_scheme');
+}
+
+function agent_corpo_preprocess_node__card(array &$variables): void {
+  $variables['#attached']['library'][] = 'agent_corpo/node-view-mode-card';
+}

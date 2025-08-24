@@ -1,0 +1,298 @@
+/**
+ * Agentic Theme - Main Theme Styles
+ * Overall theme styling and Bootstrap overrides
+ */
+
+/* Import all component styles */
+@import url('variables.css');
+@import url('base.css');
+@import url('layout.css');
+@import url('components.css');
+@import url('navigation.css');
+@import url('forms.css');
+@import url('content-types.css');
+@import url('fields.css');
+@import url('views.css');
+@import url('code.css');
+@import url('youtube-article.css');
+@import url('utilities.css');
+
+/* Bootstrap Overrides */
+.btn-primary {
+  --bs-btn-bg: var(--ag-primary);
+  --bs-btn-border-color: var(--ag-primary);
+  --bs-btn-hover-bg: var(--ag-primary-dark);
+  --bs-btn-hover-border-color: var(--ag-primary-dark);
+  --bs-btn-active-bg: var(--ag-primary-dark);
+  --bs-btn-active-border-color: var(--ag-primary-dark);
+}
+
+.alert-primary {
+  --bs-alert-bg: rgba(var(--ag-primary-rgb), 0.1);
+  --bs-alert-color: var(--ag-primary-dark);
+  --bs-alert-border-color: rgba(var(--ag-primary-rgb), 0.2);
+}
+
+.navbar {
+  --bs-navbar-padding-y: 0;
+  --bs-navbar-brand-padding-y: var(--ag-space-md);
+  --bs-navbar-brand-margin-end: var(--ag-space-xl);
+}
+
+.navbar-dark {
+  --bs-navbar-color: rgba(255, 255, 255, 0.9);
+  --bs-navbar-hover-color: white;
+  --bs-navbar-active-color: white;
+}
+
+/* Custom scrollbar for entire theme */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ag-gray-400) var(--ag-gray-100);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus visible improvements */
+*:focus-visible {
+  outline: 2px solid var(--ag-primary);
+  outline-offset: 2px;
+  border-radius: var(--ag-radius-sm);
+}
+
+/* Selection colors */
+::selection {
+  background: rgba(var(--ag-primary-rgb), 0.2);
+  color: var(--ag-text);
+}
+
+/* Print styles */
+@media print {
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+  
+  .no-print,
+  .navbar,
+  .breadcrumb,
+  .pager,
+  .footer,
+  .sidebar {
+    display: none !important;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+  
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Animation classes */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.5s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Loading states */
+.loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--ag-gray-300);
+  border-top-color: var(--ag-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Skeleton loading */
+.skeleton {
+  background: linear-gradient(90deg, var(--ag-gray-200) 25%, var(--ag-gray-300) 50%, var(--ag-gray-200) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Accessibility improvements */
+.sr-only,
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.sr-only-focusable:focus,
+.visually-hidden-focusable:focus {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --ag-primary: #0080ff;
+    --ag-text: #000000;
+    --ag-background: #ffffff;
+    --ag-border: #000000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Dark mode preparation (for future implementation) */
+@media (prefers-color-scheme: dark) {
+  /* Dark mode variables can be added here when needed */
+}
+
+/* Custom container max-widths */
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}

@@ -1,0 +1,53 @@
+{#
+/**
+ * @file
+ * Agent X theme implementation to display a menu.
+ *
+ * Available variables:
+ * - menu_name: The machine name of the menu.
+ * - items: A nested list of menu items.
+ * - attributes: HTML attributes for the menu list.
+ */
+#}
+{% import _self as menus %}
+
+{#
+  We call a macro which calls itself to render the full tree.
+  @see https://twig.symfony.com/doc/3.x/tags/macro.html
+#}
+{{ menus.menu_links(items, attributes, 0, menu_name) }}
+
+{% macro menu_links(items, attributes, menu_level, menu_name) %}
+  {% import _self as menus %}
+  {% if items %}
+    {% if menu_level == 0 %}
+      <ul{{ attributes.addClass('agent-nav-menu', 'menu', 'menu--' ~ menu_name|clean_class) }}>
+    {% else %}
+      <ul class="agent-submenu menu menu-level-{{ menu_level }}">
+    {% endif %}
+    {% for item in items %}
+      {%
+        set item_classes = [
+          'agent-nav-item',
+          'menu-item',
+          item.is_expanded ? 'has-submenu',
+          item.is_collapsed ? 'menu-item--collapsed',
+          item.in_active_trail ? 'menu-item--active-trail',
+        ]
+      %}
+      <li{{ item.attributes.addClass(item_classes) }}>
+        {%
+          set link_classes = [
+            'agent-nav-link',
+            item.in_active_trail ? 'is-active',
+          ]
+        %}
+        {{ link(item.title, item.url, { 'class': link_classes }) }}
+        {% if item.below %}
+          {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
+        {% endif %}
+      </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}

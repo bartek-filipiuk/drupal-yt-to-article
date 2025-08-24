@@ -1,0 +1,312 @@
+/**
+ * Code Highlighting Styles
+ * Syntax highlighting and code block styling
+ */
+
+/* Code blocks */
+pre {
+  background: var(--ag-code-bg);
+  color: var(--ag-code-text);
+  padding: var(--ag-space-lg);
+  border-radius: var(--ag-radius-lg);
+  overflow-x: auto;
+  margin: var(--ag-space-xl) 0;
+  border: 1px solid var(--ag-code-border);
+  box-shadow: var(--ag-shadow-md);
+  position: relative;
+  font-size: var(--ag-font-size-sm);
+  line-height: 1.6;
+}
+
+/* Code block header */
+pre[data-language]::before {
+  content: attr(data-language);
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: var(--ag-space-xs) var(--ag-space-sm);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0 var(--ag-radius-lg) 0 var(--ag-radius-md);
+  font-size: var(--ag-font-size-xs);
+  color: var(--ag-code-comment);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Line numbers */
+pre.line-numbers {
+  padding-left: 3.5rem;
+  counter-reset: linenumber;
+}
+
+pre.line-numbers > code {
+  position: relative;
+  white-space: inherit;
+}
+
+.line-numbers-rows {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: -3.5rem;
+  width: 3rem;
+  font-size: 100%;
+  letter-spacing: -1px;
+  user-select: none;
+}
+
+.line-numbers-rows > span {
+  display: block;
+  counter-increment: linenumber;
+}
+
+.line-numbers-rows > span::before {
+  content: counter(linenumber);
+  color: var(--ag-code-comment);
+  display: block;
+  padding-right: 0.8rem;
+  text-align: right;
+}
+
+/* Inline code */
+code {
+  background: var(--ag-code-bg);
+  color: var(--ag-code-text);
+  padding: 0.125rem 0.375rem;
+  border-radius: var(--ag-radius-sm);
+  font-size: 0.875em;
+  font-weight: 500;
+  font-family: var(--ag-font-mono);
+}
+
+/* Syntax highlighting - General */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--ag-code-comment);
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: var(--ag-code-text);
+}
+
+.token.namespace {
+  opacity: 0.7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #ff7b72;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: var(--ag-code-string);
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #79c0ff;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: var(--ag-code-keyword);
+}
+
+.token.function,
+.token.class-name {
+  color: var(--ag-code-function);
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #ffa657;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+/* Language-specific highlighting */
+
+/* JavaScript/TypeScript */
+.language-javascript .token.keyword,
+.language-typescript .token.keyword {
+  color: var(--ag-code-keyword);
+}
+
+.language-javascript .token.function,
+.language-typescript .token.function {
+  color: var(--ag-code-function);
+}
+
+/* CSS/SCSS */
+.language-css .token.selector,
+.language-scss .token.selector {
+  color: #a5d6ff;
+}
+
+.language-css .token.property,
+.language-scss .token.property {
+  color: #79c0ff;
+}
+
+/* HTML/XML */
+.language-html .token.tag,
+.language-xml .token.tag {
+  color: #7ee83f;
+}
+
+.language-html .token.attr-name,
+.language-xml .token.attr-name {
+  color: #79c0ff;
+}
+
+.language-html .token.attr-value,
+.language-xml .token.attr-value {
+  color: var(--ag-code-string);
+}
+
+/* PHP */
+.language-php .token.keyword {
+  color: var(--ag-code-keyword);
+}
+
+.language-php .token.variable {
+  color: #ffa657;
+}
+
+/* Python */
+.language-python .token.keyword {
+  color: var(--ag-code-keyword);
+}
+
+.language-python .token.builtin {
+  color: #79c0ff;
+}
+
+/* JSON */
+.language-json .token.property {
+  color: #79c0ff;
+}
+
+.language-json .token.string {
+  color: var(--ag-code-string);
+}
+
+/* Bash/Shell */
+.language-bash .token.function,
+.language-shell .token.function {
+  color: var(--ag-code-function);
+}
+
+.language-bash .token.keyword,
+.language-shell .token.keyword {
+  color: var(--ag-code-keyword);
+}
+
+/* Copy code button */
+.code-toolbar {
+  position: relative;
+}
+
+.code-toolbar .toolbar {
+  position: absolute;
+  top: var(--ag-space-sm);
+  right: var(--ag-space-sm);
+  display: flex;
+  gap: var(--ag-space-xs);
+}
+
+.code-toolbar .toolbar button {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--ag-code-text);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: var(--ag-space-xs) var(--ag-space-sm);
+  border-radius: var(--ag-radius-md);
+  font-size: var(--ag-font-size-xs);
+  cursor: pointer;
+  transition: all var(--ag-transition-fast);
+}
+
+.code-toolbar .toolbar button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.code-toolbar .toolbar button.copied {
+  background: var(--ag-success);
+  color: white;
+  border-color: var(--ag-success);
+}
+
+/* Highlighted lines */
+.line-highlight {
+  background: linear-gradient(to right, rgba(var(--ag-primary-rgb), 0.1) 70%, rgba(var(--ag-primary-rgb), 0));
+  margin-top: 0;
+}
+
+/* Diff highlighting */
+.token.deleted {
+  background: rgba(255, 82, 82, 0.15);
+  color: #ff5252;
+}
+
+.token.inserted {
+  background: rgba(0, 230, 118, 0.15);
+  color: #00e676;
+}
+
+/* Output/Terminal blocks */
+.language-output,
+.language-terminal {
+  background: #000000;
+  color: #00ff00;
+}
+
+.language-output .token,
+.language-terminal .token {
+  color: inherit;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  pre {
+    padding: var(--ag-space-md);
+    font-size: 0.8rem;
+  }
+  
+  .line-numbers-rows {
+    display: none;
+  }
+  
+  pre.line-numbers {
+    padding-left: var(--ag-space-md);
+  }
+}

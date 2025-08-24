@@ -2,9 +2,9 @@ websocket:
   version: 1.0
   js:
     js/yt-to-article-websocket.js: {}
-#  css:
-#    theme:
-#      css/yt-to-article.css: {}
+  css:
+    theme:
+      css/yt-to-article.css: {}
   dependencies:
     - core/drupal
     - core/drupalSettings

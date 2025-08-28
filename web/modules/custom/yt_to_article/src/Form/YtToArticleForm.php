@@ -144,6 +144,7 @@ final class YtToArticleForm extends FormBase {
         //'summary' => $this->t('Summary - Executive summary (150-250 words)'),
         'brief' => $this->t('Brief - Quick read (300-500 words)'),
         //'standard' => $this->t('Standard - Comprehensive coverage (800-1200 words)'),
+        'tutorial' => $this->t('Make a full tutorial from a movie'),
         'detailed' => $this->t('Detailed - In-depth analysis (1500-2500 words)'),
       ],
       '#default_value' => 'standard',
@@ -465,7 +466,7 @@ final class YtToArticleForm extends FormBase {
   private function getWebSocketUrl(): string {
     $settings = \Drupal::service('settings')->get('yt_to_article', []);
     $wsUrl = $settings['websocket_url'] ?? null;
-    
+
     // If no URL is configured or it's using localhost (which mobile can't access)
     if (!$wsUrl || (strpos($wsUrl, 'localhost') !== false && $this->isMobileRequest())) {
       // Build a WebSocket URL using the current request's host
@@ -473,17 +474,17 @@ final class YtToArticleForm extends FormBase {
       $isHttps = $request->isSecure();
       $protocol = $isHttps ? 'wss' : 'ws';
       $host = $request->getHost();
-      
+
       // Use the same host as the current request for mobile compatibility
       $wsUrl = $protocol . '://' . $host . '/api/v1/ws';
-      
+
       // Log this for debugging
       \Drupal::logger('yt_to_article')->info('Generated WebSocket URL for mobile: @url', ['@url' => $wsUrl]);
     }
-    
+
     return $wsUrl;
   }
-  
+
   /**
    * Check if the current request is likely from a mobile device.
    */

@@ -1,0 +1,22 @@
+uuid: 8ffb8a53-0d09-4367-8ed5-15ad0ff2d4a2
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - agent_x
+_core:
+  default_config_hash: hBHXB7hC05XU7pDYzETt-GUcpFlogK1gkjyAsg0Ym58
+id: agent_x_content
+theme: agent_x
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }

@@ -1,0 +1,22 @@
+uuid: 6e0c9619-79df-496b-bcd0-352a1394abf3
+langcode: en
+status: true
+dependencies:
+  theme:
+    - agent_corpo
+_core:
+  default_config_hash: RdY_eWLfBte955K4haVzf41yFgcSolSwzPF9Jc0ssMk
+id: agent_corpo_local_tasks
+theme: agent_corpo
+region: content
+weight: -16
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Tabs
+  label_display: '0'
+  provider: core
+  primary: true
+  secondary: true
+visibility: {  }

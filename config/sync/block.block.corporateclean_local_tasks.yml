@@ -1,0 +1,22 @@
+uuid: 62a20c80-c03d-480b-8a3d-15e4af715513
+langcode: en
+status: true
+dependencies:
+  theme:
+    - corporateclean
+_core:
+  default_config_hash: JF-nlqdioDRhIABB9wLyH5CqUFjgbd0QBEx8O9OJ9AM
+id: corporateclean_local_tasks
+theme: corporateclean
+region: content
+weight: -16
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Tabs
+  label_display: '0'
+  provider: core
+  primary: true
+  secondary: true
+visibility: {  }

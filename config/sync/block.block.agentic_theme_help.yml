@@ -1,0 +1,22 @@
+uuid: 8709388e-dafa-492a-9d25-40d765b82dde
+langcode: en
+status: false
+dependencies:
+  module:
+    - help
+  theme:
+    - agentic_theme
+_core:
+  default_config_hash: VfPFqqxfkomud5CO8DUijw85QIl9GIxh_nIxLOYESxg
+id: agentic_theme_help
+theme: agentic_theme
+region: header
+weight: -1
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility: {  }

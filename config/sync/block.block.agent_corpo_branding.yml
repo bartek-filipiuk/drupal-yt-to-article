@@ -1,0 +1,25 @@
+uuid: 5404ac3d-2ac1-4b0b-aba2-25e849a69329
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - agent_corpo
+_core:
+  default_config_hash: _7qasZP3XUQjS37uXFO1aql5Y2_AHfeZHFMZKBe_C9o
+id: agent_corpo_branding
+theme: agent_corpo
+region: header_first
+weight: -6
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Site branding'
+  label_display: '0'
+  provider: system
+  use_site_logo: false
+  use_site_name: false
+  use_site_slogan: true
+visibility: {  }

@@ -1,0 +1,20 @@
+uuid: 7f1331f6-918d-458e-92f0-3a9a126c7f4f
+langcode: en
+status: true
+dependencies:
+  theme:
+    - agent_corpo
+_core:
+  default_config_hash: csWlmkf-KymWUDFTw26H66B_Nes7SaX9NPr67wX25U8
+id: agent_corpo_page_title
+theme: agent_corpo
+region: hero_top
+weight: -7
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  label_display: '0'
+  provider: core
+visibility: {  }

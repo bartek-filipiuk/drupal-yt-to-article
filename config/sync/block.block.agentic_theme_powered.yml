@@ -1,0 +1,22 @@
+uuid: 7eea5861-8bc8-4b2f-9919-2965fdf68171
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - agentic_theme
+_core:
+  default_config_hash: eYL19CLDyinGTWYQfBD1DswWzglEotE_kHnHx3AxTXM
+id: agentic_theme_powered
+theme: agentic_theme
+region: footer_bottom
+weight: 0
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  label_display: '0'
+  provider: system
+visibility: {  }

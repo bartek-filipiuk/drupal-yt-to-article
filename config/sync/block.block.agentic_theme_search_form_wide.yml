@@ -1,0 +1,23 @@
+uuid: 6ca80bdf-6c35-4b98-a120-86665d2d24ad
+langcode: en
+status: false
+dependencies:
+  module:
+    - search
+  theme:
+    - agentic_theme
+_core:
+  default_config_hash: pbbed0hdqGDF-_QWVVTWRAwgDIotFuAvWH5mWUZu0fA
+id: agentic_theme_search_form_wide
+theme: agentic_theme
+region: secondary_menu
+weight: -5
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: 'Search form (wide)'
+  label_display: '0'
+  provider: search
+  page_id: null
+visibility: {  }

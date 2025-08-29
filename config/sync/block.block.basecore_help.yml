@@ -1,0 +1,22 @@
+uuid: 7512e3f0-f3a1-40e4-80af-f477a0ea4da3
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - basecore
+_core:
+  default_config_hash: Wi23yq_QOBtBLrLXgiXR50xeuVV64aaV9eZeYWsJD4o
+id: basecore_help
+theme: basecore
+region: content
+weight: -18
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility: {  }

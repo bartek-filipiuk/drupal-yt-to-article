@@ -1,0 +1,29 @@
+uuid: 38b31e3a-0c70-4256-8e0f-100ef3d4b8b9
+langcode: en
+status: true
+dependencies:
+  module:
+    - search
+    - system
+  theme:
+    - basecore
+_core:
+  default_config_hash: QN-w-t54YvHY8bPdMuFdDoHQ9JNQ-8CJvbsnBXdf6gY
+id: basecore_search
+theme: basecore
+region: sidebar_second
+weight: -43
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: Search
+  label_display: visible
+  provider: search
+  page_id: null
+visibility:
+  request_path:
+    id: request_path
+    pages: "/shortcodes\r\n/first-post"
+    negate: false
+    context_mapping: {  }

@@ -1,0 +1,27 @@
+uuid: 29869ebb-775c-4610-8db1-f0c2879da0fb
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - agent_corpo
+_core:
+  default_config_hash: m0DWOSLVX13IEnVc9kAAZpA9DJqS1qc0G-BT9QZya_A
+id: agent_corpo_main_menu
+theme: agent_corpo
+region: header
+weight: -22
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: 'Main navigation'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 1
+  expand_all_items: false
+visibility: {  }

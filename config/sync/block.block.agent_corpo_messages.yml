@@ -1,0 +1,22 @@
+uuid: b54401b8-46a0-423c-be25-ff5919c6f636
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - agent_corpo
+_core:
+  default_config_hash: zCh0YSXhMMH9hC170-52inAoW0mJ0pIXq-mxPKBp4Iw
+id: agent_corpo_messages
+theme: agent_corpo
+region: system_messages
+weight: -16
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  label_display: '0'
+  provider: system
+visibility: {  }

@@ -1,0 +1,25 @@
+uuid: a32fa483-8bd2-4f45-acda-ebb4855a6602
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - corporateclean
+_core:
+  default_config_hash: exlYq2jw5nhm2jEG6aOXAUsm67ZSCDLcU5a2e8nXxwY
+id: corporateclean_branding
+theme: corporateclean
+region: header_first
+weight: -6
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Site branding'
+  label_display: '0'
+  provider: system
+  use_site_logo: true
+  use_site_name: true
+  use_site_slogan: true
+visibility: {  }

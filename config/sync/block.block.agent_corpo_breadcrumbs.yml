@@ -1,0 +1,22 @@
+uuid: 3835984c-c32b-497b-8742-f1dac9df42e4
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - agent_corpo
+_core:
+  default_config_hash: eyJ9jcI2DwYde7mQQMdM2t9bKHTn6aMn3EzZv0Hm7fY
+id: agent_corpo_breadcrumbs
+theme: agent_corpo
+region: hero_top
+weight: -14
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  label_display: '0'
+  provider: system
+visibility: {  }

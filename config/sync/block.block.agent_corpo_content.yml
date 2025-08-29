@@ -1,0 +1,22 @@
+uuid: 03d2ddb6-bd24-4079-a6eb-63ccd098024c
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - agent_corpo
+_core:
+  default_config_hash: i8m9R17FFut1QxXmtUj9fUjFuanM6DDVQ73nPG0Qw-s
+id: agent_corpo_content
+theme: agent_corpo
+region: content
+weight: -15
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }

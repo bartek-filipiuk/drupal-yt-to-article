@@ -53,3 +53,14 @@ yt_to_article.webhook_debug:
     _permission: 'administer yt to article'
   options:
     _admin_route: TRUE
+
+yt_to_article.webhook_test:
+  path: '/api/yt-to-article/webhook-test'
+  defaults:
+    _controller: '\Drupal\yt_to_article\Controller\WebhookTestController::handleTestWebhook'
+    _title: 'YT to Article Webhook Test'
+  requirements:
+    _permission: 'access content'
+    _method: 'POST'
+  options:
+    no_cache: TRUE

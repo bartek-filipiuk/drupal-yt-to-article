@@ -144,10 +144,29 @@ class WebhookTestController extends ControllerBase {
       }
     }
 
-    // Log everything in one consolidated entry using proper Drupal placeholders
-    $this->logger->notice('WEBHOOK TEST - Complete Analysis | Analysis: @analysis | Full Payload: @payload', [
-      '@analysis' => json_encode($analysis, JSON_PRETTY_PRINT),
-      '@payload' => json_encode($payload, JSON_PRETTY_PRINT)
+    // Log the main analysis (without full payload to avoid truncation)
+    $this->logger->notice('WEBHOOK TEST - Analysis Summary | @analysis', [
+      '@analysis' => json_encode($analysis, JSON_PRETTY_PRINT)
+    ]);
+
+    // Log article content separately if present (to avoid truncation)
+    if (isset($payload['data']['content']['article'])) {
+      $articleContent = $payload['data']['content']['article'];
+      $this->logger->notice('WEBHOOK TEST - Article Content | Type: @type | Content: @content', [
+        '@type' => gettype($articleContent),
+        '@content' => is_string($articleContent) ? $articleContent : json_encode($articleContent, JSON_PRETTY_PRINT)
+      ]);
+    }
+
+    // Log full payload structure (keys only to avoid truncation)
+    $payloadStructure = [
+      'event' => $payload['event'] ?? 'not_set',
+      'request_id' => $payload['request_id'] ?? 'not_set',
+      'timestamp' => $payload['timestamp'] ?? 'not_set',
+      'data_keys' => isset($payload['data']) ? array_keys($payload['data']) : 'no_data'
+    ];
+    $this->logger->notice('WEBHOOK TEST - Payload Structure | @structure', [
+      '@structure' => json_encode($payloadStructure, JSON_PRETTY_PRINT)
     ]);
 
     // Return detailed response

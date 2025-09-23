@@ -144,10 +144,10 @@ class WebhookTestController extends ControllerBase {
       }
     }
 
-    // Log everything in one consolidated entry
-    $this->logger->notice('WEBHOOK TEST - Complete Analysis', [
-      'webhook_analysis' => $analysis,
-      'full_payload' => $payload
+    // Log everything in one consolidated entry using proper Drupal placeholders
+    $this->logger->notice('WEBHOOK TEST - Complete Analysis | Analysis: @analysis | Full Payload: @payload', [
+      '@analysis' => json_encode($analysis, JSON_PRETTY_PRINT),
+      '@payload' => json_encode($payload, JSON_PRETTY_PRINT)
     ]);
 
     // Return detailed response

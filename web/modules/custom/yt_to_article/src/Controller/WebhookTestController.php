@@ -54,28 +54,16 @@ class WebhookTestController extends ControllerBase {
    *   The response.
    */
   public function handleTestWebhook(Request $request): JsonResponse {
-    // Log that we received a test webhook
-    $this->logger->notice('TEST WEBHOOK RECEIVED');
-    $this->logger->notice('=====================================');
-
-    // Log all headers for debugging
-    $headers = [];
-    foreach ($request->headers->all() as $name => $values) {
-      $headers[$name] = implode(', ', $values);
-    }
-    $this->logger->notice('Headers: @headers', ['@headers' => json_encode($headers, JSON_PRETTY_PRINT)]);
-
-    // Get and log the raw body
+    // Get and parse the raw body
     $rawBody = $request->getContent();
-    $this->logger->notice('Raw body length: @length characters', ['@length' => strlen($rawBody)]);
-
-    // Try to parse as JSON
     $payload = json_decode($rawBody, TRUE);
 
     if (json_last_error() !== JSON_ERROR_NONE) {
       $error = json_last_error_msg();
-      $this->logger->error('Failed to parse JSON: @error', ['@error' => $error]);
-      $this->logger->error('Raw body (first 1000 chars): @body', ['@body' => substr($rawBody, 0, 1000)]);
+      $this->logger->error('WEBHOOK TEST - JSON Parse Error', [
+        'error' => $error,
+        'raw_body_sample' => substr($rawBody, 0, 1000)
+      ]);
 
       return new JsonResponse([
         'status' => 'error',
@@ -84,91 +72,83 @@ class WebhookTestController extends ControllerBase {
       ], 400);
     }
 
-    // Log the full payload structure
-    $this->logger->notice('Parsed payload: @payload', ['@payload' => json_encode($payload, JSON_PRETTY_PRINT)]);
-
-    // Check if this is a webhook event
-    if (isset($payload['event'])) {
-      $this->logger->notice('Event type: @event', ['@event' => $payload['event']]);
+    // Collect all headers
+    $headers = [];
+    foreach ($request->headers->all() as $name => $values) {
+      $headers[$name] = implode(', ', $values);
     }
 
-    // Check the data field
-    if (isset($payload['data'])) {
-      $this->logger->notice('Data field present, type: @type', ['@type' => gettype($payload['data'])]);
+    // Analyze payload structure
+    $analysis = [
+      'timestamp' => date('Y-m-d H:i:s'),
+      'request_info' => [
+        'method' => $request->getMethod(),
+        'content_length' => strlen($rawBody),
+        'headers' => $headers
+      ],
+      'payload_structure' => [
+        'top_level_keys' => array_keys($payload),
+        'event' => $payload['event'] ?? 'not_specified',
+        'request_id' => $payload['request_id'] ?? 'not_specified'
+      ]
+    ];
 
-      // Check content field specifically
-      if (isset($payload['data']['content'])) {
-        $contentType = gettype($payload['data']['content']);
-        $this->logger->notice('Content field type: @type', ['@type' => $contentType]);
+    // Analyze data field if present
+    if (isset($payload['data'])) {
+      $data = $payload['data'];
+      $analysis['data_analysis'] = [
+        'data_type' => gettype($data),
+        'data_keys' => is_array($data) ? array_keys($data) : 'not_array'
+      ];
+
+      // Analyze content field
+      if (isset($data['content'])) {
+        $content = $data['content'];
+        $contentType = gettype($content);
+        $analysis['content_analysis'] = [
+          'content_type' => $contentType
+        ];
 
         if ($contentType === 'string') {
-          $contentLength = strlen($payload['data']['content']);
-          $this->logger->notice('Content is a string with @length characters', ['@length' => $contentLength]);
-          $this->logger->notice('Content preview (first 500 chars): @preview', [
-            '@preview' => substr($payload['data']['content'], 0, 500)
-          ]);
+          $analysis['content_analysis']['length'] = strlen($content);
+          $analysis['content_analysis']['preview'] = substr($content, 0, 200);
         } elseif ($contentType === 'array' || $contentType === 'object') {
-          $this->logger->notice('Content is an array/object: @content', [
-            '@content' => json_encode($payload['data']['content'], JSON_PRETTY_PRINT)
-          ]);
-
-          // Check for nested format field
-          if ((is_array($payload['data']['content']) || is_object($payload['data']['content'])) && isset($payload['data']['content']['format'])) {
-            $this->logger->notice('Content format: @format', ['@format' => $payload['data']['content']['format']]);
+          if ((is_array($content) || is_object($content)) && isset($content['format'])) {
+            $analysis['content_analysis']['format'] = $content['format'];
           }
-
-          // Check for nested article field
-          if ((is_array($payload['data']['content']) || is_object($payload['data']['content'])) && isset($payload['data']['content']['article'])) {
-            $articleContent = $payload['data']['content']['article'];
-            $articleType = gettype($articleContent);
-            $this->logger->notice('Article field type: @type', ['@type' => $articleType]);
-
-            if ($articleType === 'string') {
-              $this->logger->notice('Article length: @length characters', [
-                '@length' => strlen($articleContent)
-              ]);
-            } elseif ($articleType === 'array' || $articleType === 'object') {
-              $this->logger->notice('Article is structured data: @content', [
-                '@content' => json_encode($articleContent, JSON_PRETTY_PRINT)
-              ]);
+          if ((is_array($content) || is_object($content)) && isset($content['article'])) {
+            $article = $content['article'];
+            $analysis['content_analysis']['article'] = [
+              'type' => gettype($article),
+              'structure' => is_array($article) ? array_keys($article) : 'not_array'
+            ];
+            if (is_string($article)) {
+              $analysis['content_analysis']['article']['length'] = strlen($article);
             }
           }
-        } else {
-          $this->logger->warning('Unexpected content type: @type', ['@type' => $contentType]);
         }
-      } else {
-        $this->logger->warning('No content field in data');
       }
 
-      // Check content_type field
-      if (isset($payload['data']['content_type'])) {
-        $this->logger->notice('Content-Type specified: @type', ['@type' => $payload['data']['content_type']]);
+      // Analyze other data fields
+      if (isset($data['content_type'])) {
+        $analysis['content_type'] = $data['content_type'];
       }
-
-      // Check video_info
-      if (isset($payload['data']['video_info'])) {
-        $this->logger->notice('Video info: @info', [
-          '@info' => json_encode($payload['data']['video_info'], JSON_PRETTY_PRINT)
-        ]);
+      if (isset($data['video_info'])) {
+        $analysis['video_info'] = $data['video_info'];
       }
-
-      // Check metadata
-      if (isset($payload['data']['metadata'])) {
-        $this->logger->notice('Metadata: @metadata', [
-          '@metadata' => json_encode($payload['data']['metadata'], JSON_PRETTY_PRINT)
-        ]);
+      if (isset($data['metadata'])) {
+        $analysis['metadata'] = [
+          'present' => true,
+          'keys' => is_array($data['metadata']) ? array_keys($data['metadata']) : 'not_array'
+        ];
       }
     }
 
-    // Log summary
-    $this->logger->notice('=====================================');
-    $this->logger->notice('TEST WEBHOOK PROCESSING COMPLETE');
-    $this->logger->notice('Payload structure summary:');
-    $this->logger->notice('- Top level keys: @keys', ['@keys' => implode(', ', array_keys($payload))]);
-
-    if (isset($payload['data']) && is_array($payload['data'])) {
-      $this->logger->notice('- Data keys: @keys', ['@keys' => implode(', ', array_keys($payload['data']))]);
-    }
+    // Log everything in one consolidated entry
+    $this->logger->notice('WEBHOOK TEST - Complete Analysis', [
+      'webhook_analysis' => $analysis,
+      'full_payload' => $payload
+    ]);
 
     // Return detailed response
     $response = [

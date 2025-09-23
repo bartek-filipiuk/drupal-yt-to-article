@@ -113,17 +113,23 @@ class WebhookTestController extends ControllerBase {
           ]);
 
           // Check for nested format field
-          if (is_array($payload['data']['content']) && isset($payload['data']['content']['format'])) {
+          if ((is_array($payload['data']['content']) || is_object($payload['data']['content'])) && isset($payload['data']['content']['format'])) {
             $this->logger->notice('Content format: @format', ['@format' => $payload['data']['content']['format']]);
           }
 
           // Check for nested article field
-          if (is_array($payload['data']['content']) && isset($payload['data']['content']['article'])) {
-            $articleType = gettype($payload['data']['content']['article']);
+          if ((is_array($payload['data']['content']) || is_object($payload['data']['content'])) && isset($payload['data']['content']['article'])) {
+            $articleContent = $payload['data']['content']['article'];
+            $articleType = gettype($articleContent);
             $this->logger->notice('Article field type: @type', ['@type' => $articleType]);
+
             if ($articleType === 'string') {
               $this->logger->notice('Article length: @length characters', [
-                '@length' => strlen($payload['data']['content']['article'])
+                '@length' => strlen($articleContent)
+              ]);
+            } elseif ($articleType === 'array' || $articleType === 'object') {
+              $this->logger->notice('Article is structured data: @content', [
+                '@content' => json_encode($articleContent, JSON_PRETTY_PRINT)
               ]);
             }
           }

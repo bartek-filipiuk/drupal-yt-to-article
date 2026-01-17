@@ -4,28 +4,40 @@ declare(strict_types=1);
 
 namespace Drupal\yt_to_article\Form;
 
-use Drupal\Core\Form\FormBase;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Ajax\SettingsCommand;
-use Drupal\yt_to_article\Ajax\WebSocketConnectCommand;
+use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\RendererInterface;
-use Drupal\yt_to_article\Service\YtToArticleApiClient;
+use Drupal\yt_to_article\Ajax\WebSocketConnectCommand;
 use Drupal\yt_to_article\Exception\ApiException;
-use Drupal\yt_to_article\Exception\RateLimitException;
 use Drupal\yt_to_article\Exception\InsufficientFundsException;
+use Drupal\yt_to_article\Exception\RateLimitException;
+use Drupal\yt_to_article\Service\YtToArticleApiClient;
+use Drupal\yt_to_article\ValueObject\ArticleResponse;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Form for converting YouTube videos to articles.
+ *
+ * This form provides a user interface for submitting YouTube URLs and
+ * configuring article generation options. It uses AJAX for asynchronous
+ * submission and WebSocket for real-time progress updates.
  */
 final class YtToArticleForm extends FormBase {
 
   /**
-   * Constructor with dependency injection.
+   * Constructs a new YtToArticleForm.
+   *
+   * @param \Drupal\yt_to_article\Service\YtToArticleApiClient $apiClient
+   *   The API client for article generation.
+   * @param \Psr\Log\LoggerInterface $logger
+   *   The logger service.
+   * @param \Drupal\Core\Render\RendererInterface $renderer
+   *   The renderer service.
    */
   public function __construct(
     private readonly YtToArticleApiClient $apiClient,
@@ -58,7 +70,23 @@ final class YtToArticleForm extends FormBase {
     $form['#theme'] = 'yt_to_article_form';
     $form['#attached']['library'][] = 'yt_to_article/websocket';
 
-    $form['youtube_url'] = [
+    $form['youtube_url'] = $this->buildYoutubeUrlField();
+    $form['generation_options'] = $this->buildGenerationOptionsContainer();
+    $form['actions'] = $this->buildActionsElement();
+    $form['result_container'] = $this->buildResultContainer($form_state);
+    $form['messages_container'] = $this->buildMessagesContainer();
+
+    return $form;
+  }
+
+  /**
+   * Builds the YouTube URL input field.
+   *
+   * @return array
+   *   The form element array.
+   */
+  private function buildYoutubeUrlField(): array {
+    return [
       '#type' => 'textfield',
       '#title' => $this->t('YouTube URL'),
       '#description' => $this->t('Enter a YouTube video URL to convert to an article.'),
@@ -69,15 +97,40 @@ final class YtToArticleForm extends FormBase {
       ],
       '#maxlength' => 255,
     ];
+  }
 
-    $form['generation_options'] = [
+  /**
+   * Builds the generation options container with all option fields.
+   *
+   * @return array
+   *   The form element array.
+   */
+  private function buildGenerationOptionsContainer(): array {
+    $container = [
       '#type' => 'details',
       '#title' => $this->t('Article Generation Options'),
       '#open' => TRUE,
     ];
 
-    // Writing Style
-    $form['generation_options']['style'] = [
+    $container['style'] = $this->buildStyleField();
+    $container['style_instructions'] = $this->buildStyleInstructionsField();
+    $container['audience'] = $this->buildAudienceField();
+    $container['audience_instructions'] = $this->buildAudienceInstructionsField();
+    $container['length'] = $this->buildLengthField();
+    $container['output_format'] = $this->buildOutputFormatField();
+    $container['language'] = $this->buildLanguageField();
+
+    return $container;
+  }
+
+  /**
+   * Builds the writing style dropdown field.
+   *
+   * @return array
+   *   The form element array.
+   */
+  private function buildStyleField(): array {
+    return [
       '#type' => 'select',
       '#title' => $this->t('Writing style'),
       '#options' => [
@@ -89,8 +142,16 @@ final class YtToArticleForm extends FormBase {
       '#default_value' => 'casual',
       '#description' => $this->t('Choose the tone and voice for the article.'),
     ];
+  }
 
-    $form['generation_options']['style_instructions'] = [
+  /**
+   * Builds the custom style instructions textarea field.
+   *
+   * @return array
+   *   The form element array.
+   */
+  private function buildStyleInstructionsField(): array {
+    return [
       '#type' => 'textarea',
       '#title' => $this->t('Custom style instructions'),
       '#description' => $this->t('Describe your desired writing style in detail.'),
@@ -104,9 +165,16 @@ final class YtToArticleForm extends FormBase {
         ],
       ],
     ];
+  }
 
-    // Target Audience
-    $form['generation_options']['audience'] = [
+  /**
+   * Builds the target audience dropdown field.
+   *
+   * @return array
+   *   The form element array.
+   */
+  private function buildAudienceField(): array {
+    return [
       '#type' => 'select',
       '#title' => $this->t('Target audience'),
       '#options' => [
@@ -118,8 +186,16 @@ final class YtToArticleForm extends FormBase {
       '#default_value' => 'general',
       '#description' => $this->t('Tailor content complexity for specific readers.'),
     ];
+  }
 
-    $form['generation_options']['audience_instructions'] = [
+  /**
+   * Builds the custom audience instructions textarea field.
+   *
+   * @return array
+   *   The form element array.
+   */
+  private function buildAudienceInstructionsField(): array {
+    return [
       '#type' => 'textarea',
       '#title' => $this->t('Custom audience instructions'),
       '#description' => $this->t('Describe your target audience in detail.'),
@@ -133,41 +209,56 @@ final class YtToArticleForm extends FormBase {
         ],
       ],
     ];
+  }
 
-    // Article Length
-    $form['generation_options']['length'] = [
+  /**
+   * Builds the article length dropdown field.
+   *
+   * @return array
+   *   The form element array.
+   */
+  private function buildLengthField(): array {
+    return [
       '#type' => 'select',
       '#title' => $this->t('Article length'),
       '#options' => [
         'rating' => $this->t('Rate video by AI - check if video is worth to see'),
         'article' => $this->t('Create a full article based on video'),
         'fight' => $this->t('Fight - Two AI battles against best quotes from video'),
-        //'summary' => $this->t('Summary - Executive summary (150-250 words)'),
         'brief_focused' => $this->t('Focused Brief'),
-        //'standard' => $this->t('Standard - Comprehensive coverage (800-1200 words)'),
         'tutorial' => $this->t('Make a full tutorial from a video'),
-        //'detailed' => $this->t('Detailed - In-depth analysis (1500-2500 words)'),
       ],
       '#default_value' => 'standard',
       '#description' => $this->t('Choose the appropriate length for your needs.'),
     ];
+  }
 
-    // Output Format
-    $form['generation_options']['output_format'] = [
+  /**
+   * Builds the output format dropdown field.
+   *
+   * @return array
+   *   The form element array.
+   */
+  private function buildOutputFormatField(): array {
+    return [
       '#type' => 'select',
       '#title' => $this->t('Output format'),
       '#options' => [
-        //'markdown' => $this->t('Markdown - Standard Markdown format'),
         'html' => $this->t('HTML - Clean HTML with semantic tags'),
-        //'faq' => $this->t('FAQ - Question-and-answer format'),
-        //'listicle' => $this->t('Listicle - Numbered list with key takeaways'),
       ],
       '#default_value' => 'html',
       '#description' => $this->t('Choose how you want the content formatted.'),
     ];
+  }
 
-    // Language
-    $form['generation_options']['language'] = [
+  /**
+   * Builds the language dropdown field.
+   *
+   * @return array
+   *   The form element array.
+   */
+  private function buildLanguageField(): array {
+    return [
       '#type' => 'select',
       '#title' => $this->t('Language'),
       '#options' => [
@@ -177,29 +268,46 @@ final class YtToArticleForm extends FormBase {
       '#default_value' => 'en',
       '#description' => $this->t('Choose the language for the generated article.'),
     ];
+  }
 
-    $form['actions'] = [
+  /**
+   * Builds the form actions element with submit button.
+   *
+   * @return array
+   *   The form element array.
+   */
+  private function buildActionsElement(): array {
+    return [
       '#type' => 'actions',
-    ];
-
-    $form['actions']['submit'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Generate Article'),
-      '#ajax' => [
-        'callback' => '::ajaxSubmitCallback',
-        'wrapper' => 'yt-to-article-result',
-        'progress' => [
-          'type' => 'throbber',
-          'message' => $this->t('Submitting request...'),
+      'submit' => [
+        '#type' => 'submit',
+        '#value' => $this->t('Generate Article'),
+        '#ajax' => [
+          'callback' => '::ajaxSubmitCallback',
+          'wrapper' => 'yt-to-article-result',
+          'progress' => [
+            'type' => 'throbber',
+            'message' => $this->t('Submitting request...'),
+          ],
+        ],
+        '#attributes' => [
+          'class' => ['yt-to-article-submit'],
         ],
       ],
-      '#attributes' => [
-        'class' => ['yt-to-article-submit'],
-      ],
     ];
+  }
 
-    // Container for results and progress
-    $form['result_container'] = [
+  /**
+   * Builds the result container for AJAX responses.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current form state.
+   *
+   * @return array
+   *   The form element array.
+   */
+  private function buildResultContainer(FormStateInterface $form_state): array {
+    $container = [
       '#type' => 'container',
       '#attributes' => [
         'id' => 'yt-to-article-result',
@@ -207,13 +315,21 @@ final class YtToArticleForm extends FormBase {
       ],
     ];
 
-    // Add any existing result from form state
     if ($form_state->has('result_content')) {
-      $form['result_container']['content'] = $form_state->get('result_content');
+      $container['content'] = $form_state->get('result_content');
     }
 
-    // Separate container for real-time messages that won't be replaced by AJAX
-    $form['messages_container'] = [
+    return $container;
+  }
+
+  /**
+   * Builds the messages container for real-time updates.
+   *
+   * @return array
+   *   The form element array.
+   */
+  private function buildMessagesContainer(): array {
+    return [
       '#type' => 'container',
       '#attributes' => [
         'id' => 'yt-to-article-messages-container',
@@ -221,8 +337,6 @@ final class YtToArticleForm extends FormBase {
       ],
       '#markup' => '<div class="yt-to-article-messages" data-drupal-messages aria-live="polite"><div class="messages__wrapper"></div></div>',
     ];
-
-    return $form;
   }
 
   /**
@@ -230,8 +344,6 @@ final class YtToArticleForm extends FormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state): void {
     $youtubeUrl = $form_state->getValue('youtube_url');
-
-    // Validate YouTube URL format
     $pattern = '/^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)[\w-]+(&[\w=]*)?$/i';
 
     if (!preg_match($pattern, $youtubeUrl)) {
@@ -243,16 +355,26 @@ final class YtToArticleForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-    // This method is not used in AJAX submissions
+    // This method is not used in AJAX submissions.
   }
 
   /**
    * AJAX callback for form submission.
+   *
+   * Handles the asynchronous article generation request, including API calls,
+   * WebSocket setup for progress updates, and error handling.
+   *
+   * @param array $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current form state.
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   *   The AJAX response with commands.
    */
   public function ajaxSubmitCallback(array &$form, FormStateInterface $form_state): AjaxResponse {
     $response = new AjaxResponse();
 
-    // Check for validation errors
     if ($form_state->hasAnyErrors()) {
       $messages = ['#type' => 'status_messages'];
       $response->addCommand(new HtmlCommand('#yt-to-article-result', $messages));
@@ -261,225 +383,376 @@ final class YtToArticleForm extends FormBase {
 
     try {
       $youtubeUrl = $form_state->getValue('youtube_url');
-
-      // Build configuration from form values
-      $config = [
-        'style' => $form_state->getValue('style', 'casual'),
-        'audience' => $form_state->getValue('audience', 'general'),
-        'length' => $form_state->getValue('length', 'standard'),
-        'output_format' => $form_state->getValue('output_format', 'markdown'),
-        'language' => $form_state->getValue('language', 'en'),
-        // Hardcoded LLM configuration
-        'llm_provider' => 'openrouter',
-        'llm_model' => 'google/gemini-2.5-flash',
-      ];
-
-      // Add custom instructions if needed
-      if ($config['style'] === 'custom') {
-        $config['style_instructions'] = $form_state->getValue('style_instructions', '');
-      }
-      if ($config['audience'] === 'custom') {
-        $config['audience_instructions'] = $form_state->getValue('audience_instructions', '');
-      }
-
-      $options = [
-        'config' => $config,
-      ];
-
-      // Add webhook URL from settings if available
-      $webhookUrl = $this->apiClient->getWebhookUrl();
-      if ($webhookUrl) {
-        $options['webhook_url'] = $webhookUrl;
-        // Configure webhook to receive markdown content with metadata
-        // Note: API only supports 'markdown' or 'json' for webhook content_type
-        $options['webhook_config'] = [
-          'content_type' => 'markdown',
-          'include_metadata' => true,
-        ];
-
-        $this->logger->info('Including webhook URL in article generation request: {url}', [
-          'url' => $webhookUrl,
-        ]);
-      }
-
-      // Call the API
+      $options = $this->buildApiOptions($form_state);
       $apiResponse = $this->apiClient->generateArticle($youtubeUrl, $options);
 
+      $this->handleApiSuccess($response, $apiResponse, $youtubeUrl);
 
-      // Prepare the progress container
-      $progressElement = [
-        '#theme' => 'yt_to_article_progress',
-        '#request_id' => $apiResponse->requestId,
-        '#initial_status' => $apiResponse->status,
-      ];
-
-      $renderedProgress = $this->renderer->render($progressElement);
-
-      // Update the result container
-      $response->addCommand(new HtmlCommand('#yt-to-article-result', $renderedProgress));
-
-      // Clear previous messages before starting new generation
-      $response->addCommand(new InvokeCommand(
-        '#yt-to-article-messages-container .messages__wrapper',
-        'empty'
-      ));
-
-      // Clear previous action buttons (View Article link)
-      $response->addCommand(new InvokeCommand(
-        '.yt-to-article-actions',
-        'remove'
-      ));
-
-
-      // Pass WebSocket configuration to JavaScript
-      $wsSettings = [
-        'ytToArticle' => [
-          'requestId' => $apiResponse->requestId,
-          'wsUrl' => $this->getWebSocketUrl(),
-          'token' => $this->getApiToken(),
-        ],
-      ];
-      $response->addCommand(new SettingsCommand($wsSettings));
-
-      // Add custom command to connect WebSocket
-      $response->addCommand(new WebSocketConnectCommand(
-        $apiResponse->requestId,
-        $this->getWebSocketUrl(),
-        $this->getApiToken()
-      ));
-
-      // Store in session for anonymous users
-      $currentUser = \Drupal::currentUser();
-      if ($currentUser->isAnonymous()) {
-        $session = \Drupal::request()->getSession();
-        $anonymousArticles = $session->get('yt_to_article_anonymous', ['articles' => []]);
-
-        // Initialize articles array if it doesn't exist
-        if (!isset($anonymousArticles['articles'])) {
-          $anonymousArticles['articles'] = [];
-        }
-
-        // Add new article to the beginning
-        array_unshift($anonymousArticles['articles'], [
-          'request_id' => $apiResponse->requestId,
-          'timestamp' => time(),
-          'youtube_url' => $youtubeUrl,
-          'title' => NULL, // Will be updated when node is created
-        ]);
-
-        // Keep only last 10 articles
-        $anonymousArticles['articles'] = array_slice($anonymousArticles['articles'], 0, 10);
-
-        $session->set('yt_to_article_anonymous', $anonymousArticles);
-      }
-
-      // Log successful submission
-      $this->logger->info('Article generation started for {url} with request ID {id}', [
-        'url' => $youtubeUrl,
-        'id' => $apiResponse->requestId,
-      ]);
-
-    } catch (InsufficientFundsException $e) {
-      $message = $this->t('Insufficient funds to generate article. You need either credits (current: @credits) or minimum balance of $@min_balance (current: $@balance).', [
-        '@credits' => $e->getCurrentCredits(),
-        '@min_balance' => number_format($e->getMinimumBalance(), 2),
-        '@balance' => number_format($e->getCurrentBalance(), 2),
-      ]);
-
-      $this->messenger()->addError($message);
-      $response->addCommand(new HtmlCommand('#yt-to-article-result', ['#markup' => '<div class="messages messages--error">' . $message . '</div>']));
-
-      // Also send this message via WebSocket if connection exists
-      $response->addCommand(new InvokeCommand(null, 'eval', [
-        'if (window.YtToArticleWebSocket && window.YtToArticleWebSocket.ws && window.YtToArticleWebSocket.ws.readyState === WebSocket.OPEN) {
-          window.YtToArticleWebSocket.showError("' . addslashes($message) . '");
-        }'
-      ]));
-
-      $this->logger->warning('Insufficient funds for user to generate article', [
-        'credits' => $e->getCurrentCredits(),
-        'balance' => $e->getCurrentBalance(),
-        'minimum_balance' => $e->getMinimumBalance(),
-      ]);
-
-    } catch (RateLimitException $e) {
-      $message = $this->t('Rate limit exceeded. Please wait @seconds seconds before trying again.', [
-        '@seconds' => $e->getRetryAfter() ?? 60,
-      ]);
-
-      $this->messenger()->addError($message);
-      $response->addCommand(new HtmlCommand('#yt-to-article-result', ['#markup' => '<div class="messages messages--error">' . $message . '</div>']));
-
-    } catch (ApiException $e) {
-      // Check if this is a 402 error that wasn't caught by InsufficientFundsException
-      if (strpos($e->getMessage(), '402 Payment Required') !== false) {
-        $message = $this->t('Unable to generate article: Insufficient funds. Please contact your administrator to purchase credits or add funds to your account.');
-      } elseif ($e->getCode() === 422) {
-        // This is a validation error
-        $context = $e->getContext();
-        if (isset($context['error_type']) && $context['error_type'] === 'security_violation') {
-          $message = $this->t('Security violation detected: Your custom instructions contain prohibited patterns that attempt to override system behavior. Please rephrase your instructions without trying to manipulate the system.');
-        } elseif (isset($context['response_body'])) {
-          $response_data = json_decode($context['response_body'], true);
-          if (isset($response_data['error_type']) && $response_data['error_type'] === 'security_violation') {
-            $message = $this->t('Security violation detected: Your custom instructions contain prohibited patterns that attempt to override system behavior. Please rephrase your instructions without trying to manipulate the system.');
-          } else {
-            // Other validation errors
-            $message = $this->t('Invalid input: Please check your custom instructions and ensure they meet the requirements (10-500 characters, plain text only).');
-          }
-        } else {
-          // Generic validation error
-          $message = $this->t('Invalid input: Please check your custom instructions and ensure they meet the requirements (10-500 characters, plain text only).');
-        }
-      } elseif (strpos($e->getMessage(), '422 Unprocessable Entity') !== false) {
-        // Legacy handling for string-based 422 detection
-        $message = $this->t('Invalid input: Please check your custom instructions and ensure they meet the requirements (10-500 characters, plain text only).');
-      } else {
-        // For other API errors, show a generic message
-        $message = $this->t('Unable to connect to the article generation service. Please try again later.');
-      }
-
-      $this->messenger()->addError($message);
-      $response->addCommand(new HtmlCommand('#yt-to-article-result', ['#markup' => '<div class="messages messages--error">' . $message . '</div>']));
-
-      // Log the full error details for administrators
-      $this->logger->error('API error: {message}', [
-        'message' => $e->getMessage(),
-        'context' => $e->getContext(),
-      ]);
-
-    } catch (\Exception $e) {
-      $message = $this->t('An unexpected error occurred. Please try again later.');
-
-      $this->messenger()->addError($message);
-      $response->addCommand(new HtmlCommand('#yt-to-article-result', ['#markup' => '<div class="messages messages--error">' . $message . '</div>']));
-
-      $this->logger->error('Unexpected error: {message}', ['message' => $e->getMessage()]);
+    }
+    catch (InsufficientFundsException $e) {
+      $this->handleInsufficientFundsError($response, $e);
+    }
+    catch (RateLimitException $e) {
+      $this->handleRateLimitError($response, $e);
+    }
+    catch (ApiException $e) {
+      $this->handleApiError($response, $e);
+    }
+    catch (\Exception $e) {
+      $this->handleUnexpectedError($response, $e);
     }
 
     return $response;
   }
 
   /**
-   * Get the WebSocket URL from configuration.
-   * Includes fallback protocol detection for mobile compatibility.
+   * Builds the API options array from form values.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current form state.
+   *
+   * @return array
+   *   The options array for the API call.
+   */
+  private function buildApiOptions(FormStateInterface $form_state): array {
+    $config = $this->buildApiConfig($form_state);
+    $options = ['config' => $config];
+
+    $webhookUrl = $this->apiClient->getWebhookUrl();
+    if ($webhookUrl) {
+      $options['webhook_url'] = $webhookUrl;
+      $options['webhook_config'] = [
+        'content_type' => 'markdown',
+        'include_metadata' => TRUE,
+      ];
+
+      $this->logger->info('Including webhook URL in article generation request: {url}', [
+        'url' => $webhookUrl,
+      ]);
+    }
+
+    return $options;
+  }
+
+  /**
+   * Builds the API configuration array from form values.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current form state.
+   *
+   * @return array
+   *   The configuration array.
+   */
+  private function buildApiConfig(FormStateInterface $form_state): array {
+    $style = $form_state->getValue('style', 'casual');
+    $audience = $form_state->getValue('audience', 'general');
+
+    $config = [
+      'style' => $style,
+      'audience' => $audience,
+      'length' => $form_state->getValue('length', 'standard'),
+      'output_format' => $form_state->getValue('output_format', 'markdown'),
+      'language' => $form_state->getValue('language', 'en'),
+      'llm_provider' => 'openrouter',
+      'llm_model' => 'google/gemini-2.5-flash',
+    ];
+
+    if ($style === 'custom') {
+      $config['style_instructions'] = $form_state->getValue('style_instructions', '');
+    }
+
+    if ($audience === 'custom') {
+      $config['audience_instructions'] = $form_state->getValue('audience_instructions', '');
+    }
+
+    return $config;
+  }
+
+  /**
+   * Handles a successful API response.
+   *
+   * Sets up the progress UI, WebSocket connection, and session tracking.
+   *
+   * @param \Drupal\Core\Ajax\AjaxResponse $response
+   *   The AJAX response to add commands to.
+   * @param \Drupal\yt_to_article\ValueObject\ArticleResponse $apiResponse
+   *   The API response object.
+   * @param string $youtubeUrl
+   *   The YouTube URL being processed.
+   */
+  private function handleApiSuccess(AjaxResponse $response, ArticleResponse $apiResponse, string $youtubeUrl): void {
+    $this->renderProgressResponse($response, $apiResponse);
+    $this->clearPreviousState($response);
+    $this->setupWebSocketConnection($response, $apiResponse);
+    $this->updateAnonymousUserSession($apiResponse->requestId, $youtubeUrl);
+
+    $this->logger->info('Article generation started for {url} with request ID {id}', [
+      'url' => $youtubeUrl,
+      'id' => $apiResponse->requestId,
+    ]);
+  }
+
+  /**
+   * Renders the progress template and updates the result container.
+   *
+   * @param \Drupal\Core\Ajax\AjaxResponse $response
+   *   The AJAX response to add commands to.
+   * @param \Drupal\yt_to_article\ValueObject\ArticleResponse $apiResponse
+   *   The API response object.
+   */
+  private function renderProgressResponse(AjaxResponse $response, ArticleResponse $apiResponse): void {
+    $progressElement = [
+      '#theme' => 'yt_to_article_progress',
+      '#request_id' => $apiResponse->requestId,
+      '#initial_status' => $apiResponse->status,
+    ];
+
+    $renderedProgress = $this->renderer->render($progressElement);
+    $response->addCommand(new HtmlCommand('#yt-to-article-result', $renderedProgress));
+  }
+
+  /**
+   * Clears previous messages and action buttons from the UI.
+   *
+   * @param \Drupal\Core\Ajax\AjaxResponse $response
+   *   The AJAX response to add commands to.
+   */
+  private function clearPreviousState(AjaxResponse $response): void {
+    $response->addCommand(new InvokeCommand(
+      '#yt-to-article-messages-container .messages__wrapper',
+      'empty'
+    ));
+
+    $response->addCommand(new InvokeCommand(
+      '.yt-to-article-actions',
+      'remove'
+    ));
+  }
+
+  /**
+   * Sets up the WebSocket connection for real-time progress updates.
+   *
+   * @param \Drupal\Core\Ajax\AjaxResponse $response
+   *   The AJAX response to add commands to.
+   * @param \Drupal\yt_to_article\ValueObject\ArticleResponse $apiResponse
+   *   The API response object.
+   */
+  private function setupWebSocketConnection(AjaxResponse $response, ArticleResponse $apiResponse): void {
+    $wsSettings = [
+      'ytToArticle' => [
+        'requestId' => $apiResponse->requestId,
+        'wsUrl' => $this->getWebSocketUrl(),
+        'token' => $this->getApiToken(),
+      ],
+    ];
+    $response->addCommand(new SettingsCommand($wsSettings));
+
+    $response->addCommand(new WebSocketConnectCommand(
+      $apiResponse->requestId,
+      $this->getWebSocketUrl(),
+      $this->getApiToken()
+    ));
+  }
+
+  /**
+   * Updates the session for anonymous users to track their articles.
+   *
+   * @param string $requestId
+   *   The request ID from the API.
+   * @param string $youtubeUrl
+   *   The YouTube URL being processed.
+   */
+  private function updateAnonymousUserSession(string $requestId, string $youtubeUrl): void {
+    $currentUser = \Drupal::currentUser();
+    if (!$currentUser->isAnonymous()) {
+      return;
+    }
+
+    $session = \Drupal::request()->getSession();
+    $anonymousArticles = $session->get('yt_to_article_anonymous', ['articles' => []]);
+
+    if (!isset($anonymousArticles['articles'])) {
+      $anonymousArticles['articles'] = [];
+    }
+
+    array_unshift($anonymousArticles['articles'], [
+      'request_id' => $requestId,
+      'timestamp' => time(),
+      'youtube_url' => $youtubeUrl,
+      'title' => NULL,
+    ]);
+
+    $anonymousArticles['articles'] = array_slice($anonymousArticles['articles'], 0, 10);
+    $session->set('yt_to_article_anonymous', $anonymousArticles);
+  }
+
+  /**
+   * Handles insufficient funds exception.
+   *
+   * @param \Drupal\Core\Ajax\AjaxResponse $response
+   *   The AJAX response to add commands to.
+   * @param \Drupal\yt_to_article\Exception\InsufficientFundsException $e
+   *   The exception that was thrown.
+   */
+  private function handleInsufficientFundsError(AjaxResponse $response, InsufficientFundsException $e): void {
+    $message = $this->t('Insufficient funds to generate article. You need either credits (current: @credits) or minimum balance of $@min_balance (current: $@balance).', [
+      '@credits' => $e->getCurrentCredits(),
+      '@min_balance' => number_format($e->getMinimumBalance(), 2),
+      '@balance' => number_format($e->getCurrentBalance(), 2),
+    ]);
+
+    $this->addErrorToResponse($response, $message);
+
+    $response->addCommand(new InvokeCommand(NULL, 'eval', [
+      'if (window.YtToArticleWebSocket && window.YtToArticleWebSocket.ws && window.YtToArticleWebSocket.ws.readyState === WebSocket.OPEN) {
+        window.YtToArticleWebSocket.showError("' . addslashes($message) . '");
+      }',
+    ]));
+
+    $this->logger->warning('Insufficient funds for user to generate article', [
+      'credits' => $e->getCurrentCredits(),
+      'balance' => $e->getCurrentBalance(),
+      'minimum_balance' => $e->getMinimumBalance(),
+    ]);
+  }
+
+  /**
+   * Handles rate limit exception.
+   *
+   * @param \Drupal\Core\Ajax\AjaxResponse $response
+   *   The AJAX response to add commands to.
+   * @param \Drupal\yt_to_article\Exception\RateLimitException $e
+   *   The exception that was thrown.
+   */
+  private function handleRateLimitError(AjaxResponse $response, RateLimitException $e): void {
+    $message = $this->t('Rate limit exceeded. Please wait @seconds seconds before trying again.', [
+      '@seconds' => $e->getRetryAfter() ?? 60,
+    ]);
+
+    $this->addErrorToResponse($response, $message);
+  }
+
+  /**
+   * Handles general API exceptions.
+   *
+   * @param \Drupal\Core\Ajax\AjaxResponse $response
+   *   The AJAX response to add commands to.
+   * @param \Drupal\yt_to_article\Exception\ApiException $e
+   *   The exception that was thrown.
+   */
+  private function handleApiError(AjaxResponse $response, ApiException $e): void {
+    $message = $this->determineApiErrorMessage($e);
+    $this->addErrorToResponse($response, $message);
+
+    $this->logger->error('API error: {message}', [
+      'message' => $e->getMessage(),
+      'context' => $e->getContext(),
+    ]);
+  }
+
+  /**
+   * Determines the appropriate error message for an API exception.
+   *
+   * @param \Drupal\yt_to_article\Exception\ApiException $e
+   *   The exception that was thrown.
+   *
+   * @return \Drupal\Core\StringTranslation\TranslatableMarkup|string
+   *   The error message to display.
+   */
+  private function determineApiErrorMessage(ApiException $e): mixed {
+    if (str_contains($e->getMessage(), '402 Payment Required')) {
+      return $this->t('Unable to generate article: Insufficient funds. Please contact your administrator to purchase credits or add funds to your account.');
+    }
+
+    if ($e->getCode() === 422) {
+      return $this->determineValidationErrorMessage($e);
+    }
+
+    if (str_contains($e->getMessage(), '422 Unprocessable Entity')) {
+      return $this->t('Invalid input: Please check your custom instructions and ensure they meet the requirements (10-500 characters, plain text only).');
+    }
+
+    return $this->t('Unable to connect to the article generation service. Please try again later.');
+  }
+
+  /**
+   * Determines the error message for validation errors (422).
+   *
+   * @param \Drupal\yt_to_article\Exception\ApiException $e
+   *   The exception that was thrown.
+   *
+   * @return \Drupal\Core\StringTranslation\TranslatableMarkup|string
+   *   The error message to display.
+   */
+  private function determineValidationErrorMessage(ApiException $e): mixed {
+    $context = $e->getContext();
+
+    if (isset($context['error_type']) && $context['error_type'] === 'security_violation') {
+      return $this->t('Security violation detected: Your custom instructions contain prohibited patterns that attempt to override system behavior. Please rephrase your instructions without trying to manipulate the system.');
+    }
+
+    if (isset($context['response_body'])) {
+      $responseData = json_decode($context['response_body'], TRUE);
+      if (isset($responseData['error_type']) && $responseData['error_type'] === 'security_violation') {
+        return $this->t('Security violation detected: Your custom instructions contain prohibited patterns that attempt to override system behavior. Please rephrase your instructions without trying to manipulate the system.');
+      }
+    }
+
+    return $this->t('Invalid input: Please check your custom instructions and ensure they meet the requirements (10-500 characters, plain text only).');
+  }
+
+  /**
+   * Handles unexpected exceptions.
+   *
+   * @param \Drupal\Core\Ajax\AjaxResponse $response
+   *   The AJAX response to add commands to.
+   * @param \Exception $e
+   *   The exception that was thrown.
+   */
+  private function handleUnexpectedError(AjaxResponse $response, \Exception $e): void {
+    $message = $this->t('An unexpected error occurred. Please try again later.');
+    $this->addErrorToResponse($response, $message);
+
+    $this->logger->error('Unexpected error: {message}', ['message' => $e->getMessage()]);
+  }
+
+  /**
+   * Adds an error message to the AJAX response.
+   *
+   * @param \Drupal\Core\Ajax\AjaxResponse $response
+   *   The AJAX response to add commands to.
+   * @param \Drupal\Core\StringTranslation\TranslatableMarkup|string $message
+   *   The error message to display.
+   */
+  private function addErrorToResponse(AjaxResponse $response, mixed $message): void {
+    $this->messenger()->addError($message);
+    $response->addCommand(new HtmlCommand(
+      '#yt-to-article-result',
+      ['#markup' => '<div class="messages messages--error">' . $message . '</div>']
+    ));
+  }
+
+  /**
+   * Gets the WebSocket URL from configuration.
+   *
+   * Includes fallback protocol detection for mobile compatibility. When the
+   * configured URL uses localhost (inaccessible from mobile devices), this
+   * method generates a WebSocket URL based on the current request's host.
+   *
+   * @return string
+   *   The WebSocket URL.
    */
   private function getWebSocketUrl(): string {
     $settings = \Drupal::service('settings')->get('yt_to_article', []);
-    $wsUrl = $settings['websocket_url'] ?? null;
+    $wsUrl = $settings['websocket_url'] ?? NULL;
 
-    // If no URL is configured or it's using localhost (which mobile can't access)
-    if (!$wsUrl || (strpos($wsUrl, 'localhost') !== false && $this->isMobileRequest())) {
-      // Build a WebSocket URL using the current request's host
+    $isLocalhost = $wsUrl && str_contains($wsUrl, 'localhost');
+    if (!$wsUrl || ($isLocalhost && $this->isMobileRequest())) {
       $request = \Drupal::request();
-      $isHttps = $request->isSecure();
-      $protocol = $isHttps ? 'wss' : 'ws';
+      $protocol = $request->isSecure() ? 'wss' : 'ws';
       $host = $request->getHost();
-
-      // Use the same host as the current request for mobile compatibility
       $wsUrl = $protocol . '://' . $host . '/api/v1/ws';
 
-      // Log this for debugging
       \Drupal::logger('yt_to_article')->info('Generated WebSocket URL for mobile: @url', ['@url' => $wsUrl]);
     }
 
@@ -487,7 +760,10 @@ final class YtToArticleForm extends FormBase {
   }
 
   /**
-   * Check if the current request is likely from a mobile device.
+   * Checks if the current request is likely from a mobile device.
+   *
+   * @return bool
+   *   TRUE if the request appears to be from a mobile device.
    */
   private function isMobileRequest(): bool {
     $userAgent = \Drupal::request()->headers->get('User-Agent', '');
@@ -495,10 +771,14 @@ final class YtToArticleForm extends FormBase {
   }
 
   /**
-   * Get the API token from configuration.
+   * Gets the API token from configuration.
+   *
+   * @return string
+   *   The API token.
    */
   private function getApiToken(): string {
     $settings = \Drupal::service('settings')->get('yt_to_article', []);
     return $settings['api_token'] ?? '';
   }
+
 }

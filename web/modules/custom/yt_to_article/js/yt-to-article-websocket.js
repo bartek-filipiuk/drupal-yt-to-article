@@ -143,10 +143,20 @@
       try {
         const message = JSON.parse(event.data);
         console.log('[YtToArticle] WebSocket message received:', message);
-        
+
+        // Check message type first (new API format)
+        const messageType = message.type;
+
         // Extract the actual data from the nested structure
         const data = message.data || message;
-        
+
+        // Handle error messages (new format: type === 'error')
+        if (messageType === 'error') {
+          console.log('[YtToArticle] API error message received:', data);
+          this.handleApiError(data);
+          return;
+        }
+
         // Display the message using Drupal's message system
         if (data.message) {
           console.log('[YtToArticle] Message has text, calling displayMessage');
@@ -154,19 +164,20 @@
         } else {
           console.log('[YtToArticle] No message text in data');
         }
-        
+
         // Update progress, ensuring 100% for finished state
         if (data.stage === 'finished' || data.stage === 'completed') {
           // Force 100% progress for finished state
           data.progress = 1;
         }
-        
+
         this.updateProgress(data);
-        
+
         if (data.stage === 'finished' || data.stage === 'completed') {
           this.onComplete(data);
         } else if (data.stage === 'error' || data.stage === 'failed') {
-          this.onError(data);
+          // Legacy error handling (stage-based)
+          this.handleApiError(data);
         }
       } catch (error) {
         console.error('[YtToArticle] Failed to parse WebSocket message:', error);
@@ -174,18 +185,64 @@
     },
     
     /**
-     * Handle WebSocket error.
+     * Handle WebSocket connection error.
      */
     onError: function(error) {
-      console.error('[YtToArticle] WebSocket error:', error);
+      console.error('[YtToArticle] WebSocket connection error:', error);
       console.error('[YtToArticle] Error type:', error.type);
       console.error('[YtToArticle] ReadyState:', this.ws ? this.ws.readyState : 'No WebSocket');
-      
-      if (error.error || error.message) {
-        this.showError(error.error || error.message);
+
+      // This handles WebSocket connection errors, not API errors
+      this.showError('Connection error occurred');
+    },
+
+    /**
+     * Handle API error messages from WebSocket.
+     */
+    handleApiError: function(data) {
+      const errorCode = data.error_code || null;
+      const errorMessage = this.getErrorMessage(errorCode, data.message || data.error);
+
+      console.error('[YtToArticle] API error:', { errorCode, errorMessage, data });
+
+      // Display user-friendly error message
+      this.displayMessage(errorMessage, 'error');
+
+      // Update status with error code if available
+      if (errorCode) {
+        this.updateStatus('Error: ' + errorCode, 'error');
       } else {
-        this.showError('Connection error occurred');
+        this.updateStatus('Generation failed', 'error');
       }
+
+      // Re-enable submit button
+      this.toggleSubmitButton(true);
+
+      // Close WebSocket connection
+      if (this.ws) {
+        this.ws.close();
+      }
+    },
+
+    /**
+     * Get user-friendly error message based on error code.
+     */
+    getErrorMessage: function(errorCode, fallbackMessage) {
+      const errorMessages = {
+        'TRANSCRIPT_UNAVAILABLE': 'This video has no transcript available. Try a video with captions enabled.',
+        'VIDEO_PRIVATE': 'This video is private. Please use a public video.',
+        'VIDEO_NOT_FOUND': 'Video not found. Please check the URL.',
+        'INVALID_URL': 'Invalid YouTube URL format.',
+        'TRANSCRIPTION_FAILED': 'Transcription service error. Please try again later.',
+        'LLM_GENERATION_FAILED': 'AI generation error. Please try again later.',
+        'INTERNAL_ERROR': 'An unexpected error occurred. Please try again later.'
+      };
+
+      if (errorCode && errorMessages[errorCode]) {
+        return errorMessages[errorCode];
+      }
+
+      return fallbackMessage || 'An error occurred while generating the article.';
     },
     
     /**

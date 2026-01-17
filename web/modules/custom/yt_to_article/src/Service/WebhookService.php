@@ -143,24 +143,33 @@ class WebhookService {
    * Processes article.failed webhook event.
    *
    * @param array $payload
-   *   The webhook payload.
+   *   The webhook payload containing error information.
+   *   Expected fields: request_id, error, error_code (optional), data (optional).
    *
    * @return array
-   *   Result array with success status and message.
+   *   Result array with success status, message, and error_code if available.
    */
   public function processArticleFailed(array $payload): array {
     $data = $payload['data'] ?? [];
     $requestId = $payload['request_id'] ?? '';
-    $error = $data['error'] ?? 'Unknown error';
 
-    $this->logger->error('Article generation failed for request @id: @error', [
+    // Extract error message - check both root level and nested data.
+    $error = $payload['error'] ?? $data['error'] ?? 'Unknown error';
+
+    // Extract error code - check both root level and nested data.
+    $errorCode = $payload['error_code'] ?? $data['error_code'] ?? NULL;
+
+    // Log with error code for better debugging.
+    $this->logger->error('Article generation failed for request @id [@code]: @error', [
       '@id' => $requestId,
+      '@code' => $errorCode ?? 'NO_CODE',
       '@error' => $error,
     ]);
 
     return [
       'success' => TRUE,
       'message' => 'Failure logged',
+      'error_code' => $errorCode,
     ];
   }
 
